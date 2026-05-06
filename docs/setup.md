@@ -13,29 +13,33 @@
 git clone https://github.com/evan-kolberg/prediction-market-backtesting.git
 cd prediction-market-backtesting
 
+make install
+make native-develop
+```
+
+`make install` creates the `.venv` and installs runtime, notebook, plotting,
+optimizer, downloader, and repo-gate dependencies. `make native-develop` builds
+the Rust-native data-loading extension.
+
+The equivalent manual install is:
+
+```bash
 # conda's linker flags can conflict with the venv
 unset CONDA_PREFIX
 
 uv venv --python 3.13
-uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" bokeh plotly numpy py-clob-client duckdb textual nbformat nbclient ipykernel optuna python-dotenv
+uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" bokeh plotly numpy py-clob-client duckdb textual nbformat nbclient ipykernel optuna python-dotenv aiohttp pytest ruff
 make native-develop
 ```
+
+After setup, run commands with `uv run ...`. You do not need to manually
+activate the virtualenv.
 
 If you want to build docs locally:
 
 ```bash
 uv pip install mkdocs-shadcn
 ```
-
-You can also use:
-
-```bash
-make install
-make native-develop
-```
-
-After setup, run commands with `uv run ...`. You do not need to manually
-activate the virtualenv.
 
 ## First Run
 

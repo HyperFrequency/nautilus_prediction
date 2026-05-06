@@ -13,7 +13,7 @@ backtest:
 	uv run python main.py
 
 install:
-	unset CONDA_PREFIX && uv venv --python 3.13 && uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" bokeh plotly numpy py-clob-client duckdb textual nbformat nbclient ipykernel optuna python-dotenv aiohttp
+	unset CONDA_PREFIX && uv venv --python 3.13 && uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" bokeh plotly numpy py-clob-client duckdb textual nbformat nbclient ipykernel optuna python-dotenv aiohttp pytest ruff
 
 check:
 	uv run ruff check .
