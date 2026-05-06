@@ -543,7 +543,15 @@ def _trade_source_summary_parts(entries: Sequence[TelonexSourceEntry]) -> list[s
     for entry in api_entries:
         suffix = " (key set)" if entry.api_key else " (key missing)"
         parts.append(f"api {entry.target}{suffix}")
-    parts.extend(("polymarket cache", f"api {_POLYMARKET_PUBLIC_TRADES_API_URL}"))
+    if os.getenv("TELONEX_DISABLE_POLYMARKET_TRADE_FALLBACK", "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }:
+        parts.append("polymarket fallback disabled")
+    else:
+        parts.extend(("polymarket cache", f"api {_POLYMARKET_PUBLIC_TRADES_API_URL}"))
     return parts
 
 

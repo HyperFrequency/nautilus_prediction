@@ -15,20 +15,18 @@
 #  See the repository NOTICE file for provenance and licensing scope.
 #
 """
-Corrected Polymarket fee calculation.
+Polymarket fee calculation policy.
 
-Upstream ``nautilus_trader.adapters.polymarket.common.parsing.calculate_commission``
-uses a linear formula (``qty * price * fee_rate``).  Polymarket's actual fee
-curve is ``qty * feeRate * p * (1 - p)`` which peaks at p=0.50 and tapers
-toward the extremes.
-
-This module provides the corrected formula and is installed as a monkey-patch
-via ``prediction_market_extensions.install_commission_patch()``.
+NautilusTrader 1.226 uses Polymarket's curved taker-fee formula directly. This
+module centralizes the repository's Decimal rounding behavior while targeting
+the 1.226 function signature with no old-version compatibility layer.
 """
 
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
+
+from nautilus_trader.model.enums import LiquiditySide
 
 
 def basis_points_as_decimal(basis_points: Decimal) -> Decimal:
@@ -49,35 +47,11 @@ def basis_points_as_decimal(basis_points: Decimal) -> Decimal:
     return basis_points / Decimal(10_000)
 
 
-def infer_fee_exponent(fee_rate_bps: Decimal) -> int:
-    """
-    Return the legacy Polymarket fee exponent compatibility value.
-
-    Older code paths inferred different exponents by market type. Polymarket's
-    current fee documentation uses one shared fee curve for all fee-enabled
-    categories, so callers should treat the exponent as ``1``.
-
-    Parameters
-    ----------
-    fee_rate_bps : Decimal
-        The fee rate in basis points. Retained for API compatibility.
-
-    Returns
-    -------
-    int
-        Always ``1``.
-
-    """
-    del fee_rate_bps
-    return 1
-
-
 def calculate_commission(
     quantity: Decimal,
     price: Decimal,
-    fee_rate_bps: Decimal,
-    fee_exponent: int = 1,
-    **_kwargs: object,
+    fee_rate: Decimal,
+    liquidity_side: LiquiditySide,
 ) -> float:
     """
     Calculate commission from trade parameters and fee rate.
@@ -89,12 +63,12 @@ def calculate_commission(
     Where:
     - C = number of shares (quantity)
     - p = share price
-    - feeRate = fee_rate_bps / 10_000
+    - feeRate = the effective taker rate as a decimal fraction
 
     The fee peaks at p = 0.50 and decreases symmetrically toward the
     extremes (p -> 0 or p -> 1).
 
-    Polymarket rounds fees to 5 decimal places (0.00001 USDC minimum).
+    Polymarket rounds fees to 5 decimal places (0.00001 pUSD minimum).
 
     References
     ----------
@@ -106,10 +80,10 @@ def calculate_commission(
         The fill quantity.
     price : Decimal
         The fill price (0 to 1).
-    fee_rate_bps : Decimal
-        The fee rate in basis points.
-    fee_exponent : int, default 1
-        Retained for backward compatibility with <= 1.225.0 and ignored.
+    fee_rate : Decimal
+        The effective fee rate as a decimal fraction, e.g. ``0.03`` for 3%.
+    liquidity_side : LiquiditySide
+        The liquidity side for this fill. Maker fills pay no fee.
 
     Returns
     -------
@@ -117,10 +91,8 @@ def calculate_commission(
         The commission amount rounded to 5 decimal places.
 
     """
-    if fee_rate_bps <= 0:
+    if liquidity_side != LiquiditySide.TAKER or fee_rate <= 0:
         return 0.0
 
-    del fee_exponent
-    fee_rate = basis_points_as_decimal(fee_rate_bps)
     commission = quantity * fee_rate * price * (Decimal(1) - price)
     return float(commission.quantize(Decimal("0.00001"), rounding=ROUND_HALF_UP))

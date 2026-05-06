@@ -1,8 +1,8 @@
 # Codebase UML Inventory
 
 This file is generated from Python AST metadata and excludes `tests/`.
-Generated: 2026-05-05T21:52:25+00:00
-Modules: 112 | Classes: 166 | Functions/methods: 1505
+Generated: 2026-05-06T20:15:11+00:00
+Modules: 211 | Classes: 247 | Functions/methods: 2386
 
 ## Backtesting Data Flow
 
@@ -89,6 +89,656 @@ flowchart TD
 ### `backtests/polymarket_telonex_book_joint_portfolio_runner.py`
 - Imports: `__future__, decimal`
 - Function L18: `run() -> None`
+
+### `backtests/private/__init__.py`
+- Imports: none
+
+### `backtests/private/telonex_btc_5m_adjacent_lead_lag_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L106: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L110: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L124: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L141: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L187: `_evaluate_results(*, trial_id: int, phase: str, params: dict[str, Any], results: list[dict[str, Any]], replay_count: int) -> _Evaluation`
+- Function L242: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L263: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L312: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L342: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_book_event_pressure_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L103: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L107: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L126: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L141: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L194: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L215: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L264: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L294: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_boundary_breakout_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L106: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L110: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L128: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L143: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L196: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L217: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L266: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L295: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_boundary_hold_breakout_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L106: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L110: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L128: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L144: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L197: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L218: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L267: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L297: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_cancel_replace_pressure_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L106: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L110: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L129: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L146: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L194: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L215: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L264: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L293: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_certainty_collapse_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L113: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L117: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L136: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L149: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L202: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L223: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L272: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L302: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_depth_convexity_skew_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L109: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L113: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L133: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L150: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L198: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L219: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L268: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L298: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_depth_entropy_compression_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L109: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L113: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L132: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L149: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L197: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L218: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L267: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L297: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_final_pressure_squeeze_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L110: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L114: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L128: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L145: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L198: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L219: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L268: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L299: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_impact_fair_fade_search.py`
+- Imports: `__future__, backtests, csv, dotenv, importlib, json, os, pathlib, subprocess, sys, typing, uuid`
+- Function L57: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L74: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L122: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L143: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L192: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L221: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_impact_fair_price_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L105: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L109: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L123: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L140: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L188: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L209: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L258: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L288: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_favorite_multiblock_s99_search.py`
+- Imports: `__future__, backtests, csv, datetime, decimal, dotenv, importlib, json, os, pathlib, typing`
+- Function L42: `_env_epoch_list(name: str, default: tuple[int, ...]) -> tuple[int, ...]`
+- Function L54: `_windows_from_starts(*, starts: tuple[int, ...], windows_per_block: int) -> tuple[tuple[str, str, str], ...]`
+- Function L70: `_candidate_params() -> list[dict[str, Any]]`
+- Function L125: `_params_for_strategy(params: dict[str, Any]) -> dict[str, Any]`
+- Function L138: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L168: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_favorite_multiblock_search.py`
+- Imports: `__future__, backtests, csv, datetime, decimal, dotenv, importlib, json, os, pathlib, subprocess, sys, typing, uuid`
+- Function L61: `_env_epoch_list(name: str, default: tuple[int, ...]) -> tuple[int, ...]`
+- Function L73: `_windows_from_starts(*, starts: tuple[int, ...], windows_per_block: int) -> tuple[tuple[str, str, str], ...]`
+- Function L85: `_known_s54_leader() -> dict[str, Any]`
+- Function L101: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L123: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L144: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L193: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L223: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_favorite_passive_hold_search.py`
+- Imports: `__future__, backtests, csv, datetime, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L59: `_parse_utc_iso(value: str) -> datetime`
+- Function L63: `_btc_5m_replays_with_metadata(windows: tuple[tuple[str, str, str], ...], *, activation_seconds_before_close: int) -> tuple[object, ...]`
+- Function L91: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L133: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L137: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L158: `_strategy_params(params: dict[str, Any]) -> dict[str, Any]`
+- Function L166: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L185: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L234: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L255: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L304: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L335: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_favorite_taker_hold.py`
+- Imports: `__future__, datetime, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `_env_int(name: str, default: int) -> int`
+- Function L39: `_utc_iso(value: datetime) -> str`
+- Function L43: `_btc_5m_windows() -> tuple[tuple[str, datetime, datetime], ...]`
+- Function L60: `_btc_5m_replays() -> Any`
+- Function L83: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_favorite_taker_hold_s94_search.py`
+- Imports: `__future__, backtests, csv, datetime, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L57: `_parse_utc(value: str) -> datetime`
+- Function L61: `_btc_5m_replays(windows: tuple[tuple[str, str, str], ...], *, activation_seconds_before_close: float) -> tuple[object, ...]`
+- Function L91: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L127: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L131: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L145: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L161: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L214: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L235: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L284: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L314: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_favorite_taker_hold_search.py`
+- Imports: `__future__, backtests, csv, datetime, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L55: `_utc_iso(value: datetime) -> str`
+- Function L59: `_parse_utc_iso(value: str) -> datetime`
+- Function L63: `_btc_5m_replays(windows: tuple[tuple[str, str, str], ...], *, activation_seconds_before_close: float) -> Any`
+- Function L93: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L132: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L136: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L150: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L168: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L222: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L243: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L292: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L322: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_favorite_value_cap_s100_search.py`
+- Imports: `__future__, backtests, csv, datetime, decimal, dotenv, importlib, json, os, pathlib, typing`
+- Function L42: `_env_epoch_list(name: str, default: tuple[int, ...]) -> tuple[int, ...]`
+- Function L54: `_windows_from_starts(*, starts: tuple[int, ...], windows_per_block: int) -> tuple[tuple[str, str, str], ...]`
+- Function L70: `_candidate_params() -> list[dict[str, Any]]`
+- Function L135: `_params_for_strategy(params: dict[str, Any]) -> dict[str, Any]`
+- Function L148: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L178: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_late_settlement_ablation_s95_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, typing`
+- Function L42: `_candidate_params() -> list[dict[str, Any]]`
+- Function L131: `_params_for_strategy(params: dict[str, Any]) -> dict[str, Any]`
+- Function L135: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L165: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_liquidity_withdrawal_hold_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L110: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L114: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L134: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L151: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L204: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L225: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L274: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L304: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_liquidity_withdrawal_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L110: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L114: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L134: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L151: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L206: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L227: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L276: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L306: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_low_price_passive_sweep_reprice_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, typing`
+- Function L43: `_run_label() -> str`
+- Function L50: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L124: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L163: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_opening_range_breakout_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L108: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L112: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L131: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L148: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L196: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L217: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L266: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L295: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_pair_arbitrage_search.py`
+- Imports: `__future__, csv, dataclasses, datetime, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L60: `_env_int(name: str, default: int) -> int`
+- Function L67: `_env_float(name: str, default: float) -> float`
+- Function L74: `_utc_iso(value: datetime) -> str`
+- Function L78: `_start_time() -> datetime`
+- Function L85: `_btc_5m_windows(*, start: datetime, count: int) -> tuple[tuple[str, str, str], ...]`
+- Function L97: `_btc_5m_replays(windows: tuple[tuple[str, str, str], ...]) -> tuple[object, ...]`
+- Function L113: `_replays_from_payload(payload: list[dict[str, Any]]) -> tuple[object, ...]`
+- Function L128: `_replays_to_payload(replays: tuple[object, ...]) -> list[dict[str, Any]]`
+- Function L141: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L172: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L176: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L193: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L206: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L254: `_as_float(value: object, *, default: float = 0.0) -> float`
+- Function L258: `_as_int(value: object, *, default: int = 0) -> int`
+- Function L262: `_evaluate_results(*, trial_id: int, phase: str, params: dict[str, Any], results: list[dict[str, Any]], replay_count: int) -> _Evaluation`
+- Function L317: `_worker_payload(evaluation: _Evaluation) -> dict[str, Any]`
+- Function L331: `_evaluation_from_worker_payload(*, trial_id: int, phase: str, params: dict[str, Any], payload: dict[str, Any]) -> _Evaluation`
+- Function L354: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L375: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L424: `_evaluation_row(evaluation: _Evaluation) -> dict[str, Any]`
+- Function L441: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L472: `run() -> None`
+- Class L45: `_Evaluation`
+
+### `backtests/private/telonex_btc_5m_pair_book_relative_strength_search.py`
+- Imports: `__future__, backtests, csv, dataclasses, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L69: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L114: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L118: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L132: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L149: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L197: `_evaluate_results(*, trial_id: int, phase: str, params: dict[str, Any], results: list[dict[str, Any]], replay_count: int) -> _Evaluation`
+- Function L252: `_worker_payload(evaluation: _Evaluation) -> dict[str, Any]`
+- Function L266: `_evaluation_from_worker_payload(*, trial_id: int, phase: str, params: dict[str, Any], payload: dict[str, Any]) -> _Evaluation`
+- Function L289: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L310: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L359: `_evaluation_row(evaluation: _Evaluation) -> dict[str, Any]`
+- Function L376: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L406: `run() -> None`
+- Class L54: `_Evaluation`
+
+### `backtests/private/telonex_btc_5m_passive_pair_accumulation_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L60: `_run_label() -> str`
+- Function L69: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L108: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L131: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L149: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L203: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L227: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L279: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L313: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_passive_pressure_momentum_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L59: `_run_label() -> str`
+- Function L66: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L129: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L153: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L171: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L225: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L246: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L298: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L338: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_passive_relative_value_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L59: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L118: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L142: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L158: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L212: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L233: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L282: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L314: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_passive_sweep_reprice_momentum_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L59: `_run_label() -> str`
+- Function L66: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L138: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L163: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L181: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L235: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L256: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L308: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L347: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_quote_velocity_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L108: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L112: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L131: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L142: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L195: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L216: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L265: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L295: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_round_trip_pair_arbitrage_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L90: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L94: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L111: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L128: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L176: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L197: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L246: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L276: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_settlement_pair_arbitrage_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L60: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L93: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L106: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L160: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L181: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L230: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L261: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_snap_trade_flow_search.py`
+- Imports: `__future__, backtests, csv, datetime, decimal, dotenv, importlib, json, os, pathlib, random, typing`
+- Function L35: `_env_int(name: str, default: int) -> int`
+- Function L42: `_start_time() -> datetime`
+- Function L49: `_run_label() -> str`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L104: `_evaluation_row(evaluation: base._Evaluation) -> dict[str, Any]`
+- Function L108: `_write_artifacts(*, run_label: str, evaluations: list[base._Evaluation]) -> tuple[Path, Path]`
+- Function L143: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_sweep_resiliency_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L108: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L112: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L131: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L148: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L196: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L217: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L266: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L296: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_trade_flow_search.py`
+- Imports: `__future__, csv, dataclasses, datetime, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L60: `_env_int(name: str, default: int) -> int`
+- Function L67: `_env_float(name: str, default: float) -> float`
+- Function L74: `_utc_iso(value: datetime) -> str`
+- Function L78: `_start_time() -> datetime`
+- Function L85: `_btc_5m_windows(*, start: datetime, count: int) -> tuple[tuple[str, str, str], ...]`
+- Function L97: `_btc_5m_replays(windows: tuple[tuple[str, str, str], ...]) -> tuple[object, ...]`
+- Function L113: `_replays_from_payload(payload: list[dict[str, Any]]) -> tuple[object, ...]`
+- Function L128: `_replays_to_payload(replays: tuple[object, ...]) -> list[dict[str, Any]]`
+- Function L141: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L189: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L193: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L207: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L218: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L266: `_as_float(value: object, *, default: float = 0.0) -> float`
+- Function L270: `_as_int(value: object, *, default: int = 0) -> int`
+- Function L274: `_evaluate_results(*, trial_id: int, phase: str, params: dict[str, Any], results: list[dict[str, Any]], replay_count: int) -> _Evaluation`
+- Function L329: `_worker_payload(evaluation: _Evaluation) -> dict[str, Any]`
+- Function L343: `_evaluation_from_worker_payload(*, trial_id: int, phase: str, params: dict[str, Any], payload: dict[str, Any]) -> _Evaluation`
+- Function L366: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L387: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L436: `_evaluation_row(evaluation: _Evaluation) -> dict[str, Any]`
+- Function L453: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L483: `run() -> None`
+- Class L45: `_Evaluation`
+
+### `backtests/private/telonex_btc_5m_volatility_expansion_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L106: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L110: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L130: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L145: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L198: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L219: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L268: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L298: `run() -> None`
+
+### `backtests/private/telonex_btc_5m_volume_clock_flow_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L56: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L114: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L118: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L132: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L149: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L197: `_evaluate_results(*, trial_id: int, phase: str, params: dict[str, Any], results: list[dict[str, Any]], replay_count: int) -> _Evaluation`
+- Function L252: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L273: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L322: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L352: `run() -> None`
+
+### `backtests/private/telonex_depth_pressure_trend_search.py`
+- Imports: `__future__, decimal, dotenv, importlib, os, pathlib`
+- Function L28: `_env_int(name: str, default: int) -> int`
+- Function L35: `_search(name: str) -> str`
+- Function L39: `_market_slugs() -> tuple[str, ...]`
+- Function L51: `_base_replays() -> tuple[object, ...]`
+- Function L66: `_window_specs() -> tuple[tuple[tuple[str, str, str], ...], tuple[tuple[str, str, str], ...]]`
+- Function L103: `build_search_config() -> object`
+- Function L217: `run() -> None`
+
+### `backtests/private/telonex_event_drawdown_controlled_deep_rebound_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, typing`
+- Function L44: `_canonical_params(params: dict[str, Any]) -> str`
+- Function L48: `_valid_params(params: dict[str, Any]) -> bool`
+- Function L58: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L167: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L200: `run() -> None`
+
+### `backtests/private/telonex_event_microprice_carry_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L68: `_event_replays(slugs: tuple[str, ...]) -> tuple[object, ...]`
+- Function L84: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L119: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L123: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L137: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L148: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L201: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L222: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L271: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L303: `run() -> None`
+
+### `backtests/private/telonex_event_panic_fade_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L57: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L102: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L106: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L127: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L138: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L189: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L210: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L259: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L291: `run() -> None`
+
+### `backtests/private/telonex_event_passive_no_stop_hold_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L62: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L111: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L132: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L181: `_write_artifacts(*, evaluations: list[_Evaluation], train_slugs: tuple[str, ...], holdout_slugs: tuple[str, ...]) -> tuple[Path, Path]`
+- Function L218: `run() -> None`
+
+### `backtests/private/telonex_event_passive_pressure_carry_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L62: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L111: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L132: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L181: `_write_artifacts(*, evaluations: list[_Evaluation], train_slugs: tuple[str, ...], holdout_slugs: tuple[str, ...]) -> tuple[Path, Path]`
+- Function L219: `run() -> None`
+
+### `backtests/private/telonex_event_passive_slow_hold_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L62: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L111: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L132: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L181: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L213: `run() -> None`
+
+### `backtests/private/telonex_event_passive_spread_capture_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L57: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L106: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L110: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L132: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L147: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L199: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L220: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L269: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L301: `run() -> None`
+
+### `backtests/private/telonex_event_persistent_bid_support_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L57: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L106: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L110: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L132: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L149: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L202: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L223: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L272: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L304: `run() -> None`
+
+### `backtests/private/telonex_event_persistent_bid_support_slow_hold_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L62: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L111: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L132: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L181: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L213: `run() -> None`
+
+### `backtests/private/telonex_event_supported_deep_rebound_gated_search.py`
+- Imports: `__future__, backtests, csv, dotenv, importlib, json, os, pathlib`
+- Function L42: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L75: `run() -> None`
+
+### `backtests/private/telonex_event_supported_deep_rebound_search.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, random, subprocess, sys, typing, uuid`
+- Function L57: `_parameter_samples(*, max_trials: int, random_seed: int) -> list[dict[str, Any]]`
+- Function L102: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L106: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L127: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L138: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L191: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L212: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L261: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L292: `run() -> None`
+
+### `backtests/private/telonex_event_supported_rebound_fixed_confirmation.py`
+- Imports: `__future__, backtests, csv, decimal, dotenv, importlib, json, os, pathlib, subprocess, sys, typing, uuid`
+- Function L80: `_event_replays_for_window(*, start_time: str, end_time: str) -> tuple[object, ...]`
+- Function L100: `_serialize_params(params: dict[str, Any]) -> dict[str, str]`
+- Function L104: `_deserialize_params(payload: dict[str, str]) -> dict[str, Any]`
+- Function L125: `_strategy_config(params: dict[str, Any]) -> dict[str, Any]`
+- Function L136: `_run_experiment(*, name: str, replays: tuple[object, ...], params: dict[str, Any]) -> list[dict[str, Any]]`
+- Function L189: `_evaluate_trial_direct(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L210: `_evaluate_trial(*, trial_id: int, phase: str, replays: tuple[object, ...], params: dict[str, Any]) -> _Evaluation`
+- Function L259: `_write_artifacts(evaluations: list[_Evaluation]) -> tuple[Path, Path]`
+- Function L290: `run() -> None`
+
+### `backtests/private/telonex_guarded_breakout_search.py`
+- Imports: `__future__, backtests, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `build_search_config() -> object`
+- Function L148: `run() -> None`
+
+### `backtests/private/telonex_liquidity_reversion_search.py`
+- Imports: `__future__, decimal, dotenv, importlib, os, pathlib`
+- Function L28: `_env_int(name: str, default: int) -> int`
+- Function L35: `_search(name: str) -> str`
+- Function L39: `_market_slugs() -> tuple[str, ...]`
+- Function L51: `_base_replays() -> tuple[object, ...]`
+- Function L66: `_window_specs() -> tuple[tuple[tuple[str, str, str], ...], tuple[tuple[str, str, str], ...]]`
+- Function L103: `build_search_config() -> object`
+- Function L212: `run() -> None`
+
+### `backtests/private/telonex_liquidity_shock_resiliency_search.py`
+- Imports: `__future__, backtests, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `build_search_config() -> object`
+- Function L156: `run() -> None`
+
+### `backtests/private/telonex_microprice_imbalance_search.py`
+- Imports: `__future__, decimal, dotenv, importlib, os, pathlib`
+- Function L28: `_env_int(name: str, default: int) -> int`
+- Function L35: `_search(name: str) -> str`
+- Function L39: `_market_slugs() -> tuple[str, ...]`
+- Function L51: `_base_replays() -> tuple[object, ...]`
+- Function L66: `_window_specs() -> tuple[tuple[tuple[str, str, str], ...], tuple[tuple[str, str, str], ...]]`
+- Function L103: `build_search_config() -> object`
+- Function L207: `run() -> None`
+
+### `backtests/private/telonex_panic_liquidity_fade_search.py`
+- Imports: `__future__, backtests, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `build_search_config() -> object`
+- Function L138: `run() -> None`
+
+### `backtests/private/telonex_passive_spread_capture_search.py`
+- Imports: `__future__, backtests, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `build_search_config() -> object`
+- Function L151: `run() -> None`
+
+### `backtests/private/telonex_rsi_liquidity_reversion_search.py`
+- Imports: `__future__, backtests, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `build_search_config() -> object`
+- Function L132: `run() -> None`
+
+### `backtests/private/telonex_vwap_liquidity_momentum_search.py`
+- Imports: `__future__, backtests, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `build_search_config() -> object`
+- Function L151: `run() -> None`
+
+### `backtests/private/telonex_vwap_liquidity_reversion_s90_search.py`
+- Imports: `__future__, backtests, dataclasses, dotenv, importlib, os, pathlib`
+- Function L28: `run() -> None`
+
+### `backtests/private/telonex_vwap_liquidity_reversion_search.py`
+- Imports: `__future__, backtests, decimal, dotenv, importlib, os, pathlib`
+- Function L32: `build_search_config() -> object`
+- Function L151: `run() -> None`
 
 ### `backtests/sitecustomize.py`
 - Imports: `__future__, importlib, pathlib, sys`
@@ -362,62 +1012,62 @@ flowchart TD
 - Imports: none
 
 ### `prediction_market_extensions/adapters/polymarket/execution.py`
-- Imports: `asyncio, collections, json, msgspec, nautilus_trader, prediction_market_extensions, py_clob_client, typing`
-- Class L124: `PolymarketExecutionClient(LiveExecutionClient)`
-  - Method L151: `__init__(self, loop: asyncio.AbstractEventLoop, http_client: ClobClient, msgbus: MessageBus, cache: Cache, clock: LiveClock, instrument_provider: PolymarketInstrumentProvider, ws_auth: PolymarketWebSocketAuth, config: PolymarketExecClientConfig, name: str | None) -> None`
-  - Method L249: `async _connect(self) -> None`
-  - Method L271: `async _disconnect(self) -> None`
-  - Method L274: `_stop(self) -> None`
-  - Method L277: `async _maintain_active_market(self, instrument_id: InstrumentId) -> None`
-  - Method L281: `async _update_account_state(self) -> None`
-  - Method L302: `async _fetch_user_positions(self, *, limit: int = 100, size_threshold: int = 0) -> list[dict[str, Any]]`
-  - Method L350: `async generate_order_status_reports(self, command: GenerateOrderStatusReports) -> list[OrderStatusReport]`
-  - Method L521: `async generate_order_status_report(self, command: GenerateOrderStatusReport) -> OrderStatusReport | None`
-  - Method L576: `async generate_fill_reports(self, command: GenerateFillReports) -> list[FillReport]`
-  - Method L625: `async generate_position_status_reports(self, command: GeneratePositionStatusReports) -> list[PositionStatusReport]`
-  - Method L664: `_parse_trades_response_object(self, command: GenerateFillReports, json_obj: JSON, parsed_fill_keys: set[tuple[TradeId, VenueOrderId]], reports: list[FillReport]) -> None`
-  - Method L719: `async _fetch_quantities_from_gamma_api(self, instrument_ids: list[InstrumentId]) -> dict[InstrumentId, Quantity]`
-  - Method L757: `async _fetch_quantities_from_clob_api(self, instrument_ids: list[InstrumentId]) -> dict[InstrumentId, Quantity]`
-  - Method L785: `_generate_cancel_event(self, strategy_id, instrument_id, client_order_id, venue_order_id, reason: str, ts_event: int) -> None`
-  - Method L811: `_get_neg_risk_for_instrument(self, instrument) -> bool`
-  - Method L816: `async _query_account(self, _command: QueryAccount) -> None`
-  - Method L820: `async _cancel_order(self, command: CancelOrder) -> None`
-  - Method L867: `async _batch_cancel_orders(self, command: BatchCancelOrders) -> None`
-  - Method L920: `async _cancel_all_orders(self, command: CancelAllOrders) -> None`
-  - Method L968: `async _cancel_all_global(self) -> None`
-  - Method L1002: `async _cancel_market_orders(self, instrument_id: InstrumentId | None = None, asset_id: str = '') -> None`
-  - Method L1056: `async _submit_order(self, command: SubmitOrder) -> None`
-  - Method L1130: `_validate_order_for_batch(self, order: Order) -> str | None`
-  - Method L1154: `async _submit_order_list(self, command: SubmitOrderList) -> None`
-  - Method L1224: `async _sign_orders_for_batch(self, orders: list[Order]) -> tuple[list[Order], list[PostOrdersArgs]]`
-  - Method L1285: `async _post_signed_orders_batch(self, orders: list[Order], signed_orders_args: list[PostOrdersArgs]) -> None`
-  - Method L1314: `_reject_all_orders(self, orders: list[Order], reason: str) -> None`
-  - Method L1327: `_process_batch_response(self, orders: list[Order], response: list) -> None`
-  - Method L1378: `_deny_market_order_quantity(self, order: Order, reason: str) -> None`
-  - Method L1390: `async _submit_market_order(self, command: SubmitOrder, instrument) -> None`
-  - Method L1439: `async _submit_limit_order(self, command: SubmitOrder, instrument) -> None`
-  - Method L1485: `async _post_signed_order(self, order: Order, signed_order, post_only: bool = False) -> None`
-  - Method L1521: `_handle_ws_message(self, raw: bytes) -> None`
-  - Method L1543: `_add_trade_to_cache(self, msg: PolymarketUserTrade, raw: bytes) -> None`
-  - Method L1553: `async _wait_for_ack_order(self, msg: PolymarketUserOrder, venue_order_id: VenueOrderId) -> None`
-  - Method L1576: `async _wait_for_ack_trade(self, msg: PolymarketUserTrade, venue_order_id: VenueOrderId) -> None`
-  - Method L1603: `_handle_ws_order_msg(self, msg: PolymarketUserOrder, wait_for_ack: bool) -> Any`
-  - Method L1675: `_truncate_ordered_dict(self, store: OrderedDict[Any, Any]) -> None`
-  - Method L1679: `_record_processed_trade(self, trade_id: TradeId, status: PolymarketTradeStatus) -> None`
-  - Method L1693: `_record_processed_fill(self, trade_id: TradeId, venue_order_id: VenueOrderId) -> None`
-  - Method L1699: `_handle_ws_trade_msg(self, msg: PolymarketUserTrade, wait_for_ack: bool) -> Any`
-  - Method L1741: `_handle_user_trade_in_ws_trade_msg(self, msg: PolymarketUserTrade, trade_id: TradeId, wait_for_ack: bool, order_id: str) -> Any`
+- Imports: `asyncio, collections, json, msgspec, nautilus_trader, py_clob_client, typing`
+- Class L122: `PolymarketExecutionClient(LiveExecutionClient)`
+  - Method L149: `__init__(self, loop: asyncio.AbstractEventLoop, http_client: ClobClient, msgbus: MessageBus, cache: Cache, clock: LiveClock, instrument_provider: PolymarketInstrumentProvider, ws_auth: PolymarketWebSocketAuth, config: PolymarketExecClientConfig, name: str | None) -> None`
+  - Method L247: `async _connect(self) -> None`
+  - Method L269: `async _disconnect(self) -> None`
+  - Method L272: `_stop(self) -> None`
+  - Method L275: `async _maintain_active_market(self, instrument_id: InstrumentId) -> None`
+  - Method L279: `async _update_account_state(self) -> None`
+  - Method L298: `async _fetch_user_positions(self, *, limit: int = 100, size_threshold: int = 0) -> list[dict[str, Any]]`
+  - Method L346: `async generate_order_status_reports(self, command: GenerateOrderStatusReports) -> list[OrderStatusReport]`
+  - Method L517: `async generate_order_status_report(self, command: GenerateOrderStatusReport) -> OrderStatusReport | None`
+  - Method L572: `async generate_fill_reports(self, command: GenerateFillReports) -> list[FillReport]`
+  - Method L621: `async generate_position_status_reports(self, command: GeneratePositionStatusReports) -> list[PositionStatusReport]`
+  - Method L660: `_parse_trades_response_object(self, command: GenerateFillReports, json_obj: JSON, parsed_fill_keys: set[tuple[TradeId, VenueOrderId]], reports: list[FillReport]) -> None`
+  - Method L715: `async _fetch_quantities_from_gamma_api(self, instrument_ids: list[InstrumentId]) -> dict[InstrumentId, Quantity]`
+  - Method L753: `async _fetch_quantities_from_clob_api(self, instrument_ids: list[InstrumentId]) -> dict[InstrumentId, Quantity]`
+  - Method L781: `_generate_cancel_event(self, strategy_id, instrument_id, client_order_id, venue_order_id, reason: str, ts_event: int) -> None`
+  - Method L807: `_get_neg_risk_for_instrument(self, instrument) -> bool`
+  - Method L812: `async _query_account(self, _command: QueryAccount) -> None`
+  - Method L816: `async _cancel_order(self, command: CancelOrder) -> None`
+  - Method L863: `async _batch_cancel_orders(self, command: BatchCancelOrders) -> None`
+  - Method L916: `async _cancel_all_orders(self, command: CancelAllOrders) -> None`
+  - Method L964: `async _cancel_all_global(self) -> None`
+  - Method L998: `async _cancel_market_orders(self, instrument_id: InstrumentId | None = None, asset_id: str = '') -> None`
+  - Method L1052: `async _submit_order(self, command: SubmitOrder) -> None`
+  - Method L1126: `_validate_order_for_batch(self, order: Order) -> str | None`
+  - Method L1150: `async _submit_order_list(self, command: SubmitOrderList) -> None`
+  - Method L1220: `async _sign_orders_for_batch(self, orders: list[Order]) -> tuple[list[Order], list[PostOrdersArgs]]`
+  - Method L1281: `async _post_signed_orders_batch(self, orders: list[Order], signed_orders_args: list[PostOrdersArgs]) -> None`
+  - Method L1310: `_reject_all_orders(self, orders: list[Order], reason: str) -> None`
+  - Method L1323: `_process_batch_response(self, orders: list[Order], response: list) -> None`
+  - Method L1374: `_deny_market_order_quantity(self, order: Order, reason: str) -> None`
+  - Method L1386: `async _submit_market_order(self, command: SubmitOrder, instrument) -> None`
+  - Method L1435: `async _submit_limit_order(self, command: SubmitOrder, instrument) -> None`
+  - Method L1481: `async _post_signed_order(self, order: Order, signed_order, post_only: bool = False) -> None`
+  - Method L1517: `_handle_ws_message(self, raw: bytes) -> None`
+  - Method L1539: `_add_trade_to_cache(self, msg: PolymarketUserTrade, raw: bytes) -> None`
+  - Method L1549: `async _wait_for_ack_order(self, msg: PolymarketUserOrder, venue_order_id: VenueOrderId) -> None`
+  - Method L1572: `async _wait_for_ack_trade(self, msg: PolymarketUserTrade, venue_order_id: VenueOrderId) -> None`
+  - Method L1599: `_handle_ws_order_msg(self, msg: PolymarketUserOrder, wait_for_ack: bool) -> Any`
+  - Method L1671: `_truncate_ordered_dict(self, store: OrderedDict[Any, Any]) -> None`
+  - Method L1675: `_record_processed_trade(self, trade_id: TradeId, status: PolymarketTradeStatus) -> None`
+  - Method L1689: `_record_processed_fill(self, trade_id: TradeId, venue_order_id: VenueOrderId) -> None`
+  - Method L1695: `_handle_ws_trade_msg(self, msg: PolymarketUserTrade, wait_for_ack: bool) -> Any`
+  - Method L1737: `_handle_user_trade_in_ws_trade_msg(self, msg: PolymarketUserTrade, trade_id: TradeId, wait_for_ack: bool, order_id: str) -> Any`
 
 ### `prediction_market_extensions/adapters/polymarket/fee_model.py`
 - Imports: `__future__, collections, decimal, nautilus_trader, prediction_market_extensions, typing`
-- Function L62: `_normalize_label(value: object) -> str | None`
-- Function L71: `_iter_tag_labels(tags: object) -> Iterable[str]`
-- Function L93: `_market_labels(info: Mapping[str, Any] | None) -> set[str]`
-- Function L121: `infer_maker_rebate_rate(*, market_info: Mapping[str, Any] | None, fee_rate_bps: Decimal) -> Decimal`
-- Function L151: `calculate_maker_rebate(*, quantity: Decimal, price: Decimal, fee_rate_bps: Decimal, maker_rebate_rate: Decimal) -> float`
-- Class L176: `PolymarketFeeModel(FeeModel)`
-  - Method L200: `__init__(self, *, maker_rebates_enabled: bool = True) -> None`
-  - Method L203: `get_commission(self, order, fill_qty, fill_px, instrument) -> Money`
+- Function L66: `_normalize_label(value: object) -> str | None`
+- Function L75: `_iter_tag_labels(tags: object) -> Iterable[str]`
+- Function L97: `_market_labels(info: Mapping[str, Any] | None) -> set[str]`
+- Function L125: `infer_maker_rebate_rate(*, market_info: Mapping[str, Any] | None, fee_rate_bps: Decimal) -> Decimal`
+- Function L155: `calculate_maker_rebate(*, quantity: Decimal, price: Decimal, fee_rate_bps: Decimal, maker_rebate_rate: Decimal) -> float`
+- Class L187: `PolymarketFeeModel(FeeModel)`
+  - Method L211: `__init__(self, *, maker_rebates_enabled: bool = True) -> None`
+  - Method L214: `get_commission(self, order, fill_qty, fill_px, instrument) -> Money`
 
 ### `prediction_market_extensions/adapters/polymarket/gamma_markets.py`
 - Imports: `__future__, collections, math, msgspec, nautilus_trader, os, typing`
@@ -497,10 +1147,9 @@ flowchart TD
 - Function L215: `is_resolved_sports_market(market: Mapping[str, Any], *, now: datetime, max_days_since_close: float) -> bool`
 
 ### `prediction_market_extensions/adapters/polymarket/parsing.py`
-- Imports: `__future__, decimal`
-- Function L34: `basis_points_as_decimal(basis_points: Decimal) -> Decimal`
-- Function L52: `infer_fee_exponent(fee_rate_bps: Decimal) -> int`
-- Function L75: `calculate_commission(quantity: Decimal, price: Decimal, fee_rate_bps: Decimal, fee_exponent: int = 1, **_kwargs: object) -> float`
+- Imports: `__future__, decimal, nautilus_trader`
+- Function L32: `basis_points_as_decimal(basis_points: Decimal) -> Decimal`
+- Function L50: `calculate_commission(quantity: Decimal, price: Decimal, fee_rate: Decimal, liquidity_side: LiquiditySide) -> float`
 
 ### `prediction_market_extensions/adapters/polymarket/pmxt.py`
 - Imports: `__future__, collections, concurrent, contextlib, dataclasses, datetime, duckdb, nautilus_trader, os, pandas, pathlib, prediction_market_extensions, pyarrow, re, shutil, tempfile, time, typing, urllib, warnings`
@@ -999,26 +1648,26 @@ flowchart TD
 - Function L535: `_series_values(series: object) -> list[float]`
 - Function L550: `_max_drawdown_currency(equity_series: object) -> float`
 - Function L563: `_joint_portfolio_drawdown(equity_series_list: Sequence[object]) -> float`
-- Function L631: `_as_float(value: object, *, default: float = 0.0) -> float`
-- Function L637: `_as_int(value: object, *, default: int = 0) -> int`
-- Function L645: `_score_result(*, pnl: float, max_drawdown_currency: float, fills: int, requested_coverage_ratio: float, terminated_early: bool, initial_cash: float, min_fills_per_window: int) -> float`
-- Function L663: `_evaluate_window(*, config: ParameterSearchConfig, evaluator: BacktestEvaluator | None, trial_id: int, params: ParameterValues, window: ParameterSearchWindow) -> _WindowEvaluation`
-- Function L758: `_median_metric(values: Sequence[float]) -> float`
-- Function L762: `_build_leaderboard_row(*, trial_id: int, params: ParameterValues, train_evaluations: Sequence[_WindowEvaluation], holdout_evaluations: Sequence[_WindowEvaluation] = ()) -> ParameterSearchLeaderboardRow`
-- Function L813: `_train_row_sort_key(row: ParameterSearchLeaderboardRow) -> tuple[float, int]`
-- Function L817: `_final_row_sort_key(row: ParameterSearchLeaderboardRow) -> tuple[int, float, float, int]`
-- Function L825: `_params_dict(params: ParameterValues) -> dict[str, Any]`
-- Function L829: `_json_safe(value) -> Any`
-- Function L843: `_write_leaderboard_csv(*, rows: Sequence[ParameterSearchLeaderboardRow], output_path: Path) -> str`
-- Function L906: `_summary_payload(*, config: ParameterSearchConfig, summary: ParameterSearchSummary) -> dict[str, Any]`
-- Function L945: `_write_summary_json(*, config: ParameterSearchConfig, summary: ParameterSearchSummary, output_path: Path) -> str`
-- Function L958: `_format_score(value: float | None) -> str`
-- Function L964: `_print_top_candidates(*, rows: Sequence[ParameterSearchLeaderboardRow], holdout_enabled: bool) -> None`
-- Function L986: `_evaluate_train_windows(*, config: ParameterSearchConfig, evaluator: BacktestEvaluator | None, trial_id: int, params: ParameterValues) -> tuple[_WindowEvaluation, ...]`
-- Function L1001: `_run_random_trials(config: ParameterSearchConfig, *, evaluator: BacktestEvaluator | None) -> tuple[dict[int, tuple[_WindowEvaluation, ...]], dict[int, ParameterSearchLeaderboardRow], int, int]`
-- Function L1026: `_suggest_params_from_trial(trial, parameter_space: Mapping[str, ParameterSpec]) -> ParameterValues`
-- Function L1061: `_run_tpe_trials(config: ParameterSearchConfig, *, evaluator: BacktestEvaluator | None) -> tuple[dict[int, tuple[_WindowEvaluation, ...]], dict[int, ParameterSearchLeaderboardRow], int, int]`
-- Function L1101: `run_parameter_search(config: ParameterSearchConfig, *, evaluator: BacktestEvaluator | None = None) -> ParameterSearchSummary`
+- Function L633: `_as_float(value: object, *, default: float = 0.0) -> float`
+- Function L639: `_as_int(value: object, *, default: int = 0) -> int`
+- Function L647: `_score_result(*, pnl: float, max_drawdown_currency: float, fills: int, requested_coverage_ratio: float, terminated_early: bool, initial_cash: float, min_fills_per_window: int) -> float`
+- Function L665: `_evaluate_window(*, config: ParameterSearchConfig, evaluator: BacktestEvaluator | None, trial_id: int, params: ParameterValues, window: ParameterSearchWindow) -> _WindowEvaluation`
+- Function L760: `_median_metric(values: Sequence[float]) -> float`
+- Function L764: `_build_leaderboard_row(*, trial_id: int, params: ParameterValues, train_evaluations: Sequence[_WindowEvaluation], holdout_evaluations: Sequence[_WindowEvaluation] = ()) -> ParameterSearchLeaderboardRow`
+- Function L815: `_train_row_sort_key(row: ParameterSearchLeaderboardRow) -> tuple[float, int]`
+- Function L819: `_final_row_sort_key(row: ParameterSearchLeaderboardRow) -> tuple[int, float, float, int]`
+- Function L827: `_params_dict(params: ParameterValues) -> dict[str, Any]`
+- Function L831: `_json_safe(value) -> Any`
+- Function L845: `_write_leaderboard_csv(*, rows: Sequence[ParameterSearchLeaderboardRow], output_path: Path) -> str`
+- Function L908: `_summary_payload(*, config: ParameterSearchConfig, summary: ParameterSearchSummary) -> dict[str, Any]`
+- Function L947: `_write_summary_json(*, config: ParameterSearchConfig, summary: ParameterSearchSummary, output_path: Path) -> str`
+- Function L960: `_format_score(value: float | None) -> str`
+- Function L966: `_print_top_candidates(*, rows: Sequence[ParameterSearchLeaderboardRow], holdout_enabled: bool) -> None`
+- Function L988: `_evaluate_train_windows(*, config: ParameterSearchConfig, evaluator: BacktestEvaluator | None, trial_id: int, params: ParameterValues) -> tuple[_WindowEvaluation, ...]`
+- Function L1003: `_run_random_trials(config: ParameterSearchConfig, *, evaluator: BacktestEvaluator | None) -> tuple[dict[int, tuple[_WindowEvaluation, ...]], dict[int, ParameterSearchLeaderboardRow], int, int]`
+- Function L1028: `_suggest_params_from_trial(trial, parameter_space: Mapping[str, ParameterSpec]) -> ParameterValues`
+- Function L1063: `_run_tpe_trials(config: ParameterSearchConfig, *, evaluator: BacktestEvaluator | None) -> tuple[dict[int, tuple[_WindowEvaluation, ...]], dict[int, ParameterSearchLeaderboardRow], int, int]`
+- Function L1103: `run_parameter_search(config: ParameterSearchConfig, *, evaluator: BacktestEvaluator | None = None) -> ParameterSearchSummary`
 - Class L52: `ParameterSearchWindow`
 - Class L59: `ParameterSearchConfig`
   - Method L85: `optimizer_type(self) -> str`
@@ -1093,10 +1742,13 @@ flowchart TD
   - Method L528: `apply(self, results: Results) -> Results`
 
 ### `prediction_market_extensions/backtesting/_strategy_configs.py`
-- Imports: `__future__, collections, copy, nautilus_trader, typing`
-- Function L17: `_normalized_config(*, raw_config: Mapping[str, Any], instrument_id: InstrumentId) -> dict[str, Any]`
-- Function L33: `build_importable_strategy_configs(*, strategy_configs: Sequence[StrategyConfigSpec], instrument_id: InstrumentId) -> list[ImportableStrategyConfig]`
-- Function L55: `build_strategies_from_configs(*, strategy_configs: Sequence[StrategyConfigSpec], instrument_id: InstrumentId) -> list[Strategy]`
+- Imports: `__future__, collections, copy, importlib, nautilus_trader, typing`
+- Function L18: `_is_primary_instrument_sentinel(value) -> bool`
+- Function L22: `_import_symbol(import_path: str) -> Any`
+- Function L31: `_config_field_names(config_path: str) -> set[str]`
+- Function L36: `_normalized_config(*, raw_config: Mapping[str, Any], config_path: str, instrument_id: InstrumentId) -> dict[str, Any]`
+- Function L74: `build_importable_strategy_configs(*, strategy_configs: Sequence[StrategyConfigSpec], instrument_id: InstrumentId) -> list[ImportableStrategyConfig]`
+- Function L100: `build_strategies_from_configs(*, strategy_configs: Sequence[StrategyConfigSpec], instrument_id: InstrumentId) -> list[Strategy]`
 
 ### `prediction_market_extensions/backtesting/_timing_harness.py`
 - Imports: `__future__, collections, functools, inspect, os, typing`
@@ -1312,40 +1964,41 @@ flowchart TD
 - Function L391: `_trade_source_label(source: str) -> str`
 - Function L414: `_print_trade_progress_line(*, day: pd.Timestamp, elapsed_secs: float, rows: int, source: str) -> None`
 - Function L437: `_polymarket_ceiling_warning(caught_warnings: list[warnings.WarningMessage]) -> str | None`
-- Function L445: `_trade_days_for_window(start: pd.Timestamp, end: pd.Timestamp) -> tuple[pd.Timestamp, ...]`
-- Function L458: `async _load_trade_ticks(loader, *, start: pd.Timestamp, end: pd.Timestamp, market_label: str) -> tuple[TradeTick, ...]`
-- Function L538: `_merge_records(*, book_records: tuple[OrderBookDeltas, ...], trade_records: tuple[TradeTick, ...]) -> tuple[object, ...]`
-- Function L587: `async _gather_bounded(values: Sequence[Any], *, workers: int, func: Callable[[Any], Any]) -> list[Any]`
-- Function L606: `_resolve_materialize_workers(source_workers: int) -> int`
-- Function L618: `_resolve_pmxt_grouped_market_chunk_size() -> int`
-- Function L628: `_pmxt_cache_disabled_for_all(prepared: Sequence[_PreparedBookReplay]) -> bool`
-- Function L634: `_emit_materialize_worker_event(*, vendor: str, materialize_workers: int, source_workers: int) -> None`
-- Function L658: `_call_int_method(obj, name: str, default: int) -> int`
-- Function L668: `_prepared_book_day_count(item: _PreparedBookReplay) -> int`
-- Function L678: `_telonex_materialized_cache_complete(prepared: Sequence[_PreparedBookReplay]) -> bool`
-- Function L700: `_resolve_telonex_book_workers(prepared: Sequence[_PreparedBookReplay], *, requested_workers: int) -> int`
-- Class L567: `_ResolvedBookReplay`
-- Class L574: `_PreparedBookReplay`
-- Class L581: `_LoadedBookReplay`
-- Class L751: `_BaseReplayAdapter(HistoricalReplayAdapter)`
-  - Method L761: `key(self) -> ReplayAdapterKey`
-  - Method L765: `replay_spec_type(self) -> type[Any]`
-  - Method L768: `configure_sources(self, *, sources: tuple[str, ...] | list[str]) -> AbstractContextManager[Any]`
-  - Method L774: `engine_profile(self) -> ReplayEngineProfile`
-  - Method L777: `build_single_market_replay(self, *, field_values: Mapping[str, Any]) -> Any`
-  - Method L789: `_resolve_book_replay_window(self, replay: BookReplay, *, request: ReplayLoadRequest, source_label: str) -> _ResolvedBookReplay`
-  - Method L817: `_emit_book_replay_start(*, resolved: _ResolvedBookReplay, vendor: str) -> None`
-  - Method L836: `_emit_book_replay_fetch_error(*, replay: BookReplay, vendor: str, source_label: str, error: Exception) -> None`
-  - Method L850: `_build_loaded_book_replay_or_none(self, *, prepared: _PreparedBookReplay, records: tuple[object, ...], book_event_count: int | None = None, request: ReplayLoadRequest, vendor: str, source_label: str) -> LoadedReplay | None`
-  - Method L909: `_build_loaded_replay(self, *, replay, instrument, records: tuple[Any, ...], count: int, count_key: str, market_key: str, market_id: str, prices: tuple[float, ...], outcome: str, realized_outcome: float | None, metadata: dict[str, Any], requested_window: ReplayWindow) -> LoadedReplay`
-- Class L945: `PolymarketPMXTBookReplayAdapter(_BaseReplayAdapter)`
-  - Method L946: `__init__(self) -> None`
-  - Method L973: `async load_replay(self, replay: BookReplay, *, request: ReplayLoadRequest) -> LoadedReplay | None`
-  - Method L1083: `async load_replays(self, replays: Sequence[BookReplay], *, request: ReplayLoadRequest, workers: int) -> list[LoadedReplay]`
-- Class L1813: `PolymarketTelonexBookReplayAdapter(_BaseReplayAdapter)`
-  - Method L1814: `__init__(self) -> None`
-  - Method L1844: `async load_replay(self, replay: BookReplay, *, request: ReplayLoadRequest) -> LoadedReplay | None`
-  - Method L1964: `async load_replays(self, replays: Sequence[BookReplay], *, request: ReplayLoadRequest, workers: int) -> list[LoadedReplay]`
+- Function L445: `_disable_polymarket_trade_fallback() -> bool`
+- Function L450: `_trade_days_for_window(start: pd.Timestamp, end: pd.Timestamp) -> tuple[pd.Timestamp, ...]`
+- Function L463: `async _load_trade_ticks(loader, *, start: pd.Timestamp, end: pd.Timestamp, market_label: str) -> tuple[TradeTick, ...]`
+- Function L548: `_merge_records(*, book_records: tuple[OrderBookDeltas, ...], trade_records: tuple[TradeTick, ...]) -> tuple[object, ...]`
+- Function L597: `async _gather_bounded(values: Sequence[Any], *, workers: int, func: Callable[[Any], Any]) -> list[Any]`
+- Function L616: `_resolve_materialize_workers(source_workers: int) -> int`
+- Function L628: `_resolve_pmxt_grouped_market_chunk_size() -> int`
+- Function L638: `_pmxt_cache_disabled_for_all(prepared: Sequence[_PreparedBookReplay]) -> bool`
+- Function L644: `_emit_materialize_worker_event(*, vendor: str, materialize_workers: int, source_workers: int) -> None`
+- Function L668: `_call_int_method(obj, name: str, default: int) -> int`
+- Function L678: `_prepared_book_day_count(item: _PreparedBookReplay) -> int`
+- Function L688: `_telonex_materialized_cache_complete(prepared: Sequence[_PreparedBookReplay]) -> bool`
+- Function L710: `_resolve_telonex_book_workers(prepared: Sequence[_PreparedBookReplay], *, requested_workers: int) -> int`
+- Class L577: `_ResolvedBookReplay`
+- Class L584: `_PreparedBookReplay`
+- Class L591: `_LoadedBookReplay`
+- Class L761: `_BaseReplayAdapter(HistoricalReplayAdapter)`
+  - Method L771: `key(self) -> ReplayAdapterKey`
+  - Method L775: `replay_spec_type(self) -> type[Any]`
+  - Method L778: `configure_sources(self, *, sources: tuple[str, ...] | list[str]) -> AbstractContextManager[Any]`
+  - Method L784: `engine_profile(self) -> ReplayEngineProfile`
+  - Method L787: `build_single_market_replay(self, *, field_values: Mapping[str, Any]) -> Any`
+  - Method L799: `_resolve_book_replay_window(self, replay: BookReplay, *, request: ReplayLoadRequest, source_label: str) -> _ResolvedBookReplay`
+  - Method L827: `_emit_book_replay_start(*, resolved: _ResolvedBookReplay, vendor: str) -> None`
+  - Method L846: `_emit_book_replay_fetch_error(*, replay: BookReplay, vendor: str, source_label: str, error: Exception) -> None`
+  - Method L860: `_build_loaded_book_replay_or_none(self, *, prepared: _PreparedBookReplay, records: tuple[object, ...], book_event_count: int | None = None, request: ReplayLoadRequest, vendor: str, source_label: str) -> LoadedReplay | None`
+  - Method L919: `_build_loaded_replay(self, *, replay, instrument, records: tuple[Any, ...], count: int, count_key: str, market_key: str, market_id: str, prices: tuple[float, ...], outcome: str, realized_outcome: float | None, metadata: dict[str, Any], requested_window: ReplayWindow) -> LoadedReplay`
+- Class L955: `PolymarketPMXTBookReplayAdapter(_BaseReplayAdapter)`
+  - Method L956: `__init__(self) -> None`
+  - Method L983: `async load_replay(self, replay: BookReplay, *, request: ReplayLoadRequest) -> LoadedReplay | None`
+  - Method L1093: `async load_replays(self, replays: Sequence[BookReplay], *, request: ReplayLoadRequest, workers: int) -> list[LoadedReplay]`
+- Class L1823: `PolymarketTelonexBookReplayAdapter(_BaseReplayAdapter)`
+  - Method L1824: `__init__(self) -> None`
+  - Method L1854: `async load_replay(self, replay: BookReplay, *, request: ReplayLoadRequest) -> LoadedReplay | None`
+  - Method L1974: `async load_replays(self, replays: Sequence[BookReplay], *, request: ReplayLoadRequest, workers: int) -> list[LoadedReplay]`
 
 ### `prediction_market_extensions/backtesting/data_sources/telonex.py`
 - Imports: `__future__, collections, concurrent, contextlib, contextvars, dataclasses, datetime, duckdb, hashlib, io, nautilus_trader, numpy, os, pandas, pathlib, prediction_market_extensions, pyarrow, re, resource, tempfile, threading, time, urllib, warnings`
@@ -1382,103 +2035,103 @@ flowchart TD
 - Function L520: `_source_summary_parts(entries: Sequence[TelonexSourceEntry]) -> list[str]`
 - Function L531: `_source_summary_line(label: str, parts: Sequence[str]) -> str`
 - Function L535: `_trade_source_summary_parts(entries: Sequence[TelonexSourceEntry]) -> list[str]`
-- Function L550: `_source_summary(entries: Sequence[TelonexSourceEntry]) -> str`
-- Function L561: `resolve_telonex_loader_config(*, sources: Sequence[str] | None = None, channel: str | None = None) -> tuple[TelonexDataSourceSelection, TelonexLoaderConfig]`
-- Function L581: `resolve_telonex_data_source_selection(*, sources: Sequence[str] | None = None) -> tuple[TelonexDataSourceSelection, dict[str, str | None]]`
-- Function L589: `configured_telonex_data_source(*, sources: Sequence[str] | None = None, channel: str | None = None) -> Iterator[TelonexDataSourceSelection]`
+- Function L558: `_source_summary(entries: Sequence[TelonexSourceEntry]) -> str`
+- Function L569: `resolve_telonex_loader_config(*, sources: Sequence[str] | None = None, channel: str | None = None) -> tuple[TelonexDataSourceSelection, TelonexLoaderConfig]`
+- Function L589: `resolve_telonex_data_source_selection(*, sources: Sequence[str] | None = None) -> tuple[TelonexDataSourceSelection, dict[str, str | None]]`
+- Function L597: `configured_telonex_data_source(*, sources: Sequence[str] | None = None, channel: str | None = None) -> Iterator[TelonexDataSourceSelection]`
 - Class L145: `TelonexSourceEntry`
 - Class L152: `TelonexLoaderConfig`
 - Class L158: `TelonexDataSourceSelection`
 - Class L164: `_TelonexDayResult`
 - Class L171: `_TelonexBlobRowGroupIndex`
-- Class L600: `RunnerPolymarketTelonexBookDataLoader(PolymarketDataLoader)`
-  - Method L601: `__init__(self, *args, **kwargs) -> None`
-  - Method L606: `_ensure_blob_scan_caches(self) -> None`
-  - Method L636: `_forget_blob_ts_cache_key(self, cache_key: tuple[str, str, str, int, str | None, int, int]) -> None`
-  - Method L646: `async from_market_slug(cls, slug: str, token_index: int = 0, http_client = None) -> 'RunnerPolymarketTelonexBookDataLoader'`
-  - Method L659: `_download_progress(self, url: str, downloaded_bytes: int, total_bytes: int | None, finished: bool) -> None`
-  - Method L677: `_telonex_source_kind(source: str) -> str | None`
-  - Method L681: `_telonex_stage_for_source(source: str) -> str`
-  - Method L684: `_day_progress(self, date: str, event: str, source: str, rows: int) -> None`
-  - Method L717: `_emit_cache_write_event(self, *, cache_kind: str, cache_path: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, level: str, status: str, message: str, rows: int | None = None, bytes_count: int | None = None, book_events: int | None = None, trade_ticks: int | None = None, error: str | None = None) -> None`
-  - Method L766: `_resolve_api_cache_root(cls) -> Path | None`
-  - Method L770: `_resolve_prefetch_workers(cls) -> int`
-  - Method L780: `_resolve_local_prefetch_workers(cls) -> int`
-  - Method L790: `_resolve_cache_prefetch_workers(cls) -> int`
-  - Method L800: `_resolve_api_worker_limit(cls) -> int`
-  - Method L804: `_resolve_file_worker_limit(cls) -> int`
-  - Method L807: `_config(self) -> TelonexLoaderConfig`
-  - Method L814: `_date_range(start: pd.Timestamp, end: pd.Timestamp) -> list[str]`
-  - Method L820: `_outcome_segments(*, token_index: int, outcome: str | None) -> tuple[str, ...]`
-  - Method L827: `_local_blob_root(root: Path) -> Path | None`
-  - Method L841: `_outcome_segment_candidates(*, token_index: int, outcome: str | None) -> tuple[str, ...]`
-  - Method L848: `_month_partition_dirs(*, channel_dir: Path, start: pd.Timestamp, end: pd.Timestamp) -> tuple[Path, ...]`
-  - Method L859: `_readable_blob_part_paths(self, *, channel_dir: Path, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[str], bool]`
-  - Method L896: `_scan_readable_blob_part_paths(self, partition_dir: Path) -> tuple[tuple[str, ...], bool]`
-  - Method L936: `_manifest_blob_part_paths(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[str], bool] | None`
-  - Method L1013: `_manifest_completed_row_count(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, date: str) -> int | None`
-  - Method L1052: `_manifest_empty_day_exists(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, date: str) -> bool`
-  - Method L1089: `_blob_row_group_index(self, path: str) -> _TelonexBlobRowGroupIndex | None`
-  - Method L1113: `_build_blob_row_group_index(parquet_file: pq.ParquetFile) -> _TelonexBlobRowGroupIndex`
-  - Method L1171: `_load_blob_range_row_groups(self, *, part_paths: Sequence[str], market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame | None | object`
-  - Method L1235: `_blob_row_groups_by_part(self, *, part_paths: Sequence[str], market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> dict[str, list[int]] | object`
-  - Method L1263: `_load_blob_range(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame | None`
-  - Method L1488: `_try_load_deltas_day_from_local_blob_native(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[OrderBookDeltas], Mapping[str, Sequence[object]], str] | None`
-  - Method L1620: `_download_api_day_to_cache(self, *, presigned_url: str, progress_url: str, cache_path: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> int | None`
-  - Method L1705: `_download_api_day_to_temp_file(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path, str] | None`
-  - Method L1774: `_ensure_api_day_cache_path(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path | None, str]`
-  - Method L1837: `_try_load_deltas_day_from_api_native(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[OrderBookDeltas], Mapping[str, Sequence[object]], str] | None`
-  - Method L1927: `_cached_ts_ns_for_frame(self, frame: pd.DataFrame, column_name: str) -> np.ndarray | None`
-  - Method L1938: `_local_consolidated_candidates(cls, *, root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path, ...]`
-  - Method L1956: `_local_daily_candidates(cls, *, root: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path, ...]`
-  - Method L1975: `_local_consolidated_path(self, *, root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
-  - Method L1995: `_local_path_for_day(self, *, root: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
-  - Method L2018: `_safe_read_parquet(path: Path) -> pd.DataFrame | None`
-  - Method L2029: `_load_local_day(self, *, root: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
-  - Method L2052: `_api_url(*, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> str`
-  - Method L2071: `_api_cache_path(cls, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
-  - Method L2095: `_load_api_cache_day(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
-  - Method L2124: `_write_api_cache_day(self, *, payload: bytes, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> None`
-  - Method L2185: `_fast_api_cache_path(cls, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
-  - Method L2207: `_load_fast_cache_day(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
-  - Method L2236: `_write_fast_cache_day(self, *, frame: pd.DataFrame, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> None`
-  - Method L2333: `_load_api_day_cached(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[pd.DataFrame | None, str]`
-  - Method L2408: `_deltas_cache_path(cls, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, instrument_id: object, start: pd.Timestamp, end: pd.Timestamp) -> Path | None`
-  - Method L2437: `has_complete_materialized_deltas_cache(self, *, start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int, outcome: str | None) -> bool`
-  - Method L2468: `_load_deltas_cache_day(self, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[OrderBookDeltas] | None, str]`
-  - Method L2514: `_write_deltas_cache_day(self, *, records: Sequence[OrderBookDeltas], delta_columns: Mapping[str, Sequence[object]] | None = None, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> None`
-  - Method L2592: `_trade_ticks_cache_path(cls, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, instrument_id: object, start: pd.Timestamp, end: pd.Timestamp) -> Path | None`
-  - Method L2621: `_load_trade_ticks_cache_day(self, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[tuple[TradeTick, ...] | None, str]`
-  - Method L2677: `_write_trade_ticks_cache_day(self, *, records: Sequence[TradeTick], channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> None`
-  - Method L2752: `_trade_ticks_to_cache_table(records: Sequence[TradeTick]) -> pa.Table`
-  - Method L2779: `_trade_ticks_from_cache_table(self, table: pa.Table) -> tuple[TradeTick, ...]`
-  - Method L2782: `_trade_ticks_from_cache_frame(self, frame: pd.DataFrame) -> tuple[TradeTick, ...]`
-  - Method L2818: `_deltas_columns_to_table(data: Mapping[str, Sequence[object]]) -> pa.Table`
-  - Method L2834: `_deltas_records_to_table(records: Sequence[OrderBookDeltas]) -> pa.Table`
-  - Method L2870: `_numeric_table_column(table: pa.Table, name: str) -> np.ndarray`
-  - Method L2873: `_deltas_records_from_table(self, table: pa.Table) -> list[OrderBookDeltas]`
-  - Method L2888: `_deltas_records_from_columns(self, data: dict[str, Sequence[object]]) -> list[OrderBookDeltas]`
-  - Method L2940: `_resolve_presigned_url(*, url: str, api_key: str) -> str`
-  - Method L2967: `_load_api_day(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, api_key: str | None = None) -> pd.DataFrame | None`
-  - Method L3060: `_column_to_ns(column: pd.Series, column_name: str) -> np.ndarray`
-  - Method L3072: `_normalize_to_utc(value: pd.Timestamp) -> pd.Timestamp`
-  - Method L3077: `_day_window(self, date: str, *, start: pd.Timestamp, end: pd.Timestamp) -> tuple[pd.Timestamp, pd.Timestamp] | None`
-  - Method L3091: `_first_present_column(frame: pd.DataFrame, names: Sequence[str], *, label: str) -> str`
-  - Method L3097: `_book_events_from_frame(self, frame: pd.DataFrame, *, start: pd.Timestamp, end: pd.Timestamp, include_order_book: bool = True) -> list[OrderBookDeltas]`
-  - Method L3113: `_book_events_and_delta_columns_from_frame(self, frame: pd.DataFrame, *, start: pd.Timestamp, end: pd.Timestamp, include_order_book: bool = True) -> tuple[list[OrderBookDeltas], Mapping[str, Sequence[object]] | None]`
-  - Method L3206: `_optional_column(frame: pd.DataFrame, names: Sequence[str]) -> str | None`
-  - Method L3212: `_onchain_fill_trade_ticks_from_frame(self, frame: pd.DataFrame, *, start: pd.Timestamp, end: pd.Timestamp) -> list[TradeTick]`
-  - Method L3287: `_trade_ticks_from_native_columns(self, data: tuple[list[float], list[float], list[int], list[str], list[int], list[int]]) -> list[TradeTick]`
-  - Method L3316: `_rounded_float64_array(values: object, precision: int) -> np.ndarray`
-  - Method L3319: `_empty_local_blob_day_frame(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
-  - Method L3355: `_parse_telonex_trade_frame(self, frame: pd.DataFrame, *, channel: str, source: str, start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int) -> tuple[TradeTick, ...] | None`
-  - Method L3380: `load_telonex_onchain_fill_ticks(self, start: pd.Timestamp, end: pd.Timestamp, *, market_slug: str | None = None, token_index: int | None = None, outcome: str | None = None) -> tuple[TradeTick, ...] | None`
-  - Method L3555: `_try_load_day_from_local(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp, range_cache: dict[Path, pd.DataFrame | None]) -> pd.DataFrame | None`
-  - Method L3623: `_try_load_day_from_api_entry(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[pd.DataFrame | None, str]`
-  - Method L3665: `_telonex_api_source_label(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> str`
-  - Method L3684: `_load_order_book_deltas_day(self, *, date: str, config: TelonexLoaderConfig, start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int, outcome: str | None, include_order_book: bool, range_cache: dict[Path, pd.DataFrame | None]) -> _TelonexDayResult`
-  - Method L3861: `_iter_loaded_telonex_days(self, *, dates: list[str], config: TelonexLoaderConfig, api_entries: Sequence[TelonexSourceEntry], start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int, outcome: str | None, include_order_book: bool) -> Iterator[_TelonexDayResult]`
-  - Method L3934: `load_order_book_deltas(self, start: pd.Timestamp, end: pd.Timestamp, *, market_slug: str, token_index: int, outcome: str | None, include_order_book: bool = True) -> list[OrderBookDeltas]`
+- Class L608: `RunnerPolymarketTelonexBookDataLoader(PolymarketDataLoader)`
+  - Method L609: `__init__(self, *args, **kwargs) -> None`
+  - Method L614: `_ensure_blob_scan_caches(self) -> None`
+  - Method L644: `_forget_blob_ts_cache_key(self, cache_key: tuple[str, str, str, int, str | None, int, int]) -> None`
+  - Method L654: `async from_market_slug(cls, slug: str, token_index: int = 0, http_client = None) -> 'RunnerPolymarketTelonexBookDataLoader'`
+  - Method L667: `_download_progress(self, url: str, downloaded_bytes: int, total_bytes: int | None, finished: bool) -> None`
+  - Method L685: `_telonex_source_kind(source: str) -> str | None`
+  - Method L689: `_telonex_stage_for_source(source: str) -> str`
+  - Method L692: `_day_progress(self, date: str, event: str, source: str, rows: int) -> None`
+  - Method L725: `_emit_cache_write_event(self, *, cache_kind: str, cache_path: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, level: str, status: str, message: str, rows: int | None = None, bytes_count: int | None = None, book_events: int | None = None, trade_ticks: int | None = None, error: str | None = None) -> None`
+  - Method L774: `_resolve_api_cache_root(cls) -> Path | None`
+  - Method L778: `_resolve_prefetch_workers(cls) -> int`
+  - Method L788: `_resolve_local_prefetch_workers(cls) -> int`
+  - Method L798: `_resolve_cache_prefetch_workers(cls) -> int`
+  - Method L808: `_resolve_api_worker_limit(cls) -> int`
+  - Method L812: `_resolve_file_worker_limit(cls) -> int`
+  - Method L815: `_config(self) -> TelonexLoaderConfig`
+  - Method L822: `_date_range(start: pd.Timestamp, end: pd.Timestamp) -> list[str]`
+  - Method L828: `_outcome_segments(*, token_index: int, outcome: str | None) -> tuple[str, ...]`
+  - Method L835: `_local_blob_root(root: Path) -> Path | None`
+  - Method L849: `_outcome_segment_candidates(*, token_index: int, outcome: str | None) -> tuple[str, ...]`
+  - Method L856: `_month_partition_dirs(*, channel_dir: Path, start: pd.Timestamp, end: pd.Timestamp) -> tuple[Path, ...]`
+  - Method L867: `_readable_blob_part_paths(self, *, channel_dir: Path, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[str], bool]`
+  - Method L904: `_scan_readable_blob_part_paths(self, partition_dir: Path) -> tuple[tuple[str, ...], bool]`
+  - Method L944: `_manifest_blob_part_paths(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[str], bool] | None`
+  - Method L1021: `_manifest_completed_row_count(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, date: str) -> int | None`
+  - Method L1060: `_manifest_empty_day_exists(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, date: str) -> bool`
+  - Method L1097: `_blob_row_group_index(self, path: str) -> _TelonexBlobRowGroupIndex | None`
+  - Method L1121: `_build_blob_row_group_index(parquet_file: pq.ParquetFile) -> _TelonexBlobRowGroupIndex`
+  - Method L1179: `_load_blob_range_row_groups(self, *, part_paths: Sequence[str], market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame | None | object`
+  - Method L1243: `_blob_row_groups_by_part(self, *, part_paths: Sequence[str], market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> dict[str, list[int]] | object`
+  - Method L1271: `_load_blob_range(self, *, store_root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame | None`
+  - Method L1496: `_try_load_deltas_day_from_local_blob_native(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[OrderBookDeltas], Mapping[str, Sequence[object]], str] | None`
+  - Method L1628: `_download_api_day_to_cache(self, *, presigned_url: str, progress_url: str, cache_path: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> int | None`
+  - Method L1713: `_download_api_day_to_temp_file(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path, str] | None`
+  - Method L1782: `_ensure_api_day_cache_path(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path | None, str]`
+  - Method L1845: `_try_load_deltas_day_from_api_native(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[OrderBookDeltas], Mapping[str, Sequence[object]], str] | None`
+  - Method L1935: `_cached_ts_ns_for_frame(self, frame: pd.DataFrame, column_name: str) -> np.ndarray | None`
+  - Method L1946: `_local_consolidated_candidates(cls, *, root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path, ...]`
+  - Method L1964: `_local_daily_candidates(cls, *, root: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[Path, ...]`
+  - Method L1983: `_local_consolidated_path(self, *, root: Path, channel: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
+  - Method L2003: `_local_path_for_day(self, *, root: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
+  - Method L2026: `_safe_read_parquet(path: Path) -> pd.DataFrame | None`
+  - Method L2037: `_load_local_day(self, *, root: Path, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
+  - Method L2060: `_api_url(*, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> str`
+  - Method L2079: `_api_cache_path(cls, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
+  - Method L2103: `_load_api_cache_day(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
+  - Method L2132: `_write_api_cache_day(self, *, payload: bytes, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> None`
+  - Method L2193: `_fast_api_cache_path(cls, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> Path | None`
+  - Method L2215: `_load_fast_cache_day(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
+  - Method L2244: `_write_fast_cache_day(self, *, frame: pd.DataFrame, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> None`
+  - Method L2341: `_load_api_day_cached(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[pd.DataFrame | None, str]`
+  - Method L2416: `_deltas_cache_path(cls, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, instrument_id: object, start: pd.Timestamp, end: pd.Timestamp) -> Path | None`
+  - Method L2445: `has_complete_materialized_deltas_cache(self, *, start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int, outcome: str | None) -> bool`
+  - Method L2476: `_load_deltas_cache_day(self, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[list[OrderBookDeltas] | None, str]`
+  - Method L2522: `_write_deltas_cache_day(self, *, records: Sequence[OrderBookDeltas], delta_columns: Mapping[str, Sequence[object]] | None = None, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> None`
+  - Method L2600: `_trade_ticks_cache_path(cls, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, instrument_id: object, start: pd.Timestamp, end: pd.Timestamp) -> Path | None`
+  - Method L2629: `_load_trade_ticks_cache_day(self, *, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> tuple[tuple[TradeTick, ...] | None, str]`
+  - Method L2685: `_write_trade_ticks_cache_day(self, *, records: Sequence[TradeTick], channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp) -> None`
+  - Method L2760: `_trade_ticks_to_cache_table(records: Sequence[TradeTick]) -> pa.Table`
+  - Method L2787: `_trade_ticks_from_cache_table(self, table: pa.Table) -> tuple[TradeTick, ...]`
+  - Method L2790: `_trade_ticks_from_cache_frame(self, frame: pd.DataFrame) -> tuple[TradeTick, ...]`
+  - Method L2826: `_deltas_columns_to_table(data: Mapping[str, Sequence[object]]) -> pa.Table`
+  - Method L2842: `_deltas_records_to_table(records: Sequence[OrderBookDeltas]) -> pa.Table`
+  - Method L2878: `_numeric_table_column(table: pa.Table, name: str) -> np.ndarray`
+  - Method L2881: `_deltas_records_from_table(self, table: pa.Table) -> list[OrderBookDeltas]`
+  - Method L2896: `_deltas_records_from_columns(self, data: dict[str, Sequence[object]]) -> list[OrderBookDeltas]`
+  - Method L2948: `_resolve_presigned_url(*, url: str, api_key: str) -> str`
+  - Method L2975: `_load_api_day(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, api_key: str | None = None) -> pd.DataFrame | None`
+  - Method L3068: `_column_to_ns(column: pd.Series, column_name: str) -> np.ndarray`
+  - Method L3080: `_normalize_to_utc(value: pd.Timestamp) -> pd.Timestamp`
+  - Method L3085: `_day_window(self, date: str, *, start: pd.Timestamp, end: pd.Timestamp) -> tuple[pd.Timestamp, pd.Timestamp] | None`
+  - Method L3099: `_first_present_column(frame: pd.DataFrame, names: Sequence[str], *, label: str) -> str`
+  - Method L3105: `_book_events_from_frame(self, frame: pd.DataFrame, *, start: pd.Timestamp, end: pd.Timestamp, include_order_book: bool = True) -> list[OrderBookDeltas]`
+  - Method L3121: `_book_events_and_delta_columns_from_frame(self, frame: pd.DataFrame, *, start: pd.Timestamp, end: pd.Timestamp, include_order_book: bool = True) -> tuple[list[OrderBookDeltas], Mapping[str, Sequence[object]] | None]`
+  - Method L3214: `_optional_column(frame: pd.DataFrame, names: Sequence[str]) -> str | None`
+  - Method L3220: `_onchain_fill_trade_ticks_from_frame(self, frame: pd.DataFrame, *, start: pd.Timestamp, end: pd.Timestamp) -> list[TradeTick]`
+  - Method L3295: `_trade_ticks_from_native_columns(self, data: tuple[list[float], list[float], list[int], list[str], list[int], list[int]]) -> list[TradeTick]`
+  - Method L3324: `_rounded_float64_array(values: object, precision: int) -> np.ndarray`
+  - Method L3327: `_empty_local_blob_day_frame(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> pd.DataFrame | None`
+  - Method L3363: `_parse_telonex_trade_frame(self, frame: pd.DataFrame, *, channel: str, source: str, start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int) -> tuple[TradeTick, ...] | None`
+  - Method L3388: `load_telonex_onchain_fill_ticks(self, start: pd.Timestamp, end: pd.Timestamp, *, market_slug: str | None = None, token_index: int | None = None, outcome: str | None = None) -> tuple[TradeTick, ...] | None`
+  - Method L3563: `_try_load_day_from_local(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None, start: pd.Timestamp, end: pd.Timestamp, range_cache: dict[Path, pd.DataFrame | None]) -> pd.DataFrame | None`
+  - Method L3631: `_try_load_day_from_api_entry(self, *, entry: TelonexSourceEntry, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> tuple[pd.DataFrame | None, str]`
+  - Method L3673: `_telonex_api_source_label(self, *, base_url: str, channel: str, date: str, market_slug: str, token_index: int, outcome: str | None) -> str`
+  - Method L3692: `_load_order_book_deltas_day(self, *, date: str, config: TelonexLoaderConfig, start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int, outcome: str | None, include_order_book: bool, range_cache: dict[Path, pd.DataFrame | None]) -> _TelonexDayResult`
+  - Method L3869: `_iter_loaded_telonex_days(self, *, dates: list[str], config: TelonexLoaderConfig, api_entries: Sequence[TelonexSourceEntry], start: pd.Timestamp, end: pd.Timestamp, market_slug: str, token_index: int, outcome: str | None, include_order_book: bool) -> Iterator[_TelonexDayResult]`
+  - Method L3942: `load_order_book_deltas(self, start: pd.Timestamp, end: pd.Timestamp, *, market_slug: str, token_index: int, outcome: str | None, include_order_book: bool = True) -> list[OrderBookDeltas]`
 
 ### `prediction_market_extensions/backtesting/data_sources/vendors.py`
 - Imports: `__future__, dataclasses`
@@ -1755,28 +2408,28 @@ flowchart TD
 - Function L64: `_clamp_probability(value: Decimal) -> Decimal`
 - Function L68: `_fee_per_share(*, price: Decimal, taker_fee: Decimal) -> Decimal`
 - Class L74: `BookBinaryPairArbitrageConfig(StrategyConfig)`
-  - Method L100: `__post_init__(self) -> None`
-- Class L118: `BookBinaryPairArbitrageStrategy(Strategy)`
-  - Method L132: `__init__(self, config: BookBinaryPairArbitrageConfig) -> None`
-  - Method L142: `on_start(self) -> None`
-  - Method L166: `on_order_book_deltas(self, deltas) -> None`
-  - Method L178: `_best_ask_state(self, instrument_id: InstrumentId) -> tuple[float, float, float] | None`
-  - Method L192: `_instrument_fee_rate(self, instrument_id: InstrumentId) -> Decimal`
-  - Method L198: `_free_quote_balance(self, instrument_id: InstrumentId) -> Decimal | None`
-  - Method L210: `_avg_entry_price(self, instrument_id: InstrumentId, size: Decimal) -> float | None`
-  - Method L226: `_rounded_quantity(self, instrument_id: InstrumentId, size: Decimal) -> Any`
-  - Method L242: `_pair_has_position(self, pair: tuple[InstrumentId, InstrumentId]) -> bool`
-  - Method L245: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
-  - Method L323: `_submit_pair_entry(self, *, pair: tuple[InstrumentId, InstrumentId], quantities: list[object], visible_size: float, net_unit_cost: float, edge: float) -> None`
-  - Method L362: `_event_order_is_closed(self, event) -> bool`
-  - Method L377: `_mark_order_event(self, event) -> None`
-  - Method L385: `on_order_filled(self, event) -> None`
-  - Method L388: `on_order_rejected(self, event) -> None`
-  - Method L391: `on_order_denied(self, event) -> None`
-  - Method L394: `on_order_canceled(self, event) -> None`
-  - Method L397: `on_order_expired(self, event) -> None`
-  - Method L400: `on_stop(self) -> None`
-  - Method L409: `on_reset(self) -> None`
+  - Method L101: `__post_init__(self) -> None`
+- Class L121: `BookBinaryPairArbitrageStrategy(Strategy)`
+  - Method L135: `__init__(self, config: BookBinaryPairArbitrageConfig) -> None`
+  - Method L145: `on_start(self) -> None`
+  - Method L169: `on_order_book_deltas(self, deltas) -> None`
+  - Method L181: `_best_ask_state(self, instrument_id: InstrumentId) -> tuple[float, float, float] | None`
+  - Method L195: `_instrument_fee_rate(self, instrument_id: InstrumentId) -> Decimal`
+  - Method L203: `_free_quote_balance(self, instrument_id: InstrumentId) -> Decimal | None`
+  - Method L215: `_avg_entry_price(self, instrument_id: InstrumentId, size: Decimal) -> float | None`
+  - Method L231: `_rounded_quantity(self, instrument_id: InstrumentId, size: Decimal) -> Any`
+  - Method L247: `_pair_has_position(self, pair: tuple[InstrumentId, InstrumentId]) -> bool`
+  - Method L250: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L328: `_submit_pair_entry(self, *, pair: tuple[InstrumentId, InstrumentId], quantities: list[object], visible_size: float, net_unit_cost: float, edge: float) -> None`
+  - Method L367: `_event_order_is_closed(self, event) -> bool`
+  - Method L382: `_mark_order_event(self, event) -> None`
+  - Method L390: `on_order_filled(self, event) -> None`
+  - Method L393: `on_order_rejected(self, event) -> None`
+  - Method L396: `on_order_denied(self, event) -> None`
+  - Method L399: `on_order_canceled(self, event) -> None`
+  - Method L402: `on_order_expired(self, event) -> None`
+  - Method L405: `on_stop(self) -> None`
+  - Method L414: `on_reset(self) -> None`
 
 ### `strategies/breakout.py`
 - Imports: `__future__, collections, decimal, math, nautilus_trader, strategies, typing`
@@ -1813,28 +2466,28 @@ flowchart TD
 - Class L37: `LongOnlyConfig(Protocol)`
 - Class L105: `LongOnlyPredictionMarketStrategy(Strategy)`
   - Method L110: `__init__(self, config: LongOnlyConfig) -> None`
-  - Method L123: `_warn_entry_unfillable(self, *, desired_size: Decimal, reference_price: float | None, reason: str) -> None`
-  - Method L139: `_subscribe(self) -> None`
-  - Method L142: `on_start(self) -> None`
-  - Method L150: `on_order_book_deltas(self, deltas) -> None`
-  - Method L157: `_in_position(self) -> bool`
-  - Method L160: `_free_quote_balance(self) -> Decimal | None`
-  - Method L170: `_remember_market_context(self, *, entry_reference_price: float | None, entry_visible_size: float | None, exit_visible_size: float | None = None) -> None`
-  - Method L183: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
-  - Method L190: `_entry_quantity(self, *, reference_price: float | None = None, visible_size: float | None = None) -> Any`
-  - Method L254: `_submit_entry(self, *, reference_price: float | None = None, visible_size: float | None = None) -> None`
-  - Method L283: `_submit_exit(self) -> None`
-  - Method L329: `_entry_price_with_fees(self) -> float | None`
-  - Method L342: `_exit_price_after_fees(self, price: float) -> float`
-  - Method L350: `_risk_exit(self, *, price: float, take_profit: float, stop_loss: float) -> bool`
-  - Method L370: `_event_order_is_closed(self, event) -> bool`
-  - Method L385: `on_order_filled(self, event) -> None`
-  - Method L408: `on_order_rejected(self, event) -> None`
-  - Method L411: `on_order_denied(self, event) -> None`
-  - Method L414: `on_order_canceled(self, event) -> None`
-  - Method L417: `on_order_expired(self, event) -> None`
-  - Method L420: `on_stop(self) -> None`
-  - Method L424: `on_reset(self) -> None`
+  - Method L125: `_warn_entry_unfillable(self, *, desired_size: Decimal, reference_price: float | None, reason: str) -> None`
+  - Method L141: `_subscribe(self) -> None`
+  - Method L144: `on_start(self) -> None`
+  - Method L152: `on_order_book_deltas(self, deltas) -> None`
+  - Method L160: `_in_position(self) -> bool`
+  - Method L163: `_free_quote_balance(self) -> Decimal | None`
+  - Method L173: `_remember_market_context(self, *, entry_reference_price: float | None, entry_visible_size: float | None, exit_visible_size: float | None = None) -> None`
+  - Method L186: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L193: `_entry_quantity(self, *, reference_price: float | None = None, visible_size: float | None = None) -> Any`
+  - Method L257: `_submit_entry(self, *, reference_price: float | None = None, visible_size: float | None = None) -> None`
+  - Method L286: `_submit_exit(self) -> None`
+  - Method L348: `_entry_price_with_fees(self) -> float | None`
+  - Method L361: `_exit_price_after_fees(self, price: float) -> float`
+  - Method L369: `_risk_exit(self, *, price: float, take_profit: float, stop_loss: float) -> bool`
+  - Method L389: `_event_order_is_closed(self, event) -> bool`
+  - Method L404: `on_order_filled(self, event) -> None`
+  - Method L428: `on_order_rejected(self, event) -> None`
+  - Method L431: `on_order_denied(self, event) -> None`
+  - Method L434: `on_order_canceled(self, event) -> None`
+  - Method L437: `on_order_expired(self, event) -> None`
+  - Method L440: `on_stop(self) -> None`
+  - Method L444: `on_reset(self) -> None`
 
 ### `strategies/deep_value.py`
 - Imports: `__future__, decimal, nautilus_trader, strategies`
@@ -1974,6 +2627,612 @@ flowchart TD
 - Class L170: `BookPanicFadeStrategy(_PanicFadeBase)`
   - Method L171: `_subscribe(self) -> None`
   - Method L177: `on_order_book(self, order_book) -> None`
+
+### `strategies/private/__init__.py`
+- Imports: none
+
+### `strategies/private/adjacent_contract_lead_lag.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L22: `BookAdjacentContractLeadLagConfig(StrategyConfig)`
+  - Method L48: `__post_init__(self) -> None`
+- Class L100: `BookAdjacentContractLeadLagStrategy(BookTradeFlowMomentumStrategy)`
+  - Method L105: `on_start(self) -> None`
+  - Method L109: `_relative_pressure(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L123: `_prior_pair_signal(self, pair: tuple[InstrumentId, InstrumentId]) -> tuple[int, float, float] | None`
+  - Method L156: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L251: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/btc_book_event_pressure.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L21: `BookBTCBookEventPressureConfig(StrategyConfig)`
+  - Method L46: `__post_init__(self) -> None`
+- Class L83: `BookBTCBookEventPressureStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L88: `__init__(self, config: BookBTCBookEventPressureConfig) -> None`
+  - Method L92: `on_start(self) -> None`
+  - Method L98: `on_order_book_deltas(self, deltas) -> None`
+  - Method L105: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L112: `_event_count(self, *, instrument_id: InstrumentId, current_ts_ns: int) -> int`
+  - Method L120: `_relative_event_share(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, current_ts_ns: int) -> tuple[int, float]`
+  - Method L135: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None], current_ts_ns: int) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L183: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L264: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/btc_boundary_breakout.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L20: `BookBTCBoundaryBreakoutConfig(StrategyConfig)`
+  - Method L46: `__post_init__(self) -> None`
+- Class L93: `BookBTCBoundaryBreakoutStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L98: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L105: `_boundary_cross_strength(self, instrument_id: InstrumentId, midpoint: float) -> float | None`
+  - Method L118: `_relative_boundary_edge(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L133: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L177: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L253: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/btc_boundary_hold_breakout.py`
+- Imports: `__future__, nautilus_trader, strategies`
+- Class L12: `BookBTCBoundaryHoldBreakoutStrategy(BookBTCBoundaryBreakoutStrategy)`
+  - Method L17: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L93: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/btc_certainty_collapse.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L20: `BookBTCCertaintyCollapseConfig(StrategyConfig)`
+  - Method L49: `__post_init__(self) -> None`
+- Class L95: `BookBTCCertaintyCollapseStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L100: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L107: `_history_stats(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L121: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L177: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L254: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/btc_final_pressure_squeeze.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L20: `BookBTCFinalPressureSqueezeConfig(StrategyConfig)`
+  - Method L46: `__post_init__(self) -> None`
+- Class L110: `BookBTCFinalPressureSqueezeStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L115: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L122: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L164: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L240: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/btc_late_favorite_passive_hold.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L22: `BookBTCLateFavoritePassiveHoldConfig(StrategyConfig)`
+  - Method L42: `__post_init__(self) -> None`
+- Class L73: `BookBTCLateFavoritePassiveHoldStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L82: `__init__(self, config: BookBTCLateFavoritePassiveHoldConfig) -> None`
+  - Method L92: `_subscribe(self) -> None`
+  - Method L98: `_price_increment(self) -> float`
+  - Method L104: `_weighted_depth(self, levels: list[object]) -> float`
+  - Method L112: `_book_state(self, order_book: OrderBook) -> dict[str, float] | None`
+  - Method L150: `_entry_window_is_open(self, ts_event_ns: int) -> bool`
+  - Method L159: `_entry_guard_passes(self, state: dict[str, float], *, ts_event_ns: int) -> bool`
+  - Method L178: `_limit_entry_price(self, state: dict[str, float]) -> float | None`
+  - Method L189: `_submit_limit_entry(self, *, price: float, visible_size: float) -> None`
+  - Method L217: `_cancel_active_entry(self) -> None`
+  - Method L224: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L271: `on_order_accepted(self, event) -> None`
+  - Method L275: `on_order_filled(self, event) -> None`
+  - Method L285: `on_order_rejected(self, event) -> None`
+  - Method L290: `on_order_denied(self, event) -> None`
+  - Method L295: `on_order_canceled(self, event) -> None`
+  - Method L300: `on_order_expired(self, event) -> None`
+  - Method L305: `on_stop(self) -> None`
+  - Method L309: `on_reset(self) -> None`
+
+### `strategies/private/btc_liquidity_withdrawal.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L21: `BookBTCLiquidityWithdrawalConfig(StrategyConfig)`
+  - Method L49: `__post_init__(self) -> None`
+- Class L97: `BookBTCLiquidityWithdrawalStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L102: `__init__(self, config: BookBTCLiquidityWithdrawalConfig) -> None`
+  - Method L107: `on_start(self) -> None`
+  - Method L115: `_depth_baseline(self, instrument_id: InstrumentId) -> tuple[float, float] | None`
+  - Method L123: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L157: `_record_depth_event(self, *, instrument_id: InstrumentId, bid_depth: float, ask_depth: float) -> None`
+  - Method L173: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L219: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L291: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L298: `on_reset(self) -> None`
+
+### `strategies/private/btc_liquidity_withdrawal_hold.py`
+- Imports: `__future__, nautilus_trader, strategies`
+- Class L12: `BookBTCLiquidityWithdrawalHoldStrategy(BookBTCLiquidityWithdrawalStrategy)`
+  - Method L17: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L89: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/btc_opening_range_breakout.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L20: `BookBTCOpeningRangeBreakoutConfig(StrategyConfig)`
+  - Method L46: `__post_init__(self) -> None`
+- Class L92: `BookBTCOpeningRangeBreakoutStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L97: `__init__(self, config: BookBTCOpeningRangeBreakoutConfig) -> None`
+  - Method L104: `on_start(self) -> None`
+  - Method L108: `_reset_opening_state(self) -> None`
+  - Method L115: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L122: `_record_opening(self, *, instrument_id: InstrumentId, midpoint: float) -> None`
+  - Method L134: `_opening_midpoint(self, instrument_id: InstrumentId) -> float | None`
+  - Method L140: `_relative_momentum(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L156: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L203: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L285: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L292: `on_reset(self) -> None`
+
+### `strategies/private/btc_quote_velocity.py`
+- Imports: `__future__, collections, decimal, math, nautilus_trader, strategies`
+- Class L22: `BookBTCQuoteVelocityConfig(StrategyConfig)`
+  - Method L50: `__post_init__(self) -> None`
+- Class L101: `BookBTCQuoteVelocityStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L106: `__init__(self, config: BookBTCQuoteVelocityConfig) -> None`
+  - Method L111: `on_start(self) -> None`
+  - Method L118: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L135: `_record_velocity_event(self, *, instrument_id: InstrumentId, state: dict[str, float]) -> None`
+  - Method L149: `_prune_velocity_events(self, *, instrument_id: InstrumentId, current_ts_ns: int) -> None`
+  - Method L156: `_velocity_stats(self, *, instrument_id: InstrumentId, current_ts_ns: int) -> dict[str, float] | None`
+  - Method L192: `_relative_velocity(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, current_ts_ns: int) -> float | None`
+  - Method L211: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None], current_ts_ns: int) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L268: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L352: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L359: `on_reset(self) -> None`
+
+### `strategies/private/btc_volatility_expansion.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L22: `BookBTCVolatilityExpansionConfig(StrategyConfig)`
+  - Method L48: `__post_init__(self) -> None`
+- Class L88: `BookBTCVolatilityExpansionStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L93: `__init__(self, config: BookBTCVolatilityExpansionConfig) -> None`
+  - Method L97: `on_start(self) -> None`
+  - Method L104: `_record_midpoint(self, instrument_id: InstrumentId) -> None`
+  - Method L117: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L124: `_compression_stats(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L139: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L185: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L258: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L265: `on_reset(self) -> None`
+
+### `strategies/private/cancel_replace_pressure.py`
+- Imports: `__future__, collections, dataclasses, decimal, nautilus_trader, strategies`
+- Class L23: `_BookSnapshot`
+- Class L30: `BookCancelReplacePressureConfig(StrategyConfig)`
+  - Method L56: `__post_init__(self) -> None`
+- Class L103: `BookCancelReplacePressureStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L108: `__init__(self, config: BookCancelReplacePressureConfig) -> None`
+  - Method L113: `on_start(self) -> None`
+  - Method L120: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L150: `_depth_change(self, *, previous: float, current: float) -> float`
+  - Method L155: `_migration_event(self, *, previous: _BookSnapshot | None, current: _BookSnapshot) -> float`
+  - Method L191: `_relative_cancel_pressure(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L206: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L248: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L326: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L333: `on_reset(self) -> None`
+
+### `strategies/private/depth_convexity_skew.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L22: `BookDepthConvexitySkewConfig(StrategyConfig)`
+  - Method L49: `__post_init__(self) -> None`
+- Class L99: `BookDepthConvexitySkewStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L104: `__init__(self, config: BookDepthConvexitySkewConfig) -> None`
+  - Method L108: `on_start(self) -> None`
+  - Method L113: `_split_depth(self, levels: list[object]) -> tuple[float, float]`
+  - Method L129: `_shape_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L165: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L173: `_relative_shape_skew(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L187: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L231: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L309: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L316: `on_reset(self) -> None`
+
+### `strategies/private/depth_entropy_compression.py`
+- Imports: `__future__, collections, decimal, math, nautilus_trader, strategies`
+- Class L23: `BookDepthEntropyCompressionConfig(StrategyConfig)`
+  - Method L50: `__post_init__(self) -> None`
+- Class L107: `BookDepthEntropyCompressionStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L112: `__init__(self, config: BookDepthEntropyCompressionConfig) -> None`
+  - Method L116: `on_start(self) -> None`
+  - Method L121: `_normalized_entropy(self, levels: list[object]) -> tuple[float, float] | None`
+  - Method L136: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L169: `_relative_entropy_edge(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L183: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L228: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L305: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L312: `on_reset(self) -> None`
+
+### `strategies/private/depth_pressure_trend.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies, typing`
+- Class L24: `_DepthPressureTrendConfig(Protocol)`
+- Class L48: `BookDepthPressureTrendConfig(StrategyConfig)`
+  - Method L68: `__post_init__(self) -> None`
+- Class L89: `BookDepthPressureTrendStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L98: `__init__(self, config: _DepthPressureTrendConfig) -> None`
+  - Method L108: `_subscribe(self) -> None`
+  - Method L114: `_weighted_depth(self, levels: list[object]) -> float`
+  - Method L122: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L132: `_midpoint_trend(self, midpoint: float) -> float | None`
+  - Method L138: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L179: `_on_book_signal(self, *, order_book: OrderBook, bid: float, ask: float, spread: float, pressure: float, microprice_edge: float, midpoint_trend: float | None, entry_visible_size: float | None, exit_visible_size: float | None, current_ts_ns: int | None) -> None`
+  - Method L262: `_seconds_elapsed(self, *, start_ts_ns: int | None, current_ts_ns: int | None, seconds: float) -> bool`
+  - Method L271: `_min_holding_elapsed(self, current_ts_ns: int | None) -> bool`
+  - Method L278: `_reentry_cooldown_elapsed(self, current_ts_ns: int | None) -> bool`
+  - Method L287: `_fill_ts_ns(self, event: object) -> int | None`
+  - Method L290: `on_order_filled(self, event) -> None`
+  - Method L305: `on_reset(self) -> None`
+
+### `strategies/private/event_microprice_carry.py`
+- Imports: `__future__, strategies`
+- Class L9: `BookEventMicropriceCarryStrategy(BookMicropriceImbalanceStrategy)`
+  - Method L14: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/event_panic_fade.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L23: `BookEventPanicFadeConfig(StrategyConfig)`
+  - Method L44: `__post_init__(self) -> None`
+- Class L78: `BookEventPanicFadeStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L83: `__init__(self, config: BookEventPanicFadeConfig) -> None`
+  - Method L90: `_subscribe(self) -> None`
+  - Method L96: `_depth_sum(self, levels: list[object]) -> float`
+  - Method L104: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L114: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L206: `on_order_filled(self, event) -> None`
+  - Method L216: `on_reset(self) -> None`
+  - Method L223: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/event_persistent_bid_support.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L23: `BookEventPersistentBidSupportConfig(StrategyConfig)`
+  - Method L46: `__post_init__(self) -> None`
+- Class L86: `BookEventPersistentBidSupportStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L91: `__init__(self, config: BookEventPersistentBidSupportConfig) -> None`
+  - Method L100: `_subscribe(self) -> None`
+  - Method L106: `_depth_sum(self, levels: list[object]) -> float`
+  - Method L114: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L124: `_support_is_persistent(self) -> bool`
+  - Method L153: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L230: `on_order_filled(self, event) -> None`
+  - Method L240: `on_reset(self) -> None`
+  - Method L249: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/guarded_breakout.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L21: `BookGuardedBreakoutConfig(StrategyConfig)`
+  - Method L39: `__post_init__(self) -> None`
+- Class L59: `BookGuardedBreakoutStrategy(_BreakoutBase)`
+  - Method L60: `_subscribe(self) -> None`
+  - Method L66: `_depth_sum(self, levels: list[object]) -> float`
+  - Method L74: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L84: `_entry_guard_passes(self, *, best_ask: float, entry_reference_price: float, spread: float, order_book: OrderBook, expected_entry_price: float | None) -> bool`
+  - Method L122: `on_order_book(self, order_book: OrderBook) -> None`
+
+### `strategies/private/impact_fair_price_drift.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L26: `BookImpactFairPriceDriftConfig(StrategyConfig)`
+  - Method L51: `__post_init__(self) -> None`
+- Class L96: `BookImpactFairPriceDriftStrategy(BookTradeFlowMomentumStrategy)`
+  - Method L101: `__init__(self, config: BookImpactFairPriceDriftConfig) -> None`
+  - Method L105: `on_start(self) -> None`
+  - Method L130: `_impact_quantity(self, instrument_id: InstrumentId) -> Any`
+  - Method L145: `_avg_px_for_quantity(self, *, instrument_id: InstrumentId, order_side: OrderSide) -> float | None`
+  - Method L156: `_fee_adjusted_buy_cost(self, *, instrument_id: InstrumentId, price: float) -> float`
+  - Method L167: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L193: `_attach_fair_values(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> bool`
+  - Method L223: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L264: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L330: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L334: `on_reset(self) -> None`
+- Class L340: `BookImpactFairPriceFadeStrategy(BookImpactFairPriceDriftStrategy)`
+  - Method L345: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L389: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L454: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/liquidity_reversion.py`
+- Imports: `__future__, collections, decimal, math, nautilus_trader, strategies, typing`
+- Class L25: `_LiquidityReversionConfig(Protocol)`
+- Class L46: `BookLiquidityReversionConfig(StrategyConfig)`
+  - Method L66: `__post_init__(self) -> None`
+- Class L89: `BookLiquidityReversionStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L97: `__init__(self, config: _LiquidityReversionConfig) -> None`
+  - Method L104: `_subscribe(self) -> None`
+  - Method L110: `_depth_sum(self, levels: list[object]) -> float`
+  - Method L118: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L128: `_rolling_stats(self) -> tuple[float, float] | None`
+  - Method L137: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L177: `_on_book_signal(self, *, order_book: OrderBook, bid: float, ask: float, spread: float, midpoint: float, previous_midpoint: float | None, pressure: float, microprice_edge: float, stats: tuple[float, float] | None, entry_visible_size: float | None, exit_visible_size: float | None) -> None`
+  - Method L263: `on_order_filled(self, event) -> None`
+  - Method L274: `on_reset(self) -> None`
+
+### `strategies/private/liquidity_shock_resiliency.py`
+- Imports: `__future__, collections, dataclasses, decimal, nautilus_trader, strategies`
+- Class L24: `_ShockState`
+- Class L32: `BookLiquidityShockResiliencyConfig(StrategyConfig)`
+  - Method L56: `__post_init__(self) -> None`
+- Class L90: `BookLiquidityShockResiliencyStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L95: `__init__(self, config: BookLiquidityShockResiliencyConfig) -> None`
+  - Method L106: `_subscribe(self) -> None`
+  - Method L113: `_weighted_depth(self, levels: list[object]) -> float`
+  - Method L121: `_book_state(self, order_book: OrderBook) -> dict[str, float] | None`
+  - Method L157: `on_trade_tick(self, trade) -> None`
+  - Method L166: `_signed_trade_size(self, trade) -> float`
+  - Method L178: `_prune_trades(self, current_ts_ns: int) -> None`
+  - Method L185: `_recent_sell_volume(self, current_ts_ns: int) -> float`
+  - Method L189: `_baseline(self, values: deque[float]) -> float | None`
+  - Method L194: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L204: `_detect_or_update_shock(self, *, state: dict[str, float], current_ts_ns: int) -> None`
+  - Method L232: `_shock_recovered(self, *, state: dict[str, float], expected_entry_price: float | None) -> bool`
+  - Method L264: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L311: `on_order_filled(self, event) -> None`
+  - Method L319: `on_reset(self) -> None`
+
+### `strategies/private/pair_book_relative_strength.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L24: `BookPairBookRelativeStrengthConfig(StrategyConfig)`
+  - Method L47: `__post_init__(self) -> None`
+- Class L88: `BookPairBookRelativeStrengthStrategy(BookTradeFlowMomentumStrategy)`
+  - Method L93: `on_start(self) -> None`
+  - Method L117: `_relative_pressure(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L132: `_relative_trend(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L147: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L182: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L255: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/panic_liquidity_fade.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L20: `BookPanicLiquidityFadeConfig(StrategyConfig)`
+  - Method L38: `__post_init__(self) -> None`
+- Class L56: `BookPanicLiquidityFadeStrategy(_PanicFadeBase)`
+  - Method L57: `_subscribe(self) -> None`
+  - Method L63: `_depth_sum(self, levels: list[object]) -> float`
+  - Method L71: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L81: `_entry_guard_passes(self, *, mid: float, bid: float, ask: float, spread: float, expected_entry_price: float | None, order_book: OrderBook) -> bool`
+  - Method L130: `on_order_book(self, order_book: OrderBook) -> None`
+
+### `strategies/private/passive_pair_accumulation.py`
+- Imports: `__future__, decimal, nautilus_trader, prediction_market_extensions, strategies`
+- Class L31: `BookPassivePairAccumulationConfig(StrategyConfig)`
+  - Method L58: `__post_init__(self) -> None`
+- Class L82: `BookPassivePairAccumulationStrategy(BookBinaryPairArbitrageStrategy)`
+  - Method L90: `__init__(self, config: BookPassivePairAccumulationConfig) -> None`
+  - Method L101: `on_start(self) -> None`
+  - Method L133: `on_order_book_deltas(self, deltas) -> None`
+  - Method L148: `_instrument_fee_rate(self, instrument_id: InstrumentId) -> Decimal`
+  - Method L157: `_position_size(self, instrument_id: InstrumentId) -> Decimal`
+  - Method L169: `_price_increment(self, instrument_id: InstrumentId) -> float`
+  - Method L176: `_best_bid_state(self, instrument_id: InstrumentId) -> tuple[float, float, float, float]`
+  - Method L186: `_passive_price(self, instrument_id: InstrumentId, *, bid: float, ask: float) -> float | None`
+  - Method L196: `_active_pair_orders(self, pair: tuple[InstrumentId, InstrumentId]) -> bool`
+  - Method L199: `_pair_positions(self, pair: tuple[InstrumentId, InstrumentId]) -> tuple[Decimal, Decimal]`
+  - Method L205: `_matched_position_size(self, pair: tuple[InstrumentId, InstrumentId]) -> Decimal`
+  - Method L209: `_has_pair_position(self, pair: tuple[InstrumentId, InstrumentId]) -> bool`
+  - Method L213: `_surplus_position_sizes(self, pair: tuple[InstrumentId, InstrumentId]) -> tuple[Decimal, Decimal]`
+  - Method L221: `_target_reached(self, pair: tuple[InstrumentId, InstrumentId]) -> bool`
+  - Method L229: `_entry_state(self, pair: tuple[InstrumentId, InstrumentId]) -> tuple[list[float], list[object], float, float, Decimal] | None`
+  - Method L294: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L339: `_submit_pair_entry(self, *, pair: tuple[InstrumentId, InstrumentId], prices: list[float], quantities: list[object], visible_size: float, edge: float, target_size: Decimal) -> None`
+  - Method L384: `_cancel_pair_orders(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L393: `_submit_surplus_exit(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L420: `_mark_order_closed(self, event) -> None`
+  - Method L434: `on_order_filled(self, event) -> None`
+  - Method L441: `on_order_rejected(self, event) -> None`
+  - Method L447: `on_order_denied(self, event) -> None`
+  - Method L450: `on_order_canceled(self, event) -> None`
+  - Method L453: `on_order_expired(self, event) -> None`
+  - Method L456: `on_stop(self) -> None`
+  - Method L462: `on_reset(self) -> None`
+
+### `strategies/private/passive_pressure_momentum.py`
+- Imports: `__future__, nautilus_trader, prediction_market_extensions, strategies`
+- Class L21: `BookPassivePressureMomentumConfig(BookPassiveRelativeValueConfig)`
+  - Method L44: `__post_init__(self) -> None`
+- Class L76: `BookPassivePressureMomentumStrategy(BookPassiveRelativeValueStrategy)`
+  - Method L84: `__init__(self, config: BookPassivePressureMomentumConfig) -> None`
+  - Method L95: `on_start(self) -> None`
+  - Method L103: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L123: `_signal_score(self, *, state: dict[str, float], other_state: dict[str, float]) -> float | None`
+  - Method L160: `_entry_candidate(self, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float]]) -> tuple[InstrumentId, dict[str, float], float, float] | None`
+  - Method L199: `_evaluate_active_entry(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float]]) -> None`
+  - Method L230: `_evaluate_position(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float]]) -> None`
+  - Method L298: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L305: `on_reset(self) -> None`
+
+### `strategies/private/passive_relative_value.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, prediction_market_extensions, strategies`
+- Class L35: `BookPassiveRelativeValueConfig(StrategyConfig)`
+  - Method L73: `__post_init__(self) -> None`
+- Class L128: `BookPassiveRelativeValueStrategy(BookBinaryPairArbitrageStrategy)`
+  - Method L137: `__init__(self, config: BookPassiveRelativeValueConfig) -> None`
+  - Method L153: `on_start(self) -> None`
+  - Method L185: `on_order_book_deltas(self, deltas) -> None`
+  - Method L201: `_record_midpoint(self, instrument_id: InstrumentId) -> None`
+  - Method L209: `_weighted_depth(self, levels: list[object]) -> float`
+  - Method L217: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L266: `_instrument_fee_rate(self, instrument_id: InstrumentId) -> Decimal`
+  - Method L275: `_position_size(self, instrument_id: InstrumentId) -> Decimal`
+  - Method L287: `_price_increment(self, instrument_id: InstrumentId) -> float`
+  - Method L294: `_passive_price(self, instrument_id: InstrumentId, *, bid: float, ask: float) -> float | None`
+  - Method L301: `_entry_edge(self, *, instrument_id: InstrumentId, passive_price: float, fair_value: float) -> float`
+  - Method L318: `_position_instrument(self, pair: tuple[InstrumentId, InstrumentId]) -> InstrumentId | None`
+  - Method L324: `_pair_has_active_order(self, pair: tuple[InstrumentId, InstrumentId]) -> bool`
+  - Method L327: `_entry_candidate(self, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float]]) -> tuple[InstrumentId, dict[str, float], float, float] | None`
+  - Method L379: `_entry_quantity(self, *, instrument_id: InstrumentId, reference_price: float, visible_size: float) -> Any`
+  - Method L403: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L450: `_evaluate_active_entry(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float]]) -> None`
+  - Method L484: `_evaluate_position(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float]]) -> None`
+  - Method L531: `_submit_entry(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, price: float, edge: float, visible_size: float) -> None`
+  - Method L569: `_submit_exit(self, *, instrument_id: InstrumentId, visible_size: float | None) -> None`
+  - Method L591: `_cancel_pair_orders(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L599: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L606: `_mark_order_closed(self, event) -> None`
+  - Method L617: `on_order_filled(self, event) -> None`
+  - Method L654: `on_order_rejected(self, event) -> None`
+  - Method L657: `on_order_denied(self, event) -> None`
+  - Method L660: `on_order_canceled(self, event) -> None`
+  - Method L663: `on_order_expired(self, event) -> None`
+  - Method L666: `on_stop(self) -> None`
+  - Method L678: `on_reset(self) -> None`
+
+### `strategies/private/passive_spread_capture.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L23: `BookPassiveSpreadCaptureConfig(StrategyConfig)`
+  - Method L46: `__post_init__(self) -> None`
+- Class L81: `BookPassiveSpreadCaptureStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L89: `__init__(self, config: BookPassiveSpreadCaptureConfig) -> None`
+  - Method L98: `_subscribe(self) -> None`
+  - Method L104: `_price_increment(self) -> float`
+  - Method L110: `_weighted_depth(self, levels: list[object]) -> float`
+  - Method L118: `_book_state(self, order_book: OrderBook) -> dict[str, float] | None`
+  - Method L162: `_entry_guard_passes(self, state: dict[str, float]) -> bool`
+  - Method L181: `_limit_entry_price(self, state: dict[str, float]) -> float | None`
+  - Method L192: `_submit_limit_entry(self, *, price: float, visible_size: float) -> None`
+  - Method L217: `_cancel_active_entry(self) -> None`
+  - Method L223: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L276: `on_order_accepted(self, event) -> None`
+  - Method L280: `on_order_filled(self, event) -> None`
+  - Method L292: `on_order_rejected(self, event) -> None`
+  - Method L296: `on_order_denied(self, event) -> None`
+  - Method L300: `on_order_canceled(self, event) -> None`
+  - Method L304: `on_order_expired(self, event) -> None`
+  - Method L308: `on_stop(self) -> None`
+  - Method L312: `on_reset(self) -> None`
+
+### `strategies/private/passive_sweep_reprice_momentum.py`
+- Imports: `__future__, collections, dataclasses, nautilus_trader, prediction_market_extensions, strategies`
+- Class L26: `_SweepSnapshot`
+- Class L35: `BookPassiveSweepRepriceMomentumConfig(BookPassivePressureMomentumConfig)`
+  - Method L56: `__post_init__(self) -> None`
+- Class L76: `BookPassiveSweepRepriceMomentumStrategy(BookPassivePressureMomentumStrategy)`
+  - Method L81: `__init__(self, config: BookPassiveSweepRepriceMomentumConfig) -> None`
+  - Method L87: `on_start(self) -> None`
+  - Method L98: `_depth_change(self, *, previous: float, current: float) -> float`
+  - Method L103: `_sweep_event(self, *, previous: _SweepSnapshot | None, current: _SweepSnapshot, microprice_edge: float) -> float`
+  - Method L159: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L194: `_signal_score(self, *, state: dict[str, float], other_state: dict[str, float]) -> float | None`
+  - Method L211: `_evaluate_active_entry(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float]]) -> None`
+  - Method L243: `on_order_accepted(self, event) -> None`
+  - Method L252: `_mark_order_closed(self, event) -> None`
+  - Method L260: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L267: `on_reset(self) -> None`
+
+### `strategies/private/round_trip_pair_arbitrage.py`
+- Imports: `__future__, decimal, nautilus_trader, prediction_market_extensions, strategies`
+- Class L28: `BookRoundTripPairArbitrageConfig(StrategyConfig)`
+  - Method L45: `__post_init__(self) -> None`
+- Class L66: `BookRoundTripPairArbitrageStrategy(BookBinaryPairArbitrageStrategy)`
+  - Method L71: `__init__(self, config: BookRoundTripPairArbitrageConfig) -> None`
+  - Method L78: `on_start(self) -> None`
+  - Method L101: `on_order_book_deltas(self, deltas) -> None`
+  - Method L116: `_instrument_fee_rate(self, instrument_id: InstrumentId) -> Decimal`
+  - Method L122: `_fee_adjusted_price(self, *, instrument_id: InstrumentId, price: Decimal, side: OrderSide) -> Decimal`
+  - Method L132: `_position_size(self, instrument_id: InstrumentId) -> Decimal`
+  - Method L144: `_pair_position_size(self, pair: tuple[InstrumentId, InstrumentId]) -> Decimal`
+  - Method L147: `_best_bid_state(self, instrument_id: InstrumentId) -> tuple[float, float, float] | None`
+  - Method L161: `_avg_exit_price(self, instrument_id: InstrumentId, size: Decimal) -> float | None`
+  - Method L175: `_entry_unit_cost(self, pair: tuple[InstrumentId, InstrumentId]) -> Decimal | None`
+  - Method L185: `_exit_unit_value(self, *, pair: tuple[InstrumentId, InstrumentId], size: Decimal) -> tuple[Decimal, float] | None`
+  - Method L215: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L227: `_evaluate_exit(self, *, pair: tuple[InstrumentId, InstrumentId], pair_size: Decimal) -> None`
+  - Method L262: `_submit_unmatched_exit(self, pair: tuple[InstrumentId, InstrumentId]) -> None`
+  - Method L269: `_submit_single_exit(self, *, instrument_id: InstrumentId, size: Decimal) -> None`
+  - Method L288: `_submit_pair_exit(self, *, pair: tuple[InstrumentId, InstrumentId], size: Decimal, visible_size: float, edge: float) -> None`
+  - Method L321: `on_order_filled(self, event) -> None`
+  - Method L351: `on_stop(self) -> None`
+  - Method L368: `on_reset(self) -> None`
+
+### `strategies/private/rsi_liquidity_reversion.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L22: `BookRSILiquidityReversionConfig(StrategyConfig)`
+  - Method L37: `__post_init__(self) -> None`
+- Class L53: `BookRSILiquidityReversionStrategy(_RSIReversionBase)`
+  - Method L54: `_subscribe(self) -> None`
+  - Method L60: `_depth_sum(self, levels: list[object]) -> float`
+  - Method L68: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L78: `_entry_guard_passes(self, *, bid: float, ask: float, spread: float, expected_entry_price: float | None, order_book: OrderBook) -> bool`
+  - Method L116: `on_order_book(self, order_book: OrderBook) -> None`
+
+### `strategies/private/sweep_resiliency_momentum.py`
+- Imports: `__future__, collections, dataclasses, decimal, nautilus_trader, strategies`
+- Class L23: `_ResiliencySnapshot`
+- Class L32: `BookSweepResiliencyMomentumConfig(StrategyConfig)`
+  - Method L60: `__post_init__(self) -> None`
+- Class L109: `BookSweepResiliencyMomentumStrategy(BookPairBookRelativeStrengthStrategy)`
+  - Method L114: `__init__(self, config: BookSweepResiliencyMomentumConfig) -> None`
+  - Method L119: `on_start(self) -> None`
+  - Method L126: `_depth_change(self, *, previous: float, current: float) -> float`
+  - Method L131: `_snapshot_from_state(self, *, instrument_id: InstrumentId, state: dict[str, float]) -> _ResiliencySnapshot | None`
+  - Method L153: `_sweep_event(self, *, previous: _ResiliencySnapshot | None, current: _ResiliencySnapshot) -> float`
+  - Method L198: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L218: `_relative_sweep_score(self, *, pair: tuple[InstrumentId, InstrumentId], instrument_id: InstrumentId, states: list[dict[str, float] | None]) -> float`
+  - Method L232: `_entry_candidate(self, *, pair: tuple[InstrumentId, InstrumentId], states: list[dict[str, float] | None]) -> tuple[InstrumentId, dict[str, float]] | None`
+  - Method L274: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L352: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L359: `on_reset(self) -> None`
+
+### `strategies/private/trade_flow_momentum.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, prediction_market_extensions, strategies, typing`
+- Class L33: `_TradeFlowMomentumConfig(Protocol)`
+- Class L60: `BookTradeFlowMomentumConfig(StrategyConfig)`
+  - Method L86: `__post_init__(self) -> None`
+- Class L127: `BookTradeFlowMomentumStrategy(Strategy)`
+  - Method L137: `__init__(self, config: _TradeFlowMomentumConfig) -> None`
+  - Method L156: `on_start(self) -> None`
+  - Method L182: `on_order_book_deltas(self, deltas) -> None`
+  - Method L197: `on_trade_tick(self, trade) -> None`
+  - Method L212: `_signed_trade_size(self, trade) -> float`
+  - Method L224: `_prune_flow(self, *, instrument_id: InstrumentId, current_ts_ns: int) -> None`
+  - Method L231: `_flow_stats(self, *, instrument_id: InstrumentId, current_ts_ns: int) -> tuple[float, float]`
+  - Method L241: `_weighted_depth(self, levels: list[object]) -> float`
+  - Method L249: `_record_midpoint(self, instrument_id: InstrumentId) -> None`
+  - Method L257: `_book_state(self, instrument_id: InstrumentId) -> dict[str, float] | None`
+  - Method L303: `_expected_entry_price(self, instrument_id: InstrumentId) -> float | None`
+  - Method L317: `_free_quote_balance(self, instrument_id: InstrumentId) -> Decimal | None`
+  - Method L329: `_entry_quantity(self, *, instrument_id: InstrumentId, reference_price: float, visible_size: float) -> Any`
+  - Method L365: `_submit_entry(self, *, instrument_id: InstrumentId, reference_price: float, visible_size: float) -> None`
+  - Method L393: `_submit_exit(self, *, instrument_id: InstrumentId, visible_size: float | None) -> None`
+  - Method L456: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L463: `_pair_has_pending(self, pair: tuple[InstrumentId, InstrumentId]) -> bool`
+  - Method L466: `_position_instrument(self, pair: tuple[InstrumentId, InstrumentId]) -> InstrumentId | None`
+  - Method L474: `_risk_exit(self, *, instrument_id: InstrumentId, bid: float, visible_size: float) -> bool`
+  - Method L494: `_evaluate_pair(self, pair: tuple[InstrumentId, InstrumentId], *, current_ts_ns: int) -> None`
+  - Method L597: `on_order_filled(self, event) -> None`
+  - Method L638: `on_order_rejected(self, event) -> None`
+  - Method L641: `on_order_denied(self, event) -> None`
+  - Method L644: `on_order_canceled(self, event) -> None`
+  - Method L647: `on_order_expired(self, event) -> None`
+  - Method L650: `_mark_not_pending(self, event) -> None`
+  - Method L655: `on_stop(self) -> None`
+  - Method L668: `on_reset(self) -> None`
+
+### `strategies/private/volume_clock_flow_toxicity.py`
+- Imports: `__future__, decimal, nautilus_trader, strategies`
+- Class L22: `BookVolumeClockFlowToxicityConfig(StrategyConfig)`
+  - Method L52: `__post_init__(self) -> None`
+- Class L105: `BookVolumeClockFlowToxicityStrategy(BookTradeFlowMomentumStrategy)`
+  - Method L110: `_flow_stats(self, *, instrument_id: InstrumentId, current_ts_ns: int) -> tuple[float, float]`
+  - Method L144: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/vwap_liquidity_momentum.py`
+- Imports: `__future__, nautilus_trader, strategies`
+- Class L12: `BookVWAPLiquidityMomentumStrategy(BookVWAPLiquidityReversionStrategy)`
+  - Method L17: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L78: `on_order_filled(self, event) -> None`
+  - Method L87: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+
+### `strategies/private/vwap_liquidity_reversion.py`
+- Imports: `__future__, collections, decimal, nautilus_trader, strategies`
+- Class L23: `BookVWAPLiquidityReversionConfig(StrategyConfig)`
+  - Method L42: `__post_init__(self) -> None`
+- Class L70: `BookVWAPLiquidityReversionStrategy(LongOnlyPredictionMarketStrategy)`
+  - Method L75: `__init__(self, config: BookVWAPLiquidityReversionConfig) -> None`
+  - Method L84: `_subscribe(self) -> None`
+  - Method L90: `_weighted_depth(self, levels: list[object]) -> float`
+  - Method L98: `_expected_entry_price(self, order_book: OrderBook) -> float | None`
+  - Method L110: `_book_state(self, order_book: OrderBook) -> dict[str, float] | None`
+  - Method L144: `_append_point(self, *, price: float, weight: float) -> None`
+  - Method L153: `_vwap(self) -> float | None`
+  - Method L158: `_entry_guard_passes(self, state: dict[str, float]) -> bool`
+  - Method L171: `on_order_book(self, order_book: OrderBook) -> None`
+  - Method L232: `on_order_filled(self, event) -> None`
+  - Method L241: `_order_tags(self, *, intent: str, visible_size: float | None) -> list[str]`
+  - Method L244: `on_reset(self) -> None`
 
 ### `strategies/rsi_reversion.py`
 - Imports: `__future__, decimal, nautilus_trader, strategies, typing`

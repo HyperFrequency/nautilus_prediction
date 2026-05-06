@@ -53,24 +53,26 @@ def test_extensions_resolve_to_own_namespace() -> None:
 
 
 def test_commission_patch_installed() -> None:
-    """Verify that the corrected calculate_commission is installed via monkey-patch."""
+    """Verify that the repo calculate_commission is installed via monkey-patch."""
     from decimal import Decimal
 
     from nautilus_trader.adapters.polymarket.common.parsing import calculate_commission
+    from nautilus_trader.model.enums import LiquiditySide
 
     from prediction_market_extensions.adapters.polymarket.parsing import (
         calculate_commission as pm_calculate_commission,
     )
 
     # After conftest.py runs install_commission_patch(), the upstream function
-    # should be our corrected version.
+    # should be the repo implementation.
     assert calculate_commission is pm_calculate_commission
 
     # Verify the fee curve: at p=0.50, fee = qty * feeRate * 0.50 * 0.50
     fee = calculate_commission(
         quantity=Decimal(100),
         price=Decimal("0.50"),
-        fee_rate_bps=Decimal(200),  # 2% = 200 bps
+        fee_rate=Decimal("0.02"),
+        liquidity_side=LiquiditySide.TAKER,
     )
     expected = 100 * 0.02 * 0.50 * 0.50  # = 0.50
     assert abs(fee - expected) < 0.001

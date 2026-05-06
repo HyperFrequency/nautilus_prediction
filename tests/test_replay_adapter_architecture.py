@@ -809,6 +809,50 @@ def test_trade_tick_loader_falls_through_when_telonex_onchain_fills_empty(
     assert "telonex-local::/tmp/telonex" not in output
 
 
+def test_trade_tick_loader_can_disable_polymarket_fallback_for_telonex_only_runs(
+    monkeypatch: pytest.MonkeyPatch, tmp_path, capsys
+) -> None:
+    class FakeTelonexLoader:
+        condition_id = "0xcondition"
+        token_id = "token"
+        instrument = SimpleNamespace()
+
+        def __init__(self) -> None:
+            self.telonex_calls = 0
+            self.polymarket_calls = 0
+            self._telonex_last_trade_source = "telonex api onchain_fills"
+
+        def load_telonex_onchain_fill_ticks(self, start, end):  # type: ignore[no-untyped-def]
+            del start, end
+            self.telonex_calls += 1
+            return ()
+
+        async def load_trades(self, start, end):  # type: ignore[no-untyped-def]
+            del start, end
+            self.polymarket_calls += 1
+            return []
+
+    loader = FakeTelonexLoader()
+    monkeypatch.setenv("TELONEX_DISABLE_POLYMARKET_TRADE_FALLBACK", "1")
+    monkeypatch.setattr(replay_adapters, "_cache_home", lambda: tmp_path)
+
+    trades = asyncio.run(
+        replay_adapters._load_trade_ticks(
+            loader,
+            start=pd.Timestamp("2026-01-19T00:00:00Z"),
+            end=pd.Timestamp("2026-01-19T23:59:59Z"),
+            market_label="demo-market",
+        )
+    )
+    output = capsys.readouterr().err
+
+    assert trades == ()
+    assert loader.telonex_calls == 1
+    assert loader.polymarket_calls == 0
+    assert "telonex api onchain_fills" in output
+    assert "polymarket api" not in output
+
+
 def test_trade_progress_labels_telonex_materialized_trade_cache(tmp_path, capsys) -> None:
     cache_path = tmp_path / "onchain_fills" / "2026-01-19.1-2.parquet"
 

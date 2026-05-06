@@ -23,9 +23,13 @@ from typing import Any
 
 from nautilus_trader.backtest.models import FeeModel
 from nautilus_trader.core.rust.model import OrderType
+from nautilus_trader.model.enums import LiquiditySide
 from nautilus_trader.model.objects import Money
 
-from prediction_market_extensions.adapters.polymarket.parsing import calculate_commission
+from prediction_market_extensions.adapters.polymarket.parsing import (
+    basis_points_as_decimal,
+    calculate_commission,
+)
 
 _CRYPTO_MAKER_REBATE_RATE = Decimal("0.20")
 _DEFAULT_FEE_ENABLED_MAKER_REBATE_RATE = Decimal("0.25")
@@ -167,7 +171,14 @@ def calculate_maker_rebate(
         return 0.0
 
     fee_equivalent = Decimal(
-        str(calculate_commission(quantity=quantity, price=price, fee_rate_bps=fee_rate_bps))
+        str(
+            calculate_commission(
+                quantity=quantity,
+                price=price,
+                fee_rate=basis_points_as_decimal(fee_rate_bps),
+                liquidity_side=LiquiditySide.TAKER,
+            )
+        )
     )
     rebate = fee_equivalent * maker_rebate_rate
     return float(rebate.quantize(_REBATE_QUANTUM, rounding=ROUND_HALF_UP))
@@ -253,6 +264,9 @@ class PolymarketFeeModel(FeeModel):
             return Money(Decimal(str(-rebate)), instrument.quote_currency)
 
         commission = calculate_commission(
-            quantity=fill_quantity, price=fill_price, fee_rate_bps=fee_rate_bps
+            quantity=fill_quantity,
+            price=fill_price,
+            fee_rate=taker_fee_dec,
+            liquidity_side=LiquiditySide.TAKER,
         )
         return Money(Decimal(str(commission)), instrument.quote_currency)

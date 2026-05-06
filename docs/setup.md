@@ -17,7 +17,7 @@ cd prediction-market-backtesting
 unset CONDA_PREFIX
 
 uv venv --python 3.13
-uv pip install "nautilus_trader[polymarket,visualization]==1.225.0" bokeh plotly numpy py-clob-client duckdb textual nbformat nbclient ipykernel optuna python-dotenv
+uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" bokeh plotly numpy py-clob-client duckdb textual nbformat nbclient ipykernel optuna python-dotenv
 make native-develop
 ```
 
@@ -200,7 +200,7 @@ Throughput and memory controls:
 ## Extension Architecture
 
 This repo does not vendor NautilusTrader in-tree. Runtime code comes from
-upstream `nautilus_trader==1.225.0`, and local extensions live under
+upstream `nautilus_trader==1.226.0`, and local extensions live under
 `prediction_market_extensions/`.
 
 Extensions import from upstream Nautilus and add prediction-market-specific

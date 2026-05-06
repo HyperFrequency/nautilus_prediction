@@ -601,6 +601,8 @@ def _joint_portfolio_drawdown(equity_series_list: Sequence[object]) -> float:
             continue
         index = pd.to_datetime(timestamps, utc=True, errors="coerce")
         frame = pd.Series(values, index=index).dropna().sort_index()
+        if frame.index.has_duplicates:
+            frame = frame.groupby(level=0).last()
         if not frame.empty:
             frames.append(frame)
 
