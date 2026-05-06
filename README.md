@@ -22,10 +22,11 @@
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/evan-kolberg/prediction-market-backtesting)
 
 **New in Version 4:**
-- Rust-native PMXT and Telonex data conversion
-- Faster staged PMXT and Telonex data loading
-- Unified cache/local/archive/API source progress output
-- Materialized replay caches for repeated book loads
+- Nautilus 1.226.0
+- Rust-native data conversion
+- Faster staged data loading
+- Improved materialized caches
+- Unified cache/local/archive/API message bus
 
 **New in Version 3:**
 - Telonex vendor support

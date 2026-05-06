@@ -199,7 +199,7 @@ as fresh IOC orders against the already-realized historical book.
 
 <div class="terminal-output-scroll">
 <pre><code>──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Market                                                   Book Events  Fills        Qty   AvgPx   Notional   PnL (USDC)    Return     MaxDD   Sharpe  Sortino      PF  Coverage
+Market                                                   Book Events  Fills        Qty   AvgPx   Notional   PnL (pUSD)    Return     MaxDD   Sharpe  Sortino      PF  Coverage
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 bitcoin-up-or-down-april-26-2026-4am-et:Up                    101833      1      14.01  0.3400       4.76      -4.6995    -0.47%    -1.18%      n/a   -15.87    0.88  +100.00%
 btc-updown-15m-1777222800:Up                                   61180      2      10.45  0.2400       2.51      +0.6700    +0.07%    -0.02%      n/a      n/a    2.17  +100.00%
@@ -293,7 +293,7 @@ TOTAL                                                        9385899     72    1
 
 Portfolio run stats: Iterations: 9,500,965 | Events: 410 | Orders: 153 | Positions: 48 | Elapsed: 260867.127s
 Portfolio return stats: Sharpe Ratio (252 days): -10.87 | Sortino Ratio (252 days): -10.2 | Profit Factor: 0 | Risk Return Ratio: -0.6849 | Returns Volatility (252 days): 1.017 | Average (Return): -0.04387
-Portfolio PnL stats (USDC.e): PnL (total): -148.5 | PnL% (total): -14.85 | Win Rate: 0.9167 | Expectancy: 1.164 | Avg Winner: 1.341 | Avg Loser: -0.7787
+Portfolio PnL stats (pUSD): PnL (total): -148.5 | PnL% (total): -14.85 | Win Rate: 0.9167 | Expectancy: 1.164 | Avg Winner: 1.341 | Avg Loser: -0.7787
 
 WARNING: bitcoin-up-or-down-april-26-2026-4am-et:Up: Replay selection is explicitly curated from named markets and may exclude cancelled, delisted, or zero-liquidity markets.
 WARNING: bitcoin-up-or-down-april-26-2026-4am-et:Up: No portfolio-level drawdown or daily-loss circuit breaker is configured for this run.

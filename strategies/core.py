@@ -117,6 +117,8 @@ class LongOnlyPredictionMarketStrategy(Strategy):
         self._last_entry_reference_price: float | None = None
         self._last_entry_visible_size: float | None = None
         self._last_exit_visible_size: float | None = None
+        self._last_book_ts_ns: int = 0
+        self._last_exit_attempt_ts_ns: int | None = None
         self._entry_warning_emitted: bool = False
         self._order_book: OrderBook | None = None
 
@@ -152,6 +154,7 @@ class LongOnlyPredictionMarketStrategy(Strategy):
         if self._order_book is None:
             self._order_book = OrderBook(instrument_id, book_type=BookType.L2_MBP)
         self._order_book.apply_deltas(deltas)
+        self._last_book_ts_ns = int(getattr(deltas, "ts_event", 0) or 0)
         self.on_order_book(self._order_book)
 
     def _in_position(self) -> bool:
@@ -282,6 +285,14 @@ class LongOnlyPredictionMarketStrategy(Strategy):
 
     def _submit_exit(self) -> None:
         assert self._instrument is not None
+        retry_cooldown_seconds = float(getattr(self.config, "exit_retry_cooldown_seconds", 5.0))
+        retry_cooldown_ns = int(retry_cooldown_seconds * 1_000_000_000)
+        if (
+            self._last_book_ts_ns > 0
+            and self._last_exit_attempt_ts_ns is not None
+            and self._last_book_ts_ns - self._last_exit_attempt_ts_ns < retry_cooldown_ns
+        ):
+            return
         net_position = self.portfolio.net_position(self.config.instrument_id)
         if net_position is None:
             return
@@ -310,6 +321,12 @@ class LongOnlyPredictionMarketStrategy(Strategy):
             return
         if quantity.as_double() <= 0:
             return
+        min_quantity = getattr(self._instrument, "min_quantity", None)
+        if min_quantity is not None and quantity.as_double() + 1e-12 < min_quantity.as_double():
+            return
+        lot_size = getattr(self._instrument, "lot_size", None)
+        if lot_size is not None and quantity.as_double() + 1e-12 < lot_size.as_double():
+            return
 
         order = self.order_factory.market(
             instrument_id=self.config.instrument_id,
@@ -319,6 +336,8 @@ class LongOnlyPredictionMarketStrategy(Strategy):
             reduce_only=True,
             tags=self._order_tags(intent="exit", visible_size=self._last_exit_visible_size),
         )
+        if self._last_book_ts_ns > 0:
+            self._last_exit_attempt_ts_ns = self._last_book_ts_ns
         self._pending = True
         try:
             self.submit_order(order)
@@ -400,6 +419,7 @@ class LongOnlyPredictionMarketStrategy(Strategy):
                 self._entry_price = float(self._entry_cost_sum / self._entry_qty_sum)
             else:
                 self._entry_price = None
+                self._last_exit_attempt_ts_ns = None
                 self._entry_qty_sum = Decimal("0")
                 self._entry_cost_sum = Decimal("0")
         if self._event_order_is_closed(event):
@@ -429,6 +449,8 @@ class LongOnlyPredictionMarketStrategy(Strategy):
         self._last_entry_reference_price = None
         self._last_entry_visible_size = None
         self._last_exit_visible_size = None
+        self._last_book_ts_ns = 0
+        self._last_exit_attempt_ts_ns = None
         self._entry_warning_emitted = False
         self._instrument = None
         self._order_book = None

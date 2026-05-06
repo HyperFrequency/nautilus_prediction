@@ -463,6 +463,24 @@ def test_joint_portfolio_drawdown_tracks_concurrent_losses() -> None:
     assert joint == pytest.approx(40.0)
 
 
+def test_joint_portfolio_drawdown_uses_latest_duplicate_timestamp_value() -> None:
+    # Summary series can contain repeated timestamps when multiple events are
+    # recorded at the same exchange time. Reindexing requires unique labels;
+    # using the last value preserves the latest known equity at that instant.
+    market_a = [
+        ("2026-01-01T00:00:00Z", 100.0),
+        ("2026-01-01T01:00:00Z", 95.0),
+        ("2026-01-01T01:00:00Z", 90.0),
+        ("2026-01-01T02:00:00Z", 100.0),
+    ]
+    market_b = [
+        ("2026-01-01T00:30:00Z", 100.0),
+        ("2026-01-01T01:30:00Z", 100.0),
+    ]
+
+    assert optimizer._joint_portfolio_drawdown([market_a, market_b]) == pytest.approx(10.0)
+
+
 def test_parameter_search_config_accepts_base_replays_for_multi_market(
     tmp_path: Path,
 ) -> None:

@@ -5,7 +5,8 @@ from decimal import Decimal
 from types import SimpleNamespace
 
 from nautilus_trader.core.rust.model import OrderType
-from nautilus_trader.model.currencies import USDC_POS
+from nautilus_trader.model.currencies import pUSD
+from nautilus_trader.model.enums import LiquiditySide
 from nautilus_trader.model.objects import Currency
 
 from prediction_market_extensions.adapters.polymarket.loaders import PolymarketDataLoader
@@ -16,7 +17,6 @@ from prediction_market_extensions.adapters.polymarket.fee_model import (
 )
 from prediction_market_extensions.adapters.polymarket.parsing import (
     calculate_commission,
-    infer_fee_exponent,
 )
 
 
@@ -24,9 +24,8 @@ def test_calculate_commission_matches_current_polymarket_formula() -> None:
     commission = calculate_commission(
         quantity=Decimal(100),
         price=Decimal("0.5"),
-        fee_rate_bps=Decimal(
-            30,
-        ),
+        fee_rate=Decimal("0.003"),
+        liquidity_side=LiquiditySide.TAKER,
     )
 
     assert commission == 0.075
@@ -36,18 +35,22 @@ def test_calculate_commission_rounds_to_five_decimals() -> None:
     commission = calculate_commission(
         quantity=Decimal(1),
         price=Decimal("0.5"),
-        fee_rate_bps=Decimal(
-            "2.2",
-        ),
+        fee_rate=Decimal("0.00022"),
+        liquidity_side=LiquiditySide.TAKER,
     )
 
     assert commission == 0.00006
 
 
-def test_infer_fee_exponent_is_now_a_compatibility_shim() -> None:
-    assert infer_fee_exponent(Decimal(0)) == 1
-    assert infer_fee_exponent(Decimal(35)) == 1
-    assert infer_fee_exponent(Decimal(2500)) == 1
+def test_calculate_commission_charges_takers_only() -> None:
+    commission = calculate_commission(
+        quantity=Decimal(100),
+        price=Decimal("0.5"),
+        fee_rate=Decimal("0.003"),
+        liquidity_side=LiquiditySide.MAKER,
+    )
+
+    assert commission == 0.0
 
 
 def test_fee_rate_enrichment_keeps_maker_fee_zero(monkeypatch) -> None:
@@ -133,7 +136,7 @@ def test_limit_orders_receive_polymarket_maker_rebate_credit() -> None:
         instrument=SimpleNamespace(
             info={"tags": ["Sports"]},
             taker_fee=Decimal("0.003"),
-            quote_currency=USDC_POS,
+            quote_currency=pUSD,
         ),
     )
 
@@ -163,7 +166,7 @@ def test_market_orders_still_pay_polymarket_taker_fee() -> None:
         instrument=SimpleNamespace(
             info={"tags": ["Sports"]},
             taker_fee=Decimal("0.003"),
-            quote_currency=USDC_POS,
+            quote_currency=pUSD,
         ),
     )
 

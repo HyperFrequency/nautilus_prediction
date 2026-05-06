@@ -70,7 +70,7 @@ def test_save_aggregate_backtest_report_accepts_mixed_iso_timestamp_precision(tm
         output_path=output_path,
         title="mixed timestamp precision chart",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
     )
 
     assert report_path == str(output_path.resolve())
@@ -173,7 +173,7 @@ def test_save_joint_portfolio_backtest_report_accepts_mixed_iso_timestamp_precis
         output_path=output_path,
         title="joint mixed timestamp precision chart",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
     )
 
     assert report_path == str(output_path.resolve())
@@ -278,7 +278,7 @@ def test_save_aggregate_backtest_report_adds_brier_placeholder_when_outcomes_mis
         output_path=tmp_path / "aggregate_brier_placeholder.html",
         title="aggregate placeholder chart",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         plot_panels=("brier_advantage",),
     )
 
@@ -377,7 +377,7 @@ def test_save_joint_portfolio_backtest_report_adds_brier_placeholder_when_outcom
         output_path=tmp_path / "joint_brier_placeholder.html",
         title="joint placeholder chart",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         plot_panels=("brier_advantage",),
     )
 
@@ -479,7 +479,7 @@ def test_save_aggregate_backtest_report_limits_dense_yes_price_fill_markers(
         output_path=tmp_path / "aggregate_dense_fills.html",
         title="aggregate dense fills",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
     )
 
     assert report_path == str((tmp_path / "aggregate_dense_fills.html").resolve())
@@ -576,7 +576,7 @@ def test_save_joint_portfolio_backtest_report_limits_dense_yes_price_fill_marker
         output_path=tmp_path / "joint_dense_fills.html",
         title="joint dense fills",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
     )
 
     assert report_path == str((tmp_path / "joint_dense_fills.html").resolve())
@@ -691,7 +691,7 @@ def test_save_aggregate_backtest_report_prunes_unused_payload_for_total_only_pan
         output_path=tmp_path / "aggregate_total_only.html",
         title="aggregate total only",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         plot_panels=("total_equity", "periodic_pnl", "monthly_returns"),
     )
 
@@ -784,7 +784,7 @@ def test_save_aggregate_backtest_report_keeps_market_payload_when_summary_panels
         output_path=tmp_path / "aggregate_rich.html",
         title="aggregate rich",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         plot_panels=("equity", "yes_price", "allocation", "market_pnl"),
     )
 
@@ -871,7 +871,7 @@ def test_save_joint_portfolio_backtest_report_prunes_unused_payload_for_total_on
         output_path=tmp_path / "joint_total_only.html",
         title="joint total only",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         plot_panels=("total_equity", "total_cash_equity", "periodic_pnl", "monthly_returns"),
     )
 
@@ -1001,7 +1001,7 @@ def test_save_joint_portfolio_backtest_report_keeps_market_overlays_when_needed(
         output_path=tmp_path / "joint_with_overlays.html",
         title="joint with overlays",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         plot_panels=(
             "total_brier_advantage",
             "brier_advantage",
@@ -1078,7 +1078,7 @@ def test_save_joint_portfolio_backtest_report_renders_market_overlay_labels(tmp_
         output_path=output_path,
         title="joint with rendered overlays",
         market_key="slug",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         plot_panels=(
             "total_equity",
             "equity",

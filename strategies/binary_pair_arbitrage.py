@@ -96,6 +96,7 @@ class BookBinaryPairArbitrageConfig(StrategyConfig, frozen=True):  # type: ignor
     pairing_mode: str = "sequential"
     hold_to_resolution: bool = True
     include_taker_fees_in_signal: bool = True
+    signal_fee_rate: float | None = None
 
     def __post_init__(self) -> None:
         require_positive_decimal("trade_size", self.trade_size)
@@ -107,6 +108,8 @@ class BookBinaryPairArbitrageConfig(StrategyConfig, frozen=True):  # type: ignor
         require_finite_nonnegative_float("min_visible_size", self.min_visible_size)
         require_nonnegative_int("max_entries_per_pair", self.max_entries_per_pair)
         require_nonnegative_int("reentry_cooldown_updates", self.reentry_cooldown_updates)
+        if self.signal_fee_rate is not None:
+            require_finite_nonnegative_float("signal_fee_rate", self.signal_fee_rate)
         if self.pairing_mode != "sequential":
             raise ValueError("pairing_mode currently supports only 'sequential'")
         if len(self.instrument_ids) < 2 or len(self.instrument_ids) % 2 != 0:
@@ -193,6 +196,8 @@ class BookBinaryPairArbitrageStrategy(Strategy):
         instrument = self._instruments.get(instrument_id)
         if instrument is None:
             return Decimal("0")
+        if self.config.signal_fee_rate is not None:
+            return Decimal(str(self.config.signal_fee_rate))
         return _decimal_or_none(getattr(instrument, "taker_fee", None)) or Decimal("0")
 
     def _free_quote_balance(self, instrument_id: InstrumentId) -> Decimal | None:

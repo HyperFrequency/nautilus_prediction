@@ -13,6 +13,9 @@ features from the NautilusTrader documentation.
   not make unless the user explicitly asks.
 - Keep changes tightly scoped to the request. Avoid unrelated refactors and
   formatting churn.
+- Do not add backwards-compatibility shims for old dependency APIs or old repo
+  behavior. Versioned branches preserve older versions; the active branch should
+  adopt the current target dependency/API directly.
 - NEVER push directly to `main`, `v4`, `v3`, or any default/base/release
   branch. Push only to a separate PR branch.
 

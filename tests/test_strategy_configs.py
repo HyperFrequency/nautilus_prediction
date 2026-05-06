@@ -74,8 +74,8 @@ def test_prediction_market_backtest_binds_strategy_configs_across_sims() -> None
                 },
             },
             {
-                "strategy_path": "strategies:PortfolioProbeStrategy",
-                "config_path": "strategies:PortfolioProbeConfig",
+                "strategy_path": "strategies:BookBinaryPairArbitrageStrategy",
+                "config_path": "strategies:BookBinaryPairArbitrageConfig",
                 "config": {"instrument_ids": "__ALL_SIM_INSTRUMENT_IDS__"},
             },
         ],

@@ -36,7 +36,7 @@ def test_print_backtest_summary_includes_rich_statistics(capsys) -> None:
                         "Profit Factor": 2.0,
                     },
                     "stats_pnls": {
-                        "USDC": {
+                        "pUSD": {
                             "PnL (total)": 1.0,
                             "Win Rate": 0.5,
                             "Expectancy": 0.25,
@@ -57,7 +57,7 @@ def test_print_backtest_summary_includes_rich_statistics(capsys) -> None:
         market_key="slug",
         count_key="book_events",
         count_label="Book Events",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
     )
 
     output = capsys.readouterr().out
@@ -81,7 +81,7 @@ def test_print_backtest_summary_includes_rich_statistics(capsys) -> None:
     assert "Events: 34" in output
     assert "Portfolio return stats" in output
     assert "Sharpe Ratio (252 days): 1.5" in output
-    assert "Portfolio PnL stats (USDC)" in output
+    assert "Portfolio PnL stats (pUSD)" in output
 
 
 def test_print_backtest_summary_aligns_count_header_with_values(capsys) -> None:
@@ -98,7 +98,7 @@ def test_print_backtest_summary_aligns_count_header_with_values(capsys) -> None:
         market_key="slug",
         count_key="book_events",
         count_label="Book Events",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
     )
 
     output = capsys.readouterr().out

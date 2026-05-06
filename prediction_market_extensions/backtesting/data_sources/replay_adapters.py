@@ -19,7 +19,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 from nautilus_trader.adapters.polymarket import POLYMARKET_VENUE
 from nautilus_trader.model.book import OrderBook
-from nautilus_trader.model.currencies import USDC_POS
+from nautilus_trader.model.currencies import pUSD
 from nautilus_trader.model.data import OrderBookDeltas, TradeTick
 from nautilus_trader.model.enums import AccountType, BookType, OmsType
 
@@ -442,6 +442,11 @@ def _polymarket_ceiling_warning(caught_warnings: list[warnings.WarningMessage]) 
     return None
 
 
+def _disable_polymarket_trade_fallback() -> bool:
+    raw = os.getenv("TELONEX_DISABLE_POLYMARKET_TRADE_FALLBACK", "")
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _trade_days_for_window(start: pd.Timestamp, end: pd.Timestamp) -> tuple[pd.Timestamp, ...]:
     start_utc = _normalize_timestamp(start)
     end_utc = _normalize_timestamp(end)
@@ -476,6 +481,11 @@ async def _load_trade_ticks(
             day_trades = tuple(sorted(telonex_trades, key=_trade_record_sort_key))
             source = str(
                 getattr(loader, "_telonex_last_trade_source", None) or "telonex onchain_fills"
+            )
+        elif callable(telonex_loader) and _disable_polymarket_trade_fallback():
+            day_trades = ()
+            source = str(
+                getattr(loader, "_telonex_last_trade_source", None) or "telonex onchain_fills empty"
             )
         elif cache_path is not None and cache_path.exists():
             frame = await asyncio.to_thread(pd.read_parquet, cache_path)
@@ -555,7 +565,7 @@ L2_BOOK_ENGINE_PROFILE = ReplayEngineProfile(
     venue=POLYMARKET_VENUE,
     oms_type=OmsType.NETTING,
     account_type=AccountType.CASH,
-    base_currency=USDC_POS,
+    base_currency=pUSD,
     fee_model_factory=PolymarketFeeModel,
     fill_model_mode="passive_book",
     book_type=BookType.L2_MBP,

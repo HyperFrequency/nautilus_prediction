@@ -133,7 +133,7 @@ def run() -> None:
             report=MarketReportConfig(
                 count_key="book_events",
                 count_label="Book Events",
-                pnl_label="PnL (USDC)",
+                pnl_label="PnL (pUSD)",
             ),
             empty_message="No replays met the book requirements.",
         )
@@ -175,7 +175,7 @@ build_replay_experiment(
     report=MarketReportConfig(
         count_key="book_events",
         count_label="Book Events",
-        pnl_label="PnL (USDC)",
+        pnl_label="PnL (pUSD)",
         summary_report=True,
         summary_report_path="output/polymarket_book_joint_portfolio_runner_joint_portfolio.html",
         summary_plot_panels=(

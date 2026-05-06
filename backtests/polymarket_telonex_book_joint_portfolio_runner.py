@@ -195,7 +195,7 @@ def run() -> None:
                 report=MarketReportConfig(
                     count_key="book_events",
                     count_label="Book Events",
-                    pnl_label="PnL (USDC)",
+                    pnl_label="PnL (pUSD)",
                     market_key="sim_label",
                     summary_report=True,
                     summary_report_path=(

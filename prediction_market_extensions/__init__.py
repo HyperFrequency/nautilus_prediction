@@ -7,13 +7,11 @@ _COMMISSION_PATCH_INSTALLED = False
 
 def install_commission_patch() -> None:
     """
-    Monkey-patch upstream ``calculate_commission`` with the corrected fee curve.
+    Install the repo's Polymarket commission rounding policy.
 
-    Upstream uses ``qty * price * fee_rate_bps_as_fraction`` (linear).
-    The correct Polymarket formula is ``qty * feeRate * p * (1 - p)`` (curved),
-    which peaks at p=0.50 and tapers toward the extremes.
-
-    This is the only startup hook required. Call once at process start.
+    Nautilus 1.226 uses the current curved fee formula and pUSD currency
+    model. This startup hook keeps this repository's fee rounding centralized
+    while targeting the 1.226 function signature directly.
     """
     global _COMMISSION_PATCH_INSTALLED
     if _COMMISSION_PATCH_INSTALLED:

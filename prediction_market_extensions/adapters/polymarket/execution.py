@@ -30,7 +30,7 @@ from nautilus_trader.adapters.polymarket.common.constants import (
     POLYMARKET_VENUE,
     VALID_POLYMARKET_TIME_IN_FORCE,
 )
-from nautilus_trader.adapters.polymarket.common.conversion import usdce_from_units
+from nautilus_trader.adapters.polymarket.common.conversion import pusd_from_units
 from nautilus_trader.adapters.polymarket.common.credentials import PolymarketWebSocketAuth
 from nautilus_trader.adapters.polymarket.common.enums import (
     PolymarketEventType,
@@ -83,7 +83,7 @@ from nautilus_trader.execution.messages import (
 from nautilus_trader.execution.reports import FillReport, OrderStatusReport, PositionStatusReport
 from nautilus_trader.live.execution_client import LiveExecutionClient
 from nautilus_trader.live.retry import RetryManagerPool
-from nautilus_trader.model.currencies import USDC_POS
+from nautilus_trader.model.currencies import pUSD
 from nautilus_trader.model.enums import (
     AccountType,
     ContingencyType,
@@ -117,8 +117,6 @@ from py_clob_client.client import (
 )
 from py_clob_client.clob_types import AssetType, PostOrdersArgs
 from py_clob_client.exceptions import PolyApiException
-
-from prediction_market_extensions.adapters.polymarket.parsing import infer_fee_exponent
 
 
 class PolymarketExecutionClient(LiveExecutionClient):
@@ -167,7 +165,7 @@ class PolymarketExecutionClient(LiveExecutionClient):
             oms_type=OmsType.NETTING,
             instrument_provider=instrument_provider,
             account_type=AccountType.CASH,
-            base_currency=USDC_POS,
+            base_currency=pUSD,
             msgbus=msgbus,
             cache=cache,
             clock=clock,
@@ -287,10 +285,8 @@ class PolymarketExecutionClient(LiveExecutionClient):
         response: dict[str, Any] = await asyncio.to_thread(
             self._http_client.get_balance_allowance, params
         )
-        total = usdce_from_units(int(response["balance"]))
-        account_balance = AccountBalance(
-            total=total, locked=Money.from_raw(0, USDC_POS), free=total
-        )
+        total = pusd_from_units(int(response["balance"]))
+        account_balance = AccountBalance(total=total, locked=Money.from_raw(0, pUSD), free=total)
 
         self.generate_account_state(
             balances=[account_balance],
@@ -750,7 +746,7 @@ class PolymarketExecutionClient(LiveExecutionClient):
         for instrument_id in instrument_ids:
             size = size_by_asset.get(instrument_id, 0.0)
             # Gamma API returns size as decimal float (e.g., 1.5 shares)
-            quantities[instrument_id] = Quantity(float(size), precision=USDC_POS.precision)
+            quantities[instrument_id] = Quantity(float(size), precision=pUSD.precision)
 
         return quantities
 
@@ -775,7 +771,7 @@ class PolymarketExecutionClient(LiveExecutionClient):
                 self._http_client.get_balance_allowance, params
             )
             quantities[instrument_id] = Quantity.from_raw(
-                usdce_from_units(int(response["balance"])).raw, precision=USDC_POS.precision
+                pusd_from_units(int(response["balance"])).raw, precision=pUSD.precision
             )
 
         return quantities
@@ -1804,9 +1800,13 @@ class PolymarketExecutionClient(LiveExecutionClient):
 
         last_qty = instrument.make_qty(msg.last_qty(order_id))
         last_px = instrument.make_price(msg.last_px(order_id))
-        fee_rate_bps = msg.get_fee_rate_bps(order_id)
-        fee_exponent = infer_fee_exponent(fee_rate_bps)
-        commission = calculate_commission(last_qty, last_px, fee_rate_bps, fee_exponent)
+        liquidity_side = msg.liquidity_side()
+        commission = calculate_commission(
+            quantity=last_qty.as_decimal(),
+            price=last_px.as_decimal(),
+            fee_rate=instrument.taker_fee,
+            liquidity_side=liquidity_side,
+        )
         ts_event = secs_to_nanos(int(msg.match_time))
 
         self.generate_order_filled(
@@ -1820,9 +1820,9 @@ class PolymarketExecutionClient(LiveExecutionClient):
             order_type=order.order_type,
             last_qty=last_qty,
             last_px=last_px,
-            quote_currency=USDC_POS,
-            commission=Money(commission, USDC_POS),
-            liquidity_side=msg.liquidity_side(),
+            quote_currency=pUSD,
+            commission=Money(commission, pUSD),
+            liquidity_side=liquidity_side,
             ts_event=ts_event,
             info=msg.to_dict(),
         )
