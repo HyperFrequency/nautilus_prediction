@@ -14,7 +14,7 @@ jobs:
           python-version: "3.13"
       - uses: astral-sh/setup-uv@v5
       - run: uv venv --python 3.13
-      - run: uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" aiohttp bokeh duckdb textual nbformat nbclient ipykernel pytest ruff
+      - run: uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" aiohttp bokeh duckdb textual nbformat nbclient ipykernel pytest ruff py-clob-client python-dotenv
       - run: make native-develop
       - run: uv run ruff check .
       - run: uv run ruff format --check .
