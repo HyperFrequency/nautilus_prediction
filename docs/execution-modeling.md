@@ -19,8 +19,9 @@ repo-level interpretation is:
 
 ## Fees
 
-- Polymarket uses the current taker fee curve from venue metadata, plus CLOB
-  fee-rate enrichment when the market payload itself still reports zero fees.
+- Polymarket uses the current taker fee curve from Gamma `feeSchedule.rate`
+  metadata. CLOB `maker_base_fee` and `taker_base_fee` are signing caps, not
+  the effective settlement fee.
 - Polymarket maker fees are treated as zero.
 - Polymarket maker rebates are modeled for passive limit-order fills as a
   negative commission. The credit uses the same fee-equivalent curve as taker

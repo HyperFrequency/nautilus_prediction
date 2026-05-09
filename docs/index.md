@@ -11,8 +11,9 @@ This repository is documented around two active operating assumptions:
   `build_replay_experiment(...)` or `ParameterSearchExperiment(...)`
 
 PMXT uses local raw files plus remote archives instead of a separate service
-surface. Telonex uses a local Hive-partitioned full-book mirror, materialized
-`OrderBookDeltas` replay cache, and `api:` as an explicit fallback. The primary
+surface. Telonex uses materialized `OrderBookDeltas` replay cache, `api:` as
+the public-runner first source, and a local Hive-partitioned full-book mirror as
+a fallback. The primary
 operating docs are grouped under Core Framework; optimizer research and ledger
 replay are grouped under Advanced / Experiments.
 
@@ -23,6 +24,7 @@ replay are grouped under Advanced / Experiments.
 ##### Core Framework
 
 - [Backtests And Runners](backtests.md)
+- [Sandbox And Live Runners](live.md)
 - [Data Loading](data-loading.md)
 - [Data Vendors And Local Mirrors](data-vendors.md)
 - [Vendor Fetch Sources And Timing](vendor-fetch-sources.md)

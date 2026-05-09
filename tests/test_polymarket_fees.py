@@ -122,7 +122,7 @@ def test_infer_maker_rebate_rate_zero_when_fee_enabled_but_unclassified() -> Non
 def test_infer_maker_rebate_rate_can_use_documented_fee_rate() -> None:
     rate = infer_maker_rebate_rate(
         market_info={},
-        fee_rate_bps=Decimal(720),
+        fee_rate_bps=Decimal(700),
     )
 
     assert rate == Decimal("0.20")

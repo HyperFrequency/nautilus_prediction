@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+from decimal import Decimal
 from types import SimpleNamespace
 
 import msgspec
@@ -260,6 +261,49 @@ def test_from_market_slug_uses_run_metadata_cache_and_sanitizes_resolution(
     assert "winner" not in second.instrument.info["tokens"][0]
     assert second.resolution_metadata["result"] == "Yes"
     assert second.resolution_metadata["tokens"][0]["winner"] is True
+    PolymarketDataLoader.clear_metadata_cache()
+
+
+def test_from_market_slug_preserves_gamma_fee_schedule_without_clob_fee_rate(
+    monkeypatch: pytest.MonkeyPatch, tmp_path
+) -> None:
+    monkeypatch.setenv(PolymarketDataLoader._METADATA_CACHE_DIR_ENV, str(tmp_path))
+    PolymarketDataLoader.clear_metadata_cache()
+    condition_id = "0x" + "9" * 64
+    gamma_market = _metadata_market_payload(condition_id=condition_id)
+    gamma_market["feesEnabled"] = True
+    gamma_market["feeSchedule"] = {
+        "exponent": 1,
+        "rate": 0.07,
+        "takerOnly": True,
+        "rebateRate": 0.2,
+    }
+    clob_market = _metadata_details_payload(condition_id=condition_id)
+    clob_market["maker_base_fee"] = "1000"
+    clob_market["taker_base_fee"] = "1000"
+    client = _RoutingHttpClient(
+        {
+            (
+                "https://gamma-api.polymarket.com/markets/slug/demo-market",
+                None,
+            ): gamma_market,
+            (
+                f"https://clob.polymarket.com/markets/{condition_id}",
+                None,
+            ): clob_market,
+        }
+    )
+
+    loader = asyncio.run(PolymarketDataLoader.from_market_slug("demo-market", http_client=client))
+
+    assert client.requests == [
+        ("https://gamma-api.polymarket.com/markets/slug/demo-market", None),
+        (f"https://clob.polymarket.com/markets/{condition_id}", None),
+    ]
+    assert loader.instrument.maker_fee == Decimal("0")
+    assert loader.instrument.taker_fee == Decimal("0.07")
+    assert loader.instrument.info["feeSchedule"]["rate"] == 0.07
+    assert loader.instrument.info["_gamma_original"]["feeSchedule"]["rebateRate"] == 0.2
     PolymarketDataLoader.clear_metadata_cache()
 
 

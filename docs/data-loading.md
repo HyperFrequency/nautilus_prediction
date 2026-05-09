@@ -32,8 +32,8 @@ MarketDataConfig(
     data_type=Book,
     vendor=Telonex,
     sources=(
-        "local:/Volumes/storage/telonex_data",
         "api:",
+        "local:/Volumes/storage/telonex_data",
     ),
 )
 ```
@@ -120,8 +120,8 @@ Book lookup order for a market/outcome/day:
 
 1. Materialized `OrderBookDeltas` cache under
    `~/.cache/nautilus_trader/telonex/book-deltas-v1`.
-2. Explicit `local:` Telonex mirror entries.
-3. Explicit `api:` entries.
+2. Explicit `api:` entries.
+3. Explicit `local:` Telonex mirror entries.
 4. Confirmed miss.
 
 The local mirror created by `make download-telonex-data` contains a DuckDB
@@ -269,7 +269,7 @@ Missing PMXT local files do not automatically mean failure if an archive source
 is configured after the local source. The archive can satisfy the replay and
 optionally backfill the local raw root.
 
-Missing or empty Telonex local days fall through to the next configured source.
+Missing or empty Telonex API days fall through to the next configured source.
 Unreadable parquet files warn and are skipped. Empty Telonex `onchain_fills`
 fall through to Telonex `trades`, then Polymarket public trades.
 

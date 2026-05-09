@@ -662,6 +662,12 @@ class PolymarketDataLoader:
     async def _enrich_market_details_with_fee_rate(
         cls, market_details: dict[str, Any], token_id: str, http_client: nautilus_pyo3.HttpClient
     ) -> dict[str, Any]:
+        gamma_original = market_details.get("_gamma_original") or {}
+        if market_details.get("feeSchedule") or (
+            isinstance(gamma_original, dict) and gamma_original.get("feeSchedule")
+        ):
+            return market_details
+
         existing_maker_fee = cls._coerce_fee_rate_bps(market_details.get("maker_base_fee"))
         existing_taker_fee = cls._coerce_fee_rate_bps(market_details.get("taker_base_fee"))
         if (existing_maker_fee is not None and existing_maker_fee > 0) or (
@@ -822,6 +828,16 @@ class PolymarketDataLoader:
         market_details["description"] = market.get("description") or market_details.get(
             "description"
         )
+        market_details["feeSchedule"] = market.get("feeSchedule") or market_details.get(
+            "feeSchedule"
+        )
+        market_details["feesEnabled"] = market.get("feesEnabled", market_details.get("feesEnabled"))
+        market_details["category"] = market.get("category") or market_details.get("category")
+        market_details["category_slug"] = market.get("categorySlug") or market_details.get(
+            "category_slug"
+        )
+        market_details["tags"] = market.get("tags") or market_details.get("tags")
+        market_details["_gamma_original"] = market
         market_details["closed"] = market.get("closed", market_details.get("closed"))
         market_details["closedTime"] = market.get("closedTime") or market_details.get("closedTime")
         market_details["uma_resolution_status"] = market.get(
@@ -908,6 +924,24 @@ class PolymarketDataLoader:
             outcome = token["outcome"]
             market_details = dict(market_details)
             market_details["tokens"] = tokens
+            market_details["market_slug"] = market.get("slug") or market_details.get("market_slug")
+            market_details["question"] = market.get("question") or market_details.get("question")
+            market_details["description"] = market.get("description") or market_details.get(
+                "description"
+            )
+            market_details["feeSchedule"] = market.get("feeSchedule") or market_details.get(
+                "feeSchedule"
+            )
+            market_details["feesEnabled"] = market.get(
+                "feesEnabled",
+                market_details.get("feesEnabled"),
+            )
+            market_details["category"] = market.get("category") or market_details.get("category")
+            market_details["category_slug"] = market.get("categorySlug") or market_details.get(
+                "category_slug"
+            )
+            market_details["tags"] = market.get("tags") or market_details.get("tags")
+            market_details["_gamma_original"] = market
             market_details = await cls._enrich_market_details_with_fee_rate(
                 market_details, token_id, client
             )

@@ -50,7 +50,7 @@ _FEE_ENABLED_NON_CRYPTO_LABELS = frozenset(
         "weather",
     }
 )
-_CRYPTO_FEE_RATE_BPS = frozenset({Decimal("72"), Decimal("720")})
+_CRYPTO_FEE_RATE_BPS = frozenset({Decimal("70"), Decimal("700")})
 _NON_CRYPTO_FEE_RATE_BPS = frozenset(
     {
         Decimal("30"),

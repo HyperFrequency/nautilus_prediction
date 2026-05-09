@@ -28,6 +28,8 @@ data/
 output/
 kalshi_catalog/
 
+# Live runner/scaffold files are tracked; private artifacts are ignored in live/.gitignore.
+
 # Local relay runtime
 .pmxt-relay/
 

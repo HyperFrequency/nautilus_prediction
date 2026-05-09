@@ -69,8 +69,8 @@ MarketDataConfig(
     data_type=Book,
     vendor=Telonex,
     sources=(
-        "local:/Volumes/storage/telonex_data",
         "api:",
+        "local:/Volumes/storage/telonex_data",
     ),
 )
 ```
@@ -86,8 +86,8 @@ The effective lookup order for converted replay records is:
 The `Telonex source:` line shows that implicit cache layer:
 
 ```text
-Telonex book source: explicit priority (cache -> local /Volumes/storage/telonex_data -> api https://api.telonex.io (key set))
-Telonex trade source: explicit priority (cache -> local /Volumes/storage/telonex_data -> api https://api.telonex.io (key set) -> polymarket cache -> api https://data-api.polymarket.com/trades)
+Telonex book source: explicit priority (cache -> api https://api.telonex.io (key set) -> local /Volumes/storage/telonex_data)
+Telonex trade source: explicit priority (cache -> api https://api.telonex.io (key set) -> local /Volumes/storage/telonex_data -> polymarket cache -> api https://data-api.polymarket.com/trades)
 ```
 
 Local reads use the DuckDB manifest when present. The manifest maps requested

@@ -287,6 +287,60 @@ def test_discover_reads_notebook_metadata_without_execution(tmp_path: Path, monk
     ]
 
 
+def test_sandbox_mode_discovers_local_live_runners(tmp_path: Path, monkeypatch) -> None:
+    project_root = tmp_path
+    live_root = project_root / "live"
+    live_root.mkdir()
+    (live_root / "demo_sandbox.py").write_text(
+        'NAME = "demo_sandbox"\nDESCRIPTION = "Sandbox runner"\n\ndef run() -> None:\n    pass\n',
+        encoding="utf-8",
+    )
+
+    prior_root = main_module.BACKTESTS_ROOT
+    prior_label = main_module.RUNNER_ROOT_LABEL
+    prior_title = main_module.MENU_TITLE
+    monkeypatch.setattr(main_module, "PROJECT_ROOT", project_root)
+
+    try:
+        main_module._configure_mode("sandbox")
+        discovered = main_module.discover()
+        assert main_module.BACKTESTS_ROOT == live_root
+        assert main_module.RUNNER_ROOT_LABEL == "live"
+        assert discovered == [
+            {
+                "name": "demo_sandbox",
+                "description": "",
+                "module_name": "live.demo_sandbox",
+                "relative_parts": ("demo_sandbox.py",),
+            }
+        ]
+    finally:
+        main_module.BACKTESTS_ROOT = prior_root
+        main_module.RUNNER_ROOT_LABEL = prior_label
+        main_module.MENU_TITLE = prior_title
+
+
+def test_sandbox_mode_empty_message_points_at_live(tmp_path: Path, monkeypatch, capsys) -> None:
+    project_root = tmp_path
+    prior_root = main_module.BACKTESTS_ROOT
+    prior_label = main_module.RUNNER_ROOT_LABEL
+    prior_title = main_module.MENU_TITLE
+    monkeypatch.setattr(main_module, "PROJECT_ROOT", project_root)
+
+    try:
+        with pytest.raises(SystemExit) as exc_info:
+            main_module.main(["--mode", "sandbox"])
+        assert exc_info.value.code == 1
+        rendered = capsys.readouterr().out
+        assert "No sandbox runners found" in rendered
+        assert str(project_root / "live") in rendered
+        assert "live/private" not in rendered
+    finally:
+        main_module.BACKTESTS_ROOT = prior_root
+        main_module.RUNNER_ROOT_LABEL = prior_label
+        main_module.MENU_TITLE = prior_title
+
+
 def test_load_runner_defers_import_failure_until_selection(tmp_path: Path, monkeypatch) -> None:
     project_root = tmp_path
     backtests_root = project_root / "backtests"
