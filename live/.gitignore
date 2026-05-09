@@ -1,0 +1,10 @@
+# Live runner/scaffold files are safe to publish.
+# Keep model artifacts, diagnostics, and local runtime files private.
+__pycache__/
+*.pyc
+models/
+*_diagnostics.json
+*_settlements.json
+*.log
+.env
+.env.*

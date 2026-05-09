@@ -367,12 +367,12 @@ trade-tick replay.
 - Public Telonex runners use `data_type=Book`, `vendor=Telonex`, and
   `book_snapshot_full`.
 - Telonex source parsing accepts `local:` and `api:` only.
+- Public Telonex runners list `api:${TELONEX_API_KEY}` first, then
+  `local:/Volumes/storage/telonex_data` as the standard local mirror fallback.
 - `api:` reads `TELONEX_API_KEY` from the environment or from
   `api:<key>` in runner source config. Do not commit private keys.
 - API-day payloads are cached by default at
   `~/.cache/nautilus_trader/telonex`.
-- Prefer `local:/Volumes/storage/telonex_data` for repeated research once the
-  downloader has warmed the mirror.
 
 For vendor-specific behavior and timings, use:
 

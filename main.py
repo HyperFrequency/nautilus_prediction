@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Prediction market backtest runner.
+"""Prediction market backtest and sandbox runner menu.
 
 Discovers runnable modules in flat runner entrypoints under `backtests/` and
-`backtests/private/` and presents an interactive menu. Each backtest file must
-expose `run()` or an `EXPERIMENT` manifest.
+`backtests/private/`, or local sandbox entrypoints under `live/`, and presents
+an interactive menu. Each runner file must expose `run()` or an `EXPERIMENT`
+manifest.
 
 The display name and one-line description are pulled from literal `name=` and
 `description=` kwargs in runner experiment constructors via AST scanning so the
@@ -12,11 +13,13 @@ menu does not need to import each runner module on startup.
 Run via:
     uv run python main.py
     make backtest
+    make sandbox
 """
 
 from __future__ import annotations
 
 import ast
+import argparse
 import asyncio
 import importlib
 import importlib.util
@@ -53,6 +56,7 @@ except ImportError:  # pragma: no cover - fallback is covered through non-TTY te
 
 PROJECT_ROOT = Path(__file__).parent
 BACKTESTS_ROOT = PROJECT_ROOT / "backtests"
+RUNNER_ROOT_LABEL = "backtests"
 NOTEBOOK_METADATA_KEY = "prediction_market_backtest"
 
 DIM = "\033[2m"
@@ -61,6 +65,30 @@ RESET = "\033[0m"
 ENABLE_TIMING_ENV = "BACKTEST_ENABLE_TIMING"
 SHORTCUT_LETTERS = ascii_lowercase.replace("q", "") + ascii_uppercase.replace("Q", "")
 MENU_TITLE = "Prediction Market Backtests"
+
+
+def _configure_mode(mode: str) -> None:
+    global BACKTESTS_ROOT, MENU_TITLE, RUNNER_ROOT_LABEL
+    if mode == "sandbox":
+        BACKTESTS_ROOT = PROJECT_ROOT / "live"
+        RUNNER_ROOT_LABEL = "live"
+        MENU_TITLE = "Prediction Market Sandboxes"
+        return
+
+    BACKTESTS_ROOT = PROJECT_ROOT / "backtests"
+    RUNNER_ROOT_LABEL = "backtests"
+    MENU_TITLE = "Prediction Market Backtests"
+
+
+def _parse_args(argv: list[str] | tuple[str, ...]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Prediction market runner menu.")
+    parser.add_argument(
+        "--mode",
+        choices=("backtest", "sandbox"),
+        default="backtest",
+        help="Choose backtest runners or local Nautilus sandbox runners.",
+    )
+    return parser.parse_args(list(argv))
 
 
 def _env_flag_enabled(name: str) -> bool:
@@ -267,7 +295,7 @@ def _load_notebook_metadata(path: Path, *, project_root: Path) -> dict[str, Any]
         "name": name.strip(),
         "description": description.strip(),
         "module_name": ".".join(relative_path.with_suffix("").parts),
-        "relative_parts": path.relative_to(project_root / "backtests").parts,
+        "relative_parts": path.relative_to(BACKTESTS_ROOT).parts,
     }
 
 
@@ -294,7 +322,7 @@ def _relative_parts(backtest: dict[str, Any]) -> tuple[str, ...]:
 
 
 def _relative_runner_path(backtest: dict[str, Any]) -> Path:
-    return Path("backtests", *_relative_parts(backtest))
+    return Path(RUNNER_ROOT_LABEL, *_relative_parts(backtest))
 
 
 def _runner_stem(backtest: dict[str, Any]) -> str:
@@ -773,8 +801,9 @@ def _supports_textual_menu() -> bool:
 
 def _show_basic_menu(backtests: list[dict[str, Any]]) -> int:
     """Print numbered menu and return the chosen index (0-based), or -1 to exit."""
-    print(f"\n{BOLD}Select a backtest:{RESET}\n")
-    print(f"  {BOLD}backtests/{RESET}")
+    runner_kind = "sandbox" if RUNNER_ROOT_LABEL == "live" else "backtest"
+    print(f"\n{BOLD}Select a {runner_kind}:{RESET}\n")
+    print(f"  {BOLD}{RUNNER_ROOT_LABEL}/{RESET}")
     for line in _render_menu_tree(_build_menu_tree(backtests), prefix="  "):
         print(line)
     print(f"\n  {DIM}0. Exit{RESET}\n")
@@ -857,14 +886,22 @@ def show_menu(backtests: list[dict]) -> int:
     return _show_basic_menu(backtests)
 
 
-def main() -> None:
+def main(argv: list[str] | tuple[str, ...] = ()) -> None:
+    args = _parse_args(argv)
+    _configure_mode(args.mode)
     backtests = discover()
 
     if not backtests:
-        print(
-            f"No backtests found in {BACKTESTS_ROOT}\n"
-            "Create a flat .py or .ipynb file in backtests/ or backtests/private/."
+        runner_kind = "sandbox runners" if RUNNER_ROOT_LABEL == "live" else "backtests"
+        create_hint = (
+            f"Create a flat .py or .ipynb file in {RUNNER_ROOT_LABEL}/."
+            if RUNNER_ROOT_LABEL == "live"
+            else (
+                f"Create a flat .py or .ipynb file in {RUNNER_ROOT_LABEL}/ "
+                f"or {RUNNER_ROOT_LABEL}/private/."
+            )
         )
+        print(f"No {runner_kind} found in {BACKTESTS_ROOT}\n{create_hint}")
         sys.exit(1)
 
     idx = show_menu(backtests)
@@ -899,4 +936,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    main(tuple(sys.argv[1:]))

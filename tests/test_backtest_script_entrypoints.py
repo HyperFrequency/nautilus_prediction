@@ -375,7 +375,7 @@ def test_telonex_book_joint_runners_build_inline_summary_contract(
     assert experiment.data.platform == "polymarket"
     assert experiment.data.data_type == "book"
     assert experiment.data.vendor == "telonex"
-    assert experiment.data.sources[-1] == "api:${TELONEX_API_KEY}"
+    assert experiment.data.sources[0] == "api:${TELONEX_API_KEY}"
     assert all("btc-updown-5m" not in replay.market_slug for replay in experiment.replays)
     assert len({replay.market_slug for replay in experiment.replays}) == len(experiment.replays)
     assert all(replay.token_index == 0 for replay in experiment.replays)
@@ -396,8 +396,8 @@ def test_telonex_book_joint_runners_build_inline_summary_contract(
 
     if relative_path == TELONEX_SMALL_JOINT_BOOK_RUNNER:
         assert experiment.data.sources == (
-            "local:/Users/evankolberg/Downloads/temp",
             "api:${TELONEX_API_KEY}",
+            "local:/Volumes/storage/telonex_data",
         )
         assert len(experiment.replays) == 10
         assert experiment.replays[0].market_slug == "will-the-iranian-regime-fall-by-may-31"
@@ -414,8 +414,8 @@ def test_telonex_book_joint_runners_build_inline_summary_contract(
         )
     elif relative_path == TELONEX_100_JOINT_BOOK_RUNNER:
         assert experiment.data.sources == (
-            "local:/Volumes/storage/telonex_data",
             "api:${TELONEX_API_KEY}",
+            "local:/Volumes/storage/telonex_data",
         )
         assert len(experiment.replays) == 100
         assert experiment.initial_cash == 1_000.0
@@ -449,8 +449,8 @@ def test_telonex_book_joint_runners_do_not_embed_empty_api_key(
     monkeypatch.setenv("TELONEX_API_KEY", "")
     experiment = _capture_script_experiment(monkeypatch, relative_path)
 
-    assert experiment.data.sources[-1] == "api:${TELONEX_API_KEY}"
-    assert "api:" in experiment.data.sources[-1]
+    assert experiment.data.sources[0] == "api:${TELONEX_API_KEY}"
+    assert "api:" in experiment.data.sources[0]
     assert "api:," not in repr(experiment)
 
 

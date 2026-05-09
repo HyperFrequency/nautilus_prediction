@@ -194,11 +194,10 @@ use `data_type=Book`, `vendor=Telonex`, and the `book_snapshot_full` channel.
 Execution trade ticks are loaded from Telonex materialized cache first, then the
 configured Telonex sources in order. Within each Telonex source, the loader
 tries `onchain_fills` before `trades`; Polymarket's public trade API is only the
-final fallback. Public runners list the local mirror first, then include an
-`api:${TELONEX_API_KEY}` fallback whose key is expanded by the loader at
-runtime. Empty Telonex onchain-fill days are not treated as proof that no
-execution prints exist; the loader keeps falling through to Telonex `trades`
-and then Polymarket before returning a zero-trade day.
+final fallback. Public runners list `api:${TELONEX_API_KEY}` first, then the
+standard local mirror fallback. Empty Telonex onchain-fill days are not treated
+as proof that no execution prints exist; the loader keeps falling through to
+Telonex `trades` and then Polymarket before returning a zero-trade day.
 
 Telonex source syntax:
 

@@ -1,4 +1,4 @@
-.PHONY: backtest install update test check native-develop native-debug-develop clear-pmxt-cache clear-telonex-cache clear-polymarket-cache download-pmxt-raws download-telonex-data
+.PHONY: backtest sandbox install update test check native-develop native-debug-develop clear-pmxt-cache clear-telonex-cache clear-polymarket-cache download-pmxt-raws download-telonex-data
 
 PMXT_CACHE_ROOT ?= $(if $(XDG_CACHE_HOME),$(XDG_CACHE_HOME),$(HOME)/.cache)/nautilus_trader/pmxt
 PMXT_LOCAL_DATA_ROOT ?= /Volumes/storage/pmxt_data
@@ -11,6 +11,9 @@ TELONEX_DOWNLOAD_FLAGS ?=
 
 backtest:
 	uv run python main.py
+
+sandbox:
+	uv run python main.py --mode sandbox
 
 install:
 	unset CONDA_PREFIX && uv venv --python 3.13 && uv pip install "nautilus_trader[polymarket,visualization]==1.226.0" bokeh plotly numpy py-clob-client duckdb textual nbformat nbclient ipykernel optuna python-dotenv aiohttp pytest ruff

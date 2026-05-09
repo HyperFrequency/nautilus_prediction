@@ -59,6 +59,18 @@ The menu shows flat runner entrypoints under `backtests/` and
 `backtests/private/`. It supports filtering with `/`, arrow-key navigation, and
 direct launch with `Enter`.
 
+Sandbox runner menu:
+
+```bash
+make sandbox
+```
+
+Sandbox runners live under `live/`. Public-safe runner scaffolds can be tracked,
+while private model artifacts, diagnostics, logs, and `.env` files stay ignored
+under that directory. Shared Nautilus live/sandbox helper code stays under
+`prediction_market_extensions/live/`.
+See [Sandbox And Live Runners](live.md).
+
 Direct Python runners:
 
 ```bash
@@ -134,8 +146,9 @@ full mirror.
 `book_snapshot_full` is the canonical Telonex book channel. `onchain_fills` is
 the preferred execution-tick source, and `trades` covers days where the
 onchain-fill parquet is absent or empty before falling back to Polymarket's
-public trade API. Telonex runner sources should list the intended local mirror
-first, then include `api:${TELONEX_API_KEY}` as a runtime-expanded API fallback.
+public trade API. Public Telonex runner sources list `api:${TELONEX_API_KEY}`
+first, then `local:/Volumes/storage/telonex_data` as the standard local mirror
+fallback.
 
 The Telonex downloader writes Hive-partitioned parquet files under
 `<destination>/data/` and a DuckDB manifest at `<destination>/telonex.duckdb`.

@@ -49,8 +49,8 @@ def run() -> None:
                     data_type=Book,
                     vendor=Telonex,
                     sources=(
-                        "local:/Users/evankolberg/Downloads/temp",
                         "api:${TELONEX_API_KEY}",
+                        "local:/Volumes/storage/telonex_data",
                     ),
                 ),
                 replays=(

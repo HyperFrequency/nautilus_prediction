@@ -21,6 +21,11 @@
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/evan-kolberg/prediction-market-backtesting)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/evan-kolberg/prediction-market-backtesting)
 
+**New in Version 4.1-alpha:**
+- Live sandbox plumbing for Polymarket BTC 5min markets
+- Example runner showing how to use live BTC 5min hooks
+- (strategy & model not included)
+
 **New in Version 4:**
 - Nautilus 1.226.0
 - Rust-native data conversion
@@ -88,6 +93,18 @@ Detailed guides have been filed away in the [docs index](https://evan-kolberg.gi
     - [Native Vendors](https://evan-kolberg.github.io/prediction-market-backtesting/backtests/#native-vendors)
     - [PMXT](https://evan-kolberg.github.io/prediction-market-backtesting/backtests/#pmxt)
     - [Telonex](https://evan-kolberg.github.io/prediction-market-backtesting/backtests/#telonex)
+- [Sandbox And Live Runners](https://evan-kolberg.github.io/prediction-market-backtesting/live/)
+  - [Current Scope](https://evan-kolberg.github.io/prediction-market-backtesting/live/#current-scope)
+  - [Directory Contract](https://evan-kolberg.github.io/prediction-market-backtesting/live/#directory-contract)
+  - [Sandbox Runner Contract](https://evan-kolberg.github.io/prediction-market-backtesting/live/#sandbox-runner-contract)
+  - [Shared Live Helpers](https://evan-kolberg.github.io/prediction-market-backtesting/live/#shared-live-helpers)
+  - [BTC 5m Sandbox Plumbing](https://evan-kolberg.github.io/prediction-market-backtesting/live/#btc-5m-sandbox-plumbing)
+  - [Example BTC Snapshot Runner](https://evan-kolberg.github.io/prediction-market-backtesting/live/#example-btc-snapshot-runner)
+  - [Private Strategy Boundary](https://evan-kolberg.github.io/prediction-market-backtesting/live/#private-strategy-boundary)
+  - [Model And Parameter Placement](https://evan-kolberg.github.io/prediction-market-backtesting/live/#model-and-parameter-placement)
+  - [Running Sandbox](https://evan-kolberg.github.io/prediction-market-backtesting/live/#running-sandbox)
+  - [Public Polymarket Data](https://evan-kolberg.github.io/prediction-market-backtesting/live/#public-polymarket-data)
+  - [Path To Live Polymarket Trading](https://evan-kolberg.github.io/prediction-market-backtesting/live/#path-to-live-polymarket-trading)
 - [Data Loading](https://evan-kolberg.github.io/prediction-market-backtesting/data-loading/)
   - [Mental Model](https://evan-kolberg.github.io/prediction-market-backtesting/data-loading/#mental-model)
   - [Staged Loading](https://evan-kolberg.github.io/prediction-market-backtesting/data-loading/#staged-loading)

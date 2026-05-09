@@ -182,7 +182,8 @@ Useful representative smoke checks:
 
 ```bash
 uv run python backtests/polymarket_book_ema_crossover.py
-uv run python backtests/polymarket_book_independent_multi_replay_runner.py
+uv run python backtests/polymarket_btc_5m_pair_arbitrage.py
+BACKTEST_REPLAY_LOAD_WORKERS=2 uv run python backtests/polymarket_telonex_book_joint_portfolio_runner.py
 ```
 
 If core internals, optimizer math, loader behavior, runner bootstrap, plotting,

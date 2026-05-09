@@ -40,6 +40,28 @@ Menu path:
 make backtest
 ```
 
+Sandbox menu path:
+
+```bash
+make sandbox
+```
+
+`make sandbox` should discover local files under `live/`. The framework ships
+shared helpers plus any public-safe runner scaffolds, while model artifacts and
+local runtime files stay ignored under `live/`.
+
+Focused sandbox tests:
+
+```bash
+uv run pytest tests/test_live_sandbox.py tests/test_main.py -q
+```
+
+These tests cover the sandbox menu mode, BTC 5m market helper behavior, live
+BTC feature buffering, and Nautilus sandbox config construction without making
+live network calls. Public live tests should cover helper behavior and runner
+config shape, not private strategy internals or ignored model artifacts. Private
+strategy tests can be skipped when the ignored local strategy module is absent.
+
 The runner smokes cover:
 
 - PMXT L2 book replay from filtered cache, local raw mirror, and archive
@@ -53,8 +75,8 @@ The runner smokes cover:
 
 PMXT public runners pin `local:/Volumes/storage/pmxt_data` first, then
 `archive:r2v2.pmxt.dev` and `archive:r2.pmxt.dev`. The Telonex joint runner
-pins a local Telonex mirror first, then includes `api:${TELONEX_API_KEY}` as a
-runtime-expanded API fallback.
+pins `api:${TELONEX_API_KEY}` first, then
+`local:/Volumes/storage/telonex_data` as the local mirror fallback.
 
 Coverage is mixed by design:
 

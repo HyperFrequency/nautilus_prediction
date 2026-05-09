@@ -19,6 +19,7 @@ nav:
   - Setup: setup.md
   - Core Framework:
       - Backtests And Runners: backtests.md
+      - Sandbox And Live Runners: live.md
       - Data Loading: data-loading.md
       - Data Vendors And Local Mirrors: data-vendors.md
       - Vendor Fetch Sources And Timing: vendor-fetch-sources.md
