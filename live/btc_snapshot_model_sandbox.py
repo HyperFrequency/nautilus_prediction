@@ -185,7 +185,8 @@ async def _main(argv: Sequence[str] | None = None, *, force_run: bool = False) -
     if force_run:
         args.run = True
     model_path = _model_path()
-    if not Path(model_path).exists():
+    model_exists = Path(model_path).exists()
+    if (args.run or args.build_only) and not model_exists:
         raise FileNotFoundError(model_path)
     btc_instrument_id = InstrumentId.from_str(args.btc_instrument_id)
     event_slugs = upcoming_btc_5m_event_slugs(
@@ -224,7 +225,8 @@ async def _main(argv: Sequence[str] | None = None, *, force_run: bool = False) -
     print(f"Current BTC 5m window: {upcoming_btc_5m_window_label()}")
     print(f"Event slug range: {event_slugs[0]} -> {event_slugs[-1]}")
     print(f"Next event slugs: {', '.join(event_slugs[:3])}")
-    print(f"Model profile: {model_path}")
+    model_suffix = "" if model_exists else " (missing; dry-run only)"
+    print(f"Model profile: {model_path}{model_suffix}")
     print("Policy: S199 profile, 60s snapshot, edge>=0.06, ask-cost<=1.01")
     print(f"Trade size: target {_trade_size()} contracts; market buys sent as quote quantity")
     print(f"Diagnostics: {_diagnostics_path() or 'disabled'}")

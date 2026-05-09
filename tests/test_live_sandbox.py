@@ -170,6 +170,63 @@ def test_load_btc_5m_instrument_ids_accepts_fixed_event_slugs(monkeypatch) -> No
     ]
 
 
+def test_load_btc_5m_instrument_ids_skips_incomplete_markets(monkeypatch, caplog) -> None:
+    calls: list[tuple[str, int]] = []
+
+    async def fake_from_market_slug(
+        slug: str,
+        *,
+        token_index: int,
+        http_client: object,
+    ) -> SimpleNamespace:
+        calls.append((slug, token_index))
+        if slug == "btc-updown-5m-missing":
+            raise ValueError("not yet visible")
+        return SimpleNamespace(
+            instrument=SimpleNamespace(id=InstrumentId.from_str(f"BTC{len(calls)}.POLYMARKET"))
+        )
+
+    monkeypatch.setattr(btc_5m.PolymarketDataLoader, "from_market_slug", fake_from_market_slug)
+
+    instrument_ids = asyncio.run(
+        btc_5m.load_btc_5m_instrument_ids(
+            event_slugs=["btc-updown-5m-missing", "btc-updown-5m-2000"],
+            http_client=object(),
+        )
+    )
+
+    assert instrument_ids == (
+        InstrumentId.from_str("BTC2.POLYMARKET"),
+        InstrumentId.from_str("BTC3.POLYMARKET"),
+    )
+    assert calls == [
+        ("btc-updown-5m-missing", 0),
+        ("btc-updown-5m-2000", 0),
+        ("btc-updown-5m-2000", 1),
+    ]
+    assert "Skipping BTC 5m market slug btc-updown-5m-missing" in caplog.text
+
+
+def test_load_btc_5m_instrument_ids_fails_when_no_complete_market_loads(monkeypatch) -> None:
+    async def fake_from_market_slug(
+        slug: str,
+        *,
+        token_index: int,
+        http_client: object,
+    ) -> SimpleNamespace:
+        raise ValueError(f"{slug}:{token_index} unavailable")
+
+    monkeypatch.setattr(btc_5m.PolymarketDataLoader, "from_market_slug", fake_from_market_slug)
+
+    with pytest.raises(RuntimeError, match="Loaded 0 complete BTC 5m market"):
+        asyncio.run(
+            btc_5m.load_btc_5m_instrument_ids(
+                event_slugs=["btc-updown-5m-missing"],
+                http_client=object(),
+            )
+        )
+
+
 def test_live_btc_feature_store_records_features_and_prunes_old_seconds() -> None:
     store = LiveBtcFeatureStore(buffer_seconds=3)
     store.record_trade(ts_ns=10 * NANOSECONDS_PER_SECOND, price=100.0, size=1.0)
@@ -290,6 +347,48 @@ def test_btc_snapshot_sandbox_runner_config_injects_live_runtime_options(
     assert config.config["btc_instrument_id"] == str(DEFAULT_BTC_INSTRUMENT_ID)
     assert config.config["model_path"] == "live/models/local-private-model.json"
     assert config.config["heartbeat_log_seconds"] == 17.0
+
+
+def test_btc_snapshot_sandbox_runner_dry_run_allows_missing_private_model(
+    monkeypatch,
+    capsys,
+) -> None:
+    monkeypatch.setenv("LIVE_BTC_SNAPSHOT_MODEL_PATH", "/tmp/pmbt-missing-private-model.json")
+    monkeypatch.setattr(
+        btc_snapshot_model_sandbox,
+        "upcoming_btc_5m_event_slugs",
+        lambda **_kwargs: ["btc-updown-5m-2000"],
+    )
+    monkeypatch.setattr(
+        btc_snapshot_model_sandbox,
+        "upcoming_btc_5m_window_label",
+        lambda: "window-label",
+    )
+
+    async def fake_load_btc_5m_instrument_ids(**_kwargs: object) -> tuple[InstrumentId, ...]:
+        return (
+            InstrumentId.from_str("UP.POLYMARKET"),
+            InstrumentId.from_str("DOWN.POLYMARKET"),
+        )
+
+    monkeypatch.setattr(
+        btc_snapshot_model_sandbox,
+        "load_btc_5m_instrument_ids",
+        fake_load_btc_5m_instrument_ids,
+    )
+
+    asyncio.run(btc_snapshot_model_sandbox._main([]))
+
+    output = capsys.readouterr().out
+    assert "Model profile: /tmp/pmbt-missing-private-model.json (missing; dry-run only)" in output
+    assert "Dry run only. Pass --run to start the Nautilus sandbox node." in output
+
+
+def test_btc_snapshot_sandbox_runner_build_requires_private_model(monkeypatch) -> None:
+    monkeypatch.setenv("LIVE_BTC_SNAPSHOT_MODEL_PATH", "/tmp/pmbt-missing-private-model.json")
+
+    with pytest.raises(FileNotFoundError):
+        asyncio.run(btc_snapshot_model_sandbox._main(["--build-only"]))
 
 
 def test_build_polymarket_binance_sandbox_config_uses_sandbox_execution() -> None:

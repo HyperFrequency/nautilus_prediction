@@ -99,8 +99,13 @@ instrument provider loads those markets, keeps only the current slug set, and
 prunes stale instruments outside that set. The strategy then scans Nautilus'
 cache for newly loaded BTC 5m instruments, subscribes the new UP/DOWN order
 books, and can unsubscribe/prune expired markets after its configured retention
-window. This keeps long sandbox runs from accumulating every 5-minute market
-forever.
+window.
+
+This bounds the framework-level provider list, strategy subscriptions, and local
+book maps. Nautilus may still retain some cache or sandbox-exchange metadata for
+instruments seen during the process lifetime, so very long unattended sandbox
+runs should watch memory, restart on a planned cadence if needed, and confirm
+shutdown logs show expired books being cleaned up.
 
 Settlement is separate from Nautilus' simulated exchange. The strategy can poll
 public Polymarket CLOB market state after market expiry, record whether the

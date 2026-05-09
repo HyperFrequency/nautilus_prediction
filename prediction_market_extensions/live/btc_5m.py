@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+import logging
 import os
 import time
 from typing import Sequence
@@ -14,6 +15,7 @@ DEFAULT_MARKET_COUNT = 36
 LIVE_BTC_5M_EVENT_SLUGS_ENV = "LIVE_BTC_5M_EVENT_SLUGS"
 LIVE_BTC_5M_MARKET_COUNT_ENV = "LIVE_BTC_5M_MARKET_COUNT"
 LIVE_BTC_5M_INCLUDE_CURRENT_ENV = "LIVE_INCLUDE_CURRENT_MARKET"
+_LOG = logging.getLogger(__name__)
 
 
 def floor_to_btc_5m_start(timestamp: int | None = None) -> int:
@@ -67,9 +69,11 @@ async def load_btc_5m_instrument_ids(
     include_current: bool = True,
     event_slugs: Sequence[str] | None = None,
     http_client: HttpClient | None = None,
+    min_loaded_markets: int = 1,
 ) -> tuple[InstrumentId, ...]:
     client = http_client or HttpClient(timeout_secs=15)
     instrument_ids: list[InstrumentId] = []
+    loaded_markets = 0
     slugs = (
         list(event_slugs)
         if event_slugs is not None
@@ -79,11 +83,36 @@ async def load_btc_5m_instrument_ids(
         )
     )
     for slug in slugs:
+        slug_instrument_ids: list[InstrumentId] = []
         for token_index in (0, 1):
-            loader = await PolymarketDataLoader.from_market_slug(
-                slug,
-                token_index=token_index,
-                http_client=client,
-            )
-            instrument_ids.append(loader.instrument.id)
+            try:
+                loader = await PolymarketDataLoader.from_market_slug(
+                    slug,
+                    token_index=token_index,
+                    http_client=client,
+                )
+            except Exception as exc:
+                _LOG.warning(
+                    "Skipping BTC 5m market slug %s after token index %s failed to load: %s",
+                    slug,
+                    token_index,
+                    exc,
+                )
+                slug_instrument_ids = []
+                break
+            slug_instrument_ids.append(loader.instrument.id)
+
+        if len(slug_instrument_ids) == 2:
+            instrument_ids.extend(slug_instrument_ids)
+            loaded_markets += 1
+
+    if loaded_markets < min_loaded_markets:
+        slug_preview = ", ".join(slugs[:5])
+        if len(slugs) > 5:
+            slug_preview = f"{slug_preview}, ..."
+        raise RuntimeError(
+            "Loaded "
+            f"{loaded_markets} complete BTC 5m market(s), "
+            f"required {min_loaded_markets}; requested slugs: {slug_preview}"
+        )
     return tuple(instrument_ids)
