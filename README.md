@@ -10,7 +10,7 @@
 ![Python](https://img.shields.io/badge/python-3.12%2B-3776AB?logo=python&logoColor=white)
 ![Rust](https://img.shields.io/badge/rust-1.93.1-CE422B?logo=rust&logoColor=white)
 ![Rust Edition](https://img.shields.io/badge/edition-2024-CE422B?logo=rust&logoColor=white)
-![NautilusTrader](https://img.shields.io/badge/NautilusTrader-1.225.0-1E3A5F)
+![NautilusTrader](https://img.shields.io/badge/NautilusTrader-1.226.0-1E3A5F)
 ![GitHub last commit](https://img.shields.io/github/last-commit/evan-kolberg/prediction-market-backtesting)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/evan-kolberg/prediction-market-backtesting)
 ![GitHub code size](https://img.shields.io/github/languages/code-size/evan-kolberg/prediction-market-backtesting)
@@ -40,7 +40,7 @@
 - Book replay order book deltas with trade ticks
 
 **New in Version 2:**
-- Nautilus 1.225.0, via PyPI in lieu of a subtree
+- Nautilus via PyPI in lieu of a subtree
 - Better backtest runner classes via EXPERIMENT objects
 - IPython notebook support (.ipynb files)
 - Joint portfolio multi replay runners
