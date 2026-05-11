@@ -329,37 +329,40 @@ def build_polymarket_binance_sandbox_config(
     strategies: Sequence[ImportableStrategyConfig],
     event_slug_builder: str,
     binance_instrument_ids: frozenset[InstrumentId] | None = None,
+    btc_instrument_ids: frozenset[InstrumentId] | None = None,
     starting_balance: Decimal | str = Decimal("20"),
     trader_id: str = "SANDBOX-001",
     log_level: str = "INFO",
     polymarket_update_interval_mins: int | None = None,
+    binance_us: bool = True,
     risk_submit_rate: str = "20/00:00:01",
 ) -> TradingNodeConfig:
     """Build a Nautilus sandbox node config."""
 
     polymarket_venues = frozenset({"POLYMARKET"})
     binance_venues = frozenset({"BINANCE"})
-    btc_ids = binance_instrument_ids or frozenset({DEFAULT_BTC_INSTRUMENT_ID})
+    btc_ids = btc_instrument_ids or binance_instrument_ids or frozenset({DEFAULT_BTC_INSTRUMENT_ID})
     balance = Decimal(str(starting_balance))
+    data_clients = {
+        "POLYMARKET": PolymarketDataClientConfig(
+            instrument_config=PolymarketInstrumentProviderConfig(
+                event_slug_builder=event_slug_builder,
+            ),
+            routing=RoutingConfig(venues=polymarket_venues),
+            update_instruments_interval_mins=polymarket_update_interval_mins,
+            compute_effective_deltas=False,
+        ),
+        "BINANCE": BinanceDataClientConfig(
+            instrument_provider=BinanceInstrumentProviderConfig(load_ids=btc_ids),
+            routing=RoutingConfig(venues=binance_venues),
+            us=binance_us,
+        ),
+    }
 
     return TradingNodeConfig(
         environment=Environment.SANDBOX,
         trader_id=TraderId(trader_id),
-        data_clients={
-            "POLYMARKET": PolymarketDataClientConfig(
-                instrument_config=PolymarketInstrumentProviderConfig(
-                    event_slug_builder=event_slug_builder,
-                ),
-                routing=RoutingConfig(venues=polymarket_venues),
-                update_instruments_interval_mins=polymarket_update_interval_mins,
-                compute_effective_deltas=False,
-            ),
-            "BINANCE": BinanceDataClientConfig(
-                instrument_provider=BinanceInstrumentProviderConfig(load_ids=btc_ids),
-                routing=RoutingConfig(venues=binance_venues),
-                us=True,
-            ),
-        },
+        data_clients=data_clients,
         exec_clients={
             "POLYMARKET": SandboxExecutionClientConfig(
                 routing=RoutingConfig(venues=polymarket_venues),

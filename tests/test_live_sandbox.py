@@ -3,7 +3,9 @@ from __future__ import annotations
 import asyncio
 from datetime import UTC, datetime
 import importlib
+import json
 import math
+import os
 from decimal import Decimal
 from types import SimpleNamespace
 
@@ -13,7 +15,7 @@ from nautilus_trader.model.enums import OrderSide
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.trading.config import ImportableStrategyConfig
 
-from live import btc_snapshot_model_sandbox
+from live import btc_eth_sol_snapshot_model_sandbox, btc_snapshot_model_sandbox
 from prediction_market_extensions.live import btc_5m
 from prediction_market_extensions.live.btc_features import (
     NANOSECONDS_PER_SECOND,
@@ -234,9 +236,37 @@ def test_live_btc_feature_store_records_features_and_prunes_old_seconds() -> Non
     store.record_trade(ts_ns=12 * NANOSECONDS_PER_SECOND, price=103.0, size=3.0)
     store.record_trade(ts_ns=12 * NANOSECONDS_PER_SECOND, price=103.5, size=0.5)
     store.record_trade(ts_ns=13 * NANOSECONDS_PER_SECOND, price=float("nan"), size=99.0)
+    store.record_book(
+        ts_ns=12 * NANOSECONDS_PER_SECOND,
+        mid=103.0,
+        spread=0.5,
+        bid_size=2.0,
+        ask_size=1.0,
+        bid_depth=5.0,
+        ask_depth=3.0,
+        book_imbalance=0.25,
+        microprice=103.1,
+    )
 
     assert store.price_at(12) == 103.5
     assert store.price_at(11) == 101.0
+    assert store.observation_second_at(12) == 12
+    assert store.observation_age_seconds(13) == 1.0
+    assert store.book_observation_second_at(13) == 12
+    assert store.book_observation_age_seconds(13) == 1.0
+    assert store.book_features_at(13) == {
+        "btc_book_age_seconds": 1.0,
+        "btc_book_ask_depth": 3.0,
+        "btc_book_ask_size": 1.0,
+        "btc_book_bid_depth": 5.0,
+        "btc_book_bid_size": 2.0,
+        "btc_book_imbalance": 0.25,
+        "btc_book_microprice": 103.1,
+        "btc_book_microprice_diff": pytest.approx(0.1),
+        "btc_book_mid": 103.0,
+        "btc_book_spread": 0.5,
+        "btc_book_spread_bps": pytest.approx(48.543689),
+    }
     assert store.momentum(12, 2) == 3.5
     assert store.volume(12, 2) == 5.5
     assert store.volatility(12, 2) == pytest.approx(0.75)
@@ -244,8 +274,70 @@ def test_live_btc_feature_store_records_features_and_prunes_old_seconds() -> Non
     store.record_trade(ts_ns=14 * NANOSECONDS_PER_SECOND, price=104.0, size=4.0)
 
     assert math.isnan(store.price_at(10))
+    assert store.observation_second_at(10) is None
+    assert math.isinf(store.observation_age_seconds(10))
+    assert store.book_features_at(10) is None
     assert store.price_at(11) == 101.0
     assert store.price_at(14) == 104.0
+
+
+def test_live_btc_feature_store_can_prefix_book_features() -> None:
+    store = LiveBtcFeatureStore(buffer_seconds=3, book_prefix="eth")
+    store.record_trade(ts_ns=12 * NANOSECONDS_PER_SECOND, price=200.0, size=1.0)
+    store.record_book(
+        ts_ns=12 * NANOSECONDS_PER_SECOND,
+        mid=200.0,
+        spread=0.2,
+        bid_size=3.0,
+        ask_size=2.0,
+        bid_depth=9.0,
+        ask_depth=7.0,
+        book_imbalance=0.125,
+        microprice=200.05,
+    )
+
+    assert store.book_features_at(13) == {
+        "eth_book_age_seconds": 1.0,
+        "eth_book_ask_depth": 7.0,
+        "eth_book_ask_size": 2.0,
+        "eth_book_bid_depth": 9.0,
+        "eth_book_bid_size": 3.0,
+        "eth_book_imbalance": 0.125,
+        "eth_book_microprice": 200.05,
+        "eth_book_microprice_diff": pytest.approx(0.05),
+        "eth_book_mid": 200.0,
+        "eth_book_spread": 0.2,
+        "eth_book_spread_bps": pytest.approx(10.0),
+    }
+
+
+def test_live_btc_feature_store_prunes_book_only_features() -> None:
+    store = LiveBtcFeatureStore(buffer_seconds=3, book_prefix="sol")
+    store.record_book(
+        ts_ns=12 * NANOSECONDS_PER_SECOND,
+        mid=100.0,
+        spread=0.1,
+        bid_size=1.0,
+        ask_size=1.0,
+        bid_depth=2.0,
+        ask_depth=2.0,
+        book_imbalance=0.0,
+        microprice=100.0,
+    )
+    store.record_book(
+        ts_ns=16 * NANOSECONDS_PER_SECOND,
+        mid=101.0,
+        spread=0.1,
+        bid_size=1.0,
+        ask_size=1.0,
+        bid_depth=2.0,
+        ask_depth=2.0,
+        book_imbalance=0.0,
+        microprice=101.0,
+    )
+
+    assert store.book_features_at(12) is None
+    assert store.book_features_at(16)["sol_book_mid"] == 101.0
 
 
 def test_split_polymarket_instrument_id_extracts_condition_and_token() -> None:
@@ -317,8 +409,16 @@ def test_btc_snapshot_sandbox_runner_is_example_wiring_with_private_artifacts(
     monkeypatch.delenv("LIVE_BTC_SNAPSHOT_MODEL_PATH", raising=False)
     monkeypatch.delenv("LIVE_BTC_SNAPSHOT_DIAGNOSTICS_PATH", raising=False)
     monkeypatch.delenv("LIVE_BTC_HEARTBEAT_LOG_SECONDS", raising=False)
+    monkeypatch.delenv("LIVE_BTC_MAX_FEATURE_AGE_SECONDS", raising=False)
+    monkeypatch.delenv("LIVE_BTC_DAILY_STOP_LOSS", raising=False)
+    monkeypatch.delenv("LIVE_BTC_DATA_SOURCE", raising=False)
+    monkeypatch.delenv("LIVE_BTC_BINANCE_GLOBAL", raising=False)
+    monkeypatch.delenv("LIVE_BTC_EXTRA_SPOT_INSTRUMENT_IDS", raising=False)
+    monkeypatch.delenv("LIVE_BTC_SNAPSHOT_MOMENTUM_ALIGNMENT", raising=False)
+    monkeypatch.delenv("LIVE_BTC_EXPENSIVE_MIN_SIGNED_MOMENTUM_30S", raising=False)
 
     params = btc_snapshot_model_sandbox._strategy_parameters()
+    args = btc_snapshot_model_sandbox._parse_args([])
 
     assert btc_snapshot_model_sandbox.STRATEGY_PATH.startswith("strategies.private.")
     assert btc_snapshot_model_sandbox.CONFIG_PATH.startswith("strategies.private.")
@@ -326,6 +426,17 @@ def test_btc_snapshot_sandbox_runner_is_example_wiring_with_private_artifacts(
     assert str(params["model_path"]).startswith("live/models/")
     assert params["diagnostics_path"] is None
     assert params["heartbeat_log_seconds"] == 300.0
+    assert params["edge"] == 0.12
+    assert params["momentum_alignment"] == "none"
+    assert params["min_selected_probability"] == 0.0
+    assert params["max_yes_no_ask_cost"] == 0.0
+    assert params["max_btc_feature_age_seconds"] == 30.0
+    assert params["daily_stop_loss"] == 1.2
+    assert params["expensive_min_signed_momentum_30s"] == 0.0
+    assert btc_snapshot_model_sandbox._resolve_btc_data_source(args) == "binance-global"
+    assert btc_snapshot_model_sandbox._default_btc_instrument_id("binance-global") == (
+        DEFAULT_BTC_INSTRUMENT_ID
+    )
 
 
 def test_btc_snapshot_sandbox_runner_config_injects_live_runtime_options(
@@ -333,20 +444,90 @@ def test_btc_snapshot_sandbox_runner_config_injects_live_runtime_options(
 ) -> None:
     monkeypatch.setenv("LIVE_BTC_SNAPSHOT_MODEL_PATH", "live/models/local-private-model.json")
     monkeypatch.setenv("LIVE_BTC_HEARTBEAT_LOG_SECONDS", "17")
+    monkeypatch.setenv("LIVE_BTC_MAX_FEATURE_AGE_SECONDS", "4.5")
+    monkeypatch.setenv("LIVE_BTC_DAILY_STOP_LOSS", "0.8")
+    monkeypatch.setenv("LIVE_BTC_SNAPSHOT_MOMENTUM_ALIGNMENT", "momentum_vote")
+    monkeypatch.setenv("LIVE_BTC_EXPENSIVE_MIN_SIGNED_MOMENTUM_30S", "1.5")
     up = InstrumentId.from_str("UP.POLYMARKET")
     down = InstrumentId.from_str("DOWN.POLYMARKET")
 
     config = btc_snapshot_model_sandbox._build_strategy_config(
         instrument_ids=(up, down),
         btc_instrument_id=DEFAULT_BTC_INSTRUMENT_ID,
+        extra_spot_instrument_ids=(InstrumentId.from_str("ETHUSDT.BINANCE"),),
     )
 
     assert config.strategy_path == btc_snapshot_model_sandbox.STRATEGY_PATH
     assert config.config_path == btc_snapshot_model_sandbox.CONFIG_PATH
     assert config.config["instrument_ids"] == [str(up), str(down)]
     assert config.config["btc_instrument_id"] == str(DEFAULT_BTC_INSTRUMENT_ID)
+    assert config.config["extra_spot_instrument_ids"] == ["ETHUSDT.BINANCE"]
     assert config.config["model_path"] == "live/models/local-private-model.json"
     assert config.config["heartbeat_log_seconds"] == 17.0
+    assert config.config["momentum_alignment"] == "momentum_vote"
+    assert config.config["max_btc_feature_age_seconds"] == 4.5
+    assert config.config["daily_stop_loss"] == 0.8
+    assert config.config["expensive_min_signed_momentum_30s"] == 1.5
+
+
+def test_btc_snapshot_sandbox_runner_policy_label_uses_configured_thresholds() -> None:
+    assert (
+        btc_snapshot_model_sandbox._policy_label(
+            {
+                "snapshot_seconds": (60,),
+                "edge": 0.08,
+                "max_ask_price": 0.75,
+            }
+        )
+        == "Policy: model profile, 60s snapshot, edge>=0.08, max ask<=0.75"
+    )
+
+
+def test_btc_eth_sol_sandbox_runner_sets_private_champion_defaults(monkeypatch) -> None:
+    monkeypatch.delenv("LIVE_BTC_SNAPSHOT_MODEL_PATH", raising=False)
+    monkeypatch.delenv("LIVE_BTC_SNAPSHOT_EDGE", raising=False)
+    monkeypatch.delenv("LIVE_BTC_EXTRA_SPOT_INSTRUMENT_IDS", raising=False)
+
+    btc_eth_sol_snapshot_model_sandbox._configure_env_defaults()
+
+    assert os.environ["LIVE_BTC_SNAPSHOT_MODEL_PATH"] == (
+        btc_eth_sol_snapshot_model_sandbox.DEFAULT_ETH_SOL_MODEL_PATH
+    )
+    assert os.environ["LIVE_BTC_SNAPSHOT_EDGE"] == "0.08"
+    assert os.environ["LIVE_BTC_EXTRA_SPOT_INSTRUMENT_IDS"] == ("ETHUSDT.BINANCE,SOLUSDT.BINANCE")
+
+
+def test_btc_snapshot_sandbox_runner_detects_extra_spot_instruments(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    monkeypatch.delenv("LIVE_BTC_EXTRA_SPOT_INSTRUMENT_IDS", raising=False)
+    model_path = tmp_path / "model.json"
+    model_path.write_text(
+        json.dumps(
+            {
+                "model": {
+                    "columns": [
+                        "seconds_left",
+                        "eth_return_since_start",
+                        "sol_return_since_start",
+                        "xrp_return_since_start",
+                    ],
+                },
+            },
+        ),
+    )
+
+    assert btc_snapshot_model_sandbox._model_extra_spot_prefixes(str(model_path)) == (
+        "eth",
+        "sol",
+        "xrp",
+    )
+    assert btc_snapshot_model_sandbox._extra_spot_instrument_ids(str(model_path)) == (
+        InstrumentId.from_str("ETHUSDT.BINANCE"),
+        InstrumentId.from_str("SOLUSDT.BINANCE"),
+        InstrumentId.from_str("XRPUSDT.BINANCE"),
+    )
 
 
 def test_btc_snapshot_sandbox_runner_dry_run_allows_missing_private_model(
@@ -449,6 +630,22 @@ def test_build_polymarket_binance_sandbox_config_disables_polymarket_refresh_by_
     )
 
     assert config.data_clients["POLYMARKET"].update_instruments_interval_mins is None
+
+
+def test_build_polymarket_binance_sandbox_config_can_use_global_binance() -> None:
+    strategy = ImportableStrategyConfig(
+        strategy_path="strategies:DemoStrategy",
+        config_path="strategies:DemoConfig",
+        config={"parameter_name": 1},
+    )
+
+    config = build_polymarket_binance_sandbox_config(
+        strategies=[strategy],
+        event_slug_builder="tests.fake:slugs",
+        binance_us=False,
+    )
+
+    assert config.data_clients["BINANCE"].us is False
 
 
 def test_public_polymarket_data_factory_does_not_require_credentials(monkeypatch) -> None:

@@ -61,13 +61,15 @@ Reusable helper code belongs in `prediction_market_extensions/live/`.
 Current helper responsibilities include:
 
 - Polymarket BTC 5m slug and instrument loading
-- Binance BTC trade instrument defaults
+- external BTC trade instrument defaults
 - Nautilus sandbox node config construction
 - sandbox execution client factory registration
 - live BTC trade feature buffering for strategies that need recent BTC
   momentum, volume, or volatility features
 - public Polymarket CLOB settlement polling for sandbox portfolio accounting
 - rolling BTC 5m market discovery and pruning
+- BTC trade-feed freshness checks so live strategies can fail closed when the
+  external reference-price feed is stale
 
 These helpers must remain parameter-free. They can accept strategy configs and
 runtime options from a local runner, but they should not embed private
@@ -88,9 +90,9 @@ The public-safe path is:
    Polymarket event-slug horizon, loads the initial UP/DOWN instrument IDs, and
    exposes an importable slug builder for provider refreshes.
 5. `prediction_market_extensions/live/sandbox.py` builds the Nautilus sandbox
-   node with public Polymarket market data, Binance US BTC trades, and Nautilus
-   sandbox execution.
-6. Strategy code receives live order-book deltas and Binance BTC trade ticks
+   node with public Polymarket market data, an external BTC trade feed, and
+   Nautilus sandbox execution.
+6. Strategy code receives live order-book deltas and external BTC trade ticks
    through Nautilus, then emits sandbox orders through Nautilus risk/execution.
 
 The BTC 5m hooks are rolling, not fixed. On each Polymarket instrument refresh,
@@ -119,6 +121,13 @@ model evaluation points. This makes it clear whether the node is merely
 connected, actively receiving BTC ticks, and actually evaluating the current 5m
 market.
 
+Strategies should also guard against stale reference data. A connected reference
+websocket is not enough proof that BTC features are fresh; the runner can pass a
+maximum BTC feature age so private strategy code skips entries when recent BTC
+trade ticks are missing. The example runner defaults this to 30 seconds, which
+keeps the guard meaningful while avoiding false blocks from normal public-feed
+cadence.
+
 ## Example BTC Snapshot Runner
 
 `live/btc_snapshot_model_sandbox.py` is an example of how a local live runner
@@ -129,8 +138,9 @@ complete public trading package:
 - it sets environment values used by the importable BTC 5m slug builder;
 - it resolves the private model path from `LIVE_BTC_SNAPSHOT_MODEL_PATH` or a
   default under `live/models/`;
-- it builds a strategy config that injects instrument IDs, the Binance BTC
-  trade instrument, local runtime options, and the private model path;
+- it builds a strategy config that injects instrument IDs, the external BTC
+  trade instrument, optional extra spot feature instruments, local runtime
+  options, and the private model path;
 - it calls `build_polymarket_binance_sandbox_config()` and
   `build_polymarket_binance_sandbox_node()`;
 - it supports dry-run/build-only validation and a `--run` path for starting the
@@ -140,6 +150,35 @@ By default, the example runner sets `heartbeat_log_seconds` from
 `LIVE_BTC_HEARTBEAT_LOG_SECONDS`, defaulting to five minutes. Set that
 environment variable lower while debugging startup, or higher if a production
 sandbox log is too chatty.
+
+The example runner also exposes operational switches for the live data path:
+
+- `LIVE_BTC_MAX_FEATURE_AGE_SECONDS` controls how stale BTC trade-derived
+  features may be before the private strategy should skip an entry; the default
+  is 30 seconds.
+- `LIVE_BTC_DAILY_STOP_LOSS` passes a sandbox daily loss limit into strategies
+  that support one.
+- `LIVE_BTC_DATA_SOURCE` or `--btc-data-source` selects the Binance BTC feed.
+  Supported values are `binance-us` and `binance-global`; the example runner
+  defaults to `binance-global` so live BTC features match the Telonex Binance
+  data used for the private model.
+- `LIVE_BTC_BINANCE_GLOBAL=1` or `--binance-global` remains as a compatibility
+  alias for `--btc-data-source binance-global`.
+- `LIVE_BTC_EXTRA_SPOT_INSTRUMENT_IDS` or `--extra-spot-instrument-ids` can
+  provide comma-separated Binance spot instruments such as
+  `ETHUSDT.BINANCE,SOLUSDT.BINANCE`. If unset, the runner inspects the private
+  model columns and auto-subscribes matching spot instruments for prefixes such
+  as `eth_` and `sol_`.
+
+`live/btc_eth_sol_snapshot_model_sandbox.py` is a local convenience wrapper for
+the current private BTC 5m ETH/SOL profile. It points the base runner at the
+ignored ETH/SOL model artifact, sets `LIVE_BTC_SNAPSHOT_EDGE=0.08`, and
+subscribes `ETHUSDT.BINANCE` and `SOLUSDT.BINANCE` alongside BTC. Run it
+directly the same way as the generic runner:
+
+```bash
+uv run python live/btc_eth_sol_snapshot_model_sandbox.py --run
+```
 
 That runner is useful as a public example of the sandbox wiring. It references
 private strategy and model paths to show where local artifacts plug in, but
@@ -153,7 +192,7 @@ Do not open-source the private strategy or model artifacts.
 
 The BTC snapshot model depends on private research code and private Telonex
 backtesting data. The public repository can show how Nautilus sandbox plumbing,
-Polymarket BTC 5m market discovery, Binance BTC trade features, heartbeat and
+Polymarket BTC 5m market discovery, external BTC trade features, heartbeat and
 evaluation logging, settlement polling, and local runner injection fit together.
 It should not include:
 
