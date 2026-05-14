@@ -1,8 +1,8 @@
 # Codebase UML Inventory
 
 This file is generated from Python AST metadata and excludes `tests/` plus git-ignored private strategy/research directories.
-Generated: 2026-05-11T03:41:57+00:00
-Modules: 119 | Classes: 171 | Functions/methods: 1572
+Generated: 2026-05-14T16:02:58+00:00
+Modules: 119 | Classes: 171 | Functions/methods: 1581
 
 ## Backtesting Data Flow
 
@@ -732,18 +732,27 @@ flowchart TD
 - Function L1105: `save_joint_portfolio_backtest_report(*, results: Sequence[dict[str, Any]], output_path: str | Path, title: str, market_key: str, pnl_label: str, max_points_per_market: int = 400, plot_panels: Sequence[str] | None = None) -> str | None`
 - Function L1347: `print_backtest_summary(*, results: list[dict[str, Any]], market_key: str, count_key: str, count_label: str, pnl_label: str, empty_message: str = 'No markets had sufficient data.') -> None`
 - Function L1410: `_summary_stats_for_result(result: Mapping[str, Any]) -> dict[str, float | None]`
-- Function L1428: `_summary_stats_total(*, rows: Sequence[Mapping[str, float | None]], results: Sequence[Mapping[str, Any]]) -> dict[str, float | None]`
-- Function L1454: `_summary_fill_stats(fill_events: object) -> tuple[float, float, float | None]`
-- Function L1472: `_summary_returns_from_pairs(pairs: object) -> dict[int, float]`
-- Function L1493: `_summary_return_stats(returns: dict[int, float]) -> dict[str, float | None]`
-- Function L1510: `_summary_total_return_pct(pairs: object) -> float | None`
-- Function L1526: `_safe_stat(func, returns: dict[int, float]) -> float | None`
-- Function L1534: `_safe_stat_percent(func, returns: dict[int, float]) -> float | None`
-- Function L1539: `_coerce_float(value: object) -> float | None`
-- Function L1547: `_format_summary_float(value: object, decimals: int) -> str`
-- Function L1554: `_format_summary_pct(value: object) -> str`
-- Function L1561: `_print_portfolio_stats(results: Sequence[Mapping[str, Any]]) -> None`
-- Function L1624: `_selected_named_stats(stats: Mapping[str, Any], names: Sequence[str]) -> list[str]`
+- Function L1432: `_summary_stats_total(*, rows: Sequence[Mapping[str, float | None]], results: Sequence[Mapping[str, Any]]) -> dict[str, float | None]`
+- Function L1485: `_summary_fill_stats(fill_events: object) -> tuple[float, float, float | None]`
+- Function L1503: `_summary_returns_from_pairs(pairs: object) -> dict[int, float]`
+- Function L1508: `_summary_returns_from_series(series: pd.Series) -> dict[int, float]`
+- Function L1528: `_summary_return_stats(returns: dict[int, float]) -> dict[str, float | None]`
+- Function L1545: `_summary_total_return_pct(pairs: object) -> float | None`
+- Function L1550: `_summary_total_return_pct_from_series(series: pd.Series) -> float | None`
+- Function L1565: `_summary_reconciled_equity_series(pairs: object, *, final_pnl: object) -> pd.Series`
+- Function L1595: `_summary_total_return_pct_for_portfolio(*, equity_series: object, total_pnl: float, portfolio_pnls: Mapping[str, Any], use_portfolio_stats: bool) -> float | None`
+- Function L1627: `_summary_portfolio_stats(results: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]`
+- Function L1634: `_summary_portfolio_return_stats(portfolio_stats: Mapping[str, Any]) -> Mapping[str, Any]`
+- Function L1639: `_summary_portfolio_pnl_stats(portfolio_stats: Mapping[str, Any]) -> Mapping[str, Any]`
+- Function L1651: `_summary_portfolio_pnl_matches(*, portfolio_pnls: Mapping[str, Any], total_pnl: float) -> bool`
+- Function L1659: `_summary_prefer_stat(primary: object, fallback: float | None) -> float | None`
+- Function L1664: `_safe_stat(func, returns: dict[int, float]) -> float | None`
+- Function L1672: `_safe_stat_percent(func, returns: dict[int, float]) -> float | None`
+- Function L1677: `_coerce_float(value: object) -> float | None`
+- Function L1685: `_format_summary_float(value: object, decimals: int) -> str`
+- Function L1692: `_format_summary_pct(value: object) -> str`
+- Function L1699: `_print_portfolio_stats(results: Sequence[Mapping[str, Any]]) -> None`
+- Function L1762: `_selected_named_stats(stats: Mapping[str, Any], names: Sequence[str]) -> list[str]`
 
 ### `prediction_market_extensions/analysis/__init__.py`
 - Imports: none
