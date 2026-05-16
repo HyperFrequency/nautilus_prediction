@@ -450,5 +450,9 @@ def main() -> None:
     print(f"Walk-forward summary JSON: {summary_path}")
 
 
+def run() -> None:
+    main()
+
+
 if __name__ == "__main__":
     main()

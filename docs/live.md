@@ -32,8 +32,9 @@ position limits, and operational checks are explicit.
 
 Live runner and scaffold files can be tracked when they are safe to publish.
 Selected public model profiles can also be tracked under `live/models/`.
-Diagnostics, logs, `.env` files, settlement ledgers, and machine-specific
-runtime files remain ignored by `live/.gitignore`.
+Diagnostics and settlement ledgers using the standard
+`*_diagnostics.json`/`*_settlements.json` suffixes, logs, `.env` files, and
+machine-specific runtime files remain ignored by `live/.gitignore`.
 
 Do not put private model weights, private research notes, or deployment secrets
 in `prediction_market_extensions/live/`. That package is shared helper code
@@ -74,15 +75,15 @@ Reusable helper code belongs in `prediction_market_extensions/live/`.
 Current helper responsibilities include:
 
 - Polymarket BTC 5m slug and instrument loading
-- external BTC trade instrument defaults
+- external BTC market-data instrument defaults
 - Nautilus sandbox node config construction
 - sandbox execution client factory registration
-- live BTC trade feature buffering for strategies that need recent BTC
-  momentum, volume, or volatility features
+- live BTC trade and L2 book feature buffering for strategies that need recent
+  BTC momentum, volume, volatility, or book-depth features
 - public Polymarket CLOB settlement polling for sandbox portfolio accounting
 - rolling BTC 5m market discovery and pruning
-- BTC trade-feed freshness checks so live strategies can fail closed when the
-  external reference-price feed is stale
+- BTC market-data freshness checks so live strategies can fail closed when the
+  external reference-price or book feed is stale
 
 These helpers must remain parameter-free. They can accept strategy configs and
 runtime options from a local runner, but they should not embed private
@@ -104,10 +105,12 @@ The public-safe path is:
    Polymarket event-slug horizon, loads the initial UP/DOWN instrument IDs, and
    exposes an importable slug builder for provider refreshes.
 5. `prediction_market_extensions/live/sandbox.py` builds the Nautilus sandbox
-   node with public Polymarket market data, an external BTC trade feed, and
-   Nautilus sandbox execution.
-6. Strategy code receives live order-book deltas and external BTC trade ticks
-   through Nautilus, then emits sandbox orders through Nautilus risk/execution.
+   node with public Polymarket market data, external Binance BTC trade and L2
+   book feeds, optional extra Binance spot book feeds, and Nautilus sandbox
+   execution.
+6. Strategy code receives live Polymarket order-book deltas plus external
+   Binance trade ticks and book deltas through Nautilus, then emits sandbox
+   orders through Nautilus risk/execution.
 
 The BTC 5m hooks are rolling, not fixed. On each Polymarket instrument refresh,
 the slug builder returns the current upcoming market window. The public
@@ -308,7 +311,9 @@ intentional for the deployment.
 
 Large diagnostics should be opt-in. For example, the BTC snapshot sandbox runner
 only writes its evaluation/order/fill diagnostics when
-`LIVE_BTC_SNAPSHOT_DIAGNOSTICS_PATH` is set.
+`LIVE_BTC_SNAPSHOT_DIAGNOSTICS_PATH` is set. Use the standard
+`*_diagnostics.json` and `*_settlements.json` suffixes for local artifact paths,
+or add any custom names to `.gitignore` before running.
 
 ## Running Sandbox
 
@@ -325,8 +330,8 @@ uv run python main.py --mode sandbox
 ```
 
 The menu discovers flat Python and notebook files under `live/`. Runtime files
-such as diagnostics and settlement ledgers are ignored. Published model profiles
-under `live/models/` can be inspected or selected with
+matching the standard diagnostics and settlement suffixes are ignored. Published
+model profiles under `live/models/` can be inspected or selected with
 `LIVE_BTC_SNAPSHOT_MODEL_PATH`.
 
 Direct runner execution is still useful while developing a sandbox runner:

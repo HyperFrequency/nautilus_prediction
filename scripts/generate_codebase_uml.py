@@ -139,10 +139,10 @@ flowchart TD
     Experiment --> Backtest[PredictionMarketBacktest]
     Backtest --> Registry[data_sources.registry]
     Registry --> Adapter[HistoricalReplayAdapter]
-    Adapter --> Loader[Vendor loader: Kalshi / Polymarket / PMXT / Telonex]
+    Adapter --> Loader[Public replay loader: PMXT / Telonex]
     Loader --> Records[LoadedReplay records + instrument]
     Records --> Engine[Nautilus BacktestEngine]
-    Engine --> Strategy[Strategy configs / LongOnlyPredictionMarketStrategy]
+    Engine --> Strategy[Strategy configs / prediction-market strategies]
     Engine --> Artifacts[Artifacts, reports, summary series]
     Artifacts --> Optimizer[Optimizer score and leaderboard]
 ```"""

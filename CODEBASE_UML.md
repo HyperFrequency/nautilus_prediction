@@ -1,7 +1,7 @@
 # Codebase UML Inventory
 
 This file is generated from Python AST metadata and excludes `tests/` plus cache, virtualenv, and dot directories.
-Generated: 2026-05-16T20:54:19+00:00
+Generated: 2026-05-16T21:06:08+00:00
 Modules: 136 | Classes: 181 | Functions/methods: 1897
 
 ## Backtesting Data Flow
@@ -12,10 +12,10 @@ flowchart TD
     Experiment --> Backtest[PredictionMarketBacktest]
     Backtest --> Registry[data_sources.registry]
     Registry --> Adapter[HistoricalReplayAdapter]
-    Adapter --> Loader[Vendor loader: Kalshi / Polymarket / PMXT / Telonex]
+    Adapter --> Loader[Public replay loader: PMXT / Telonex]
     Loader --> Records[LoadedReplay records + instrument]
     Records --> Engine[Nautilus BacktestEngine]
-    Engine --> Strategy[Strategy configs / LongOnlyPredictionMarketStrategy]
+    Engine --> Strategy[Strategy configs / prediction-market strategies]
     Engine --> Artifacts[Artifacts, reports, summary series]
     Artifacts --> Optimizer[Optimizer score and leaderboard]
 ```

@@ -12,8 +12,9 @@
 - `prediction_market_extensions/backtesting/` contains shared runner plumbing,
   data-source adapters, timing, reporting, artifacts, and optimizer helpers.
 
-Only flat `backtests/*.py`, `backtests/*.ipynb`, `backtests/private/*.py`, and
-`backtests/private/*.ipynb` files are discoverable by the menu. Subdirectories
+The menu only considers flat `backtests/*.py`, `backtests/*.ipynb`,
+`backtests/private/*.py`, and `backtests/private/*.ipynb` files. Python files
+still need a `run()` function or `EXPERIMENT` object to appear. Subdirectories
 under `backtests/` should be support code only.
 
 Current public Python runners:
@@ -67,8 +68,9 @@ Tracked private cache helpers:
 The Polymarket helper downloads BTC 5m `book_snapshot_full` API-day files into
 the Telonex cache layout. The Binance helper downloads spot `trades`,
 `book_snapshot_25`, and optional `quotes` parquet days into the spot cache
-layout used by the snapshot research runner. Both require `TELONEX_API_KEY` in
-the environment or `.env`.
+layout used by the snapshot research runner. Both are direct CLI helpers with
+`main()` entrypoints, and both require `TELONEX_API_KEY` in the environment or
+`.env`.
 
 Tracked BTC 5m snapshot model runners:
 
@@ -111,9 +113,11 @@ Tracked broader Telonex research runners:
 - `backtests/private/telonex_resolved_sports_research.py`
 
 The general-market runner compares deep-value, panic-fade, and VWAP-reversion
-candidates across the Telonex 100-market replay sample. The resolved-sports
-runner discovers recently resolved Polymarket sports markets and compares
-late-favorite or final-period-momentum candidates over their closing windows.
+candidates across a configurable subset of the Telonex 100-market replay sample
+and defaults to 80 selected slugs split between train and holdout. The
+resolved-sports runner discovers recently resolved Polymarket sports markets
+and compares late-favorite or final-period-momentum candidates over their
+closing windows.
 
 These archived runners usually require Telonex API access, local Telonex cache
 coverage, and enough memory for multi-market L2 replay. The expected local cache
