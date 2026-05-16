@@ -19,9 +19,28 @@
 - [x] richer charting and honest multi-run HTML/report outputs [PR#5](https://github.com/ben-gramling/nautilus_pm/pull/5), [PR#52](https://github.com/evan-kolberg/prediction-market-backtesting/pull/52), [PR#68](https://github.com/evan-kolberg/prediction-market-backtesting/pull/68), [PR#74](https://github.com/evan-kolberg/prediction-market-backtesting/pull/74), [PR#80](https://github.com/evan-kolberg/prediction-market-backtesting/pull/80), [PR#83](https://github.com/evan-kolberg/prediction-market-backtesting/pull/83)
 - [x] manifest-based runner architecture and repo-level optimizer surface [PR#67](https://github.com/evan-kolberg/prediction-market-backtesting/pull/67)
 - [x] repo-level runner/report contracts, docs validation, and launcher/docs hardening [PR#64](https://github.com/evan-kolberg/prediction-market-backtesting/pull/64), [PR#65](https://github.com/evan-kolberg/prediction-market-backtesting/pull/65), [PR#68](https://github.com/evan-kolberg/prediction-market-backtesting/pull/68), [PR#69](https://github.com/evan-kolberg/prediction-market-backtesting/pull/69), [PR#71](https://github.com/evan-kolberg/prediction-market-backtesting/pull/71), [PR#76](https://github.com/evan-kolberg/prediction-market-backtesting/pull/76), [PR#77](https://github.com/evan-kolberg/prediction-market-backtesting/pull/77), [PR#78](https://github.com/evan-kolberg/prediction-market-backtesting/pull/78), [PR#80](https://github.com/evan-kolberg/prediction-market-backtesting/pull/80), [PR#81](https://github.com/evan-kolberg/prediction-market-backtesting/pull/81)
+- [x] archived Telonex private research source, BTC snapshot model profiles,
+  and BTC snapshot live sandbox examples published for study
+  [PR#147](https://github.com/evan-kolberg/prediction-market-backtesting/pull/147)
 
 ## Known Issues
 
+- The archived `backtests/private/` and `strategies/private/` source is
+  published for study, not as a current trading edge. These runners capture old
+  Telonex BTC 5m, general-market, and resolved-sports research surfaces. They
+  can require Telonex API access, local Telonex cache coverage, and substantial
+  replay memory. Market structure, public feed behavior, Polymarket constraints,
+  and model relevance have drifted since the recorded research runs.
+- The archived BTC snapshot model bundle is the only private strategy family
+  wired into live sandbox runners. Re-training the included JSON profiles
+  requires local Telonex Polymarket book snapshots and Telonex Binance spot
+  parquet caches that are not shipped with the repository; cross-asset profiles
+  need matching ETH, SOL, or XRP spot caches. The archived cache-hydration
+  helpers can populate those paths for users with Telonex API access, but exact
+  reproduction still depends on historical Telonex file availability and
+  matching the original environment settings. The companion walk-forward and
+  runner-validation scripts also require compatible dataset/model artifacts
+  produced by the research workflow.
 - Kalshi is not currently exposed as a public runnable backtest path. The repo
   still contains Kalshi instrument, trade/candlestick loader, fee-model, and
   research helper components, but the built-in replay adapter registry only
