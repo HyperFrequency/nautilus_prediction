@@ -1,4 +1,5 @@
-# Ignore everything in this directory — backtests stay private.
-*
-# ...except this file, so the folder is tracked by git.
-!.gitignore
+# Historical research runners in this namespace are tracked.
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.log

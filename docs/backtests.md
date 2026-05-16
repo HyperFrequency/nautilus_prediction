@@ -3,11 +3,12 @@
 ## Repo Layout
 
 - `strategies/` contains reusable strategy classes and configs.
-- `strategies/private/` is for git-ignored local strategy modules.
+- `strategies/private/` contains historical strategy modules that were once
+  local-only. They remain in that namespace for import compatibility.
 - `backtests/` contains flat public runner entrypoints.
-- `backtests/private/` is for git-ignored local runner entrypoints. The BTC
-  snapshot model research script is a historical exception that is tracked as an
-  archived model-training example.
+- `backtests/private/` contains historical Telonex research runners that were
+  once local-only. They are tracked as an archive, not as the recommended
+  baseline smoke-test set.
 - `prediction_market_extensions/backtesting/` contains shared runner plumbing,
   data-source adapters, timing, reporting, artifacts, and optimizer helpers.
 
@@ -39,20 +40,84 @@ These are research demos, not profitability claims. They are pinned to concrete
 markets, windows, sources, strategy configs, and execution assumptions so direct
 script runs stay reproducible.
 
-The archived BTC snapshot model research runner lives at:
+## Archived Private Research
+
+The `private/` namespace is now a historical research archive. The files remain
+under `backtests/private/` and `strategies/private/` so old import paths and
+saved model profiles keep working, but they are no longer hidden from git.
+Treat them as study material and reproducibility aids, not as maintained trading
+recommendations or guaranteed public smoke tests.
+
+Tracked private strategies:
+
+- `strategies/private/btc_snapshot_model.py`: the BTC 5m snapshot model
+  strategy used by the archived Nautilus replay validator and live sandbox
+  runners.
+- `strategies/private/passive_pair_accumulation.py`: a maker-first
+  complementary-token strategy. It watches paired YES/NO books, posts post-only
+  buy limits on both legs when the fee-adjusted combined passive cost is below
+  settlement value, holds matched shares to resolution, and market-sells any
+  unmatched surplus after a bounded completion window.
+
+Tracked private cache helpers:
+
+- `backtests/private/telonex_btc_5m_polymarket_download.py`
+- `backtests/private/telonex_binance_btc_download.py`
+
+The Polymarket helper downloads BTC 5m `book_snapshot_full` API-day files into
+the Telonex cache layout. The Binance helper downloads spot `trades`,
+`book_snapshot_25`, and optional `quotes` parquet days into the spot cache
+layout used by the snapshot research runner. Both require `TELONEX_API_KEY` in
+the environment or `.env`.
+
+Tracked BTC 5m snapshot model runners:
 
 ```text
 backtests/private/telonex_btc_5m_snapshot_model_research.py
+backtests/private/telonex_btc_5m_snapshot_model_walkforward.py
+backtests/private/telonex_btc_5m_snapshot_model_runner_validate.py
 ```
 
-It builds BTC 5m snapshot rows, fits the logistic model used by the published
-`live/models/btc_snapshot_model_*.json` profiles, evaluates fixed policy grids,
-and writes research artifacts under `output/telonex_churn/model_research/`.
-It is tracked for study, not as a guaranteed public smoke test. Re-running it
-requires local Telonex Polymarket book snapshots and Telonex Binance spot data
-under the cache paths referenced by the script. Without those local parquet
-caches, the runner should fail instead of producing misleading model output.
-The expected local cache layouts are:
+The research runner builds BTC 5m snapshot rows, fits the logistic model used by
+the published `live/models/btc_snapshot_model_*.json` profiles, evaluates fixed
+policy grids, and writes research artifacts under
+`output/telonex_churn/model_research/`. The walk-forward runner consumes a
+dataset CSV emitted by that research runner, refits the logistic model across
+rolling train/validation/holdout folds, and writes fold-level CSV and JSON
+summaries. The runner validator replays a selected model through Nautilus/Telonex
+L2 chunks with the archived strategy, then writes chunk CSVs, fills/skips CSVs,
+a summary JSON, and an HTML report.
+
+Tracked BTC 5m strategy-family validators:
+
+- `backtests/private/telonex_btc_5m_passive_pair_accumulation_search.py`
+- `backtests/private/telonex_btc_5m_passive_pair_forward_validate.py`
+- `backtests/private/telonex_btc_5m_passive_pair_chunked_forward_validate.py`
+- `backtests/private/telonex_btc_5m_late_favorite_chunked_forward_validate.py`
+- `backtests/private/telonex_btc_5m_microprice_imbalance_chunked_forward_validate.py`
+- `backtests/private/telonex_btc_5m_pair_arbitrage_chunked_forward_validate.py`
+
+The passive-pair search uses the archived
+`BookPassivePairAccumulationStrategy`. The other validators reuse public
+strategy classes such as late-favorite taker-hold, microprice imbalance, and
+binary pair arbitrage with archived champion parameters and later BTC 5m
+forward windows. Several of these modules share evaluation helpers from the
+passive-pair search runner; that coupling is historical and intentionally kept
+visible.
+
+Tracked broader Telonex research runners:
+
+- `backtests/private/telonex_general_market_value_rebound_search.py`
+- `backtests/private/telonex_resolved_sports_research.py`
+
+The general-market runner compares deep-value, panic-fade, and VWAP-reversion
+candidates across the Telonex 100-market replay sample. The resolved-sports
+runner discovers recently resolved Polymarket sports markets and compares
+late-favorite or final-period-momentum candidates over their closing windows.
+
+These archived runners usually require Telonex API access, local Telonex cache
+coverage, and enough memory for multi-market L2 replay. The expected local cache
+layouts for the BTC snapshot workflow are:
 
 ```text
 ~/.cache/nautilus_trader/telonex/api-days/*/polymarket/book_snapshot_full/{slug}/outcome={Up,Down}/{date}.parquet
@@ -65,43 +130,17 @@ The quote cache is only required for profiles trained with quote features.
 Cross-asset profiles additionally require matching `ethusdt`, `solusdt`, or
 `xrpusdt` spot caches.
 
-Two archived cache-hydration helpers are included for users with Telonex API
-access:
-
-```text
-backtests/private/telonex_btc_5m_polymarket_download.py
-backtests/private/telonex_binance_btc_download.py
-```
-
-The Polymarket helper downloads BTC 5m `book_snapshot_full` API-day files into
-the Telonex cache layout. The Binance helper downloads spot `trades`,
-`book_snapshot_25`, and optional `quotes` parquet days into the spot cache
-layout used by the research runner. Both require `TELONEX_API_KEY` in the
-environment or `.env`.
-
-The companion walk-forward runner is:
-
-```text
-backtests/private/telonex_btc_5m_snapshot_model_walkforward.py
-```
-
-It consumes a dataset CSV emitted by the research runner, refits the logistic
-model across rolling train/validation/holdout folds, and writes fold-level CSV
-and JSON summaries under `output/telonex_churn/model_research/`. It is useful
-for studying how the model was stress-tested after initial fitting, but it is
-not a standalone backtest and cannot run until a compatible research dataset
-exists locally.
-
-Both archived runners define `run()` and can still appear in the private runner
-menu. They are intentionally not part of the public smoke-test set.
+All tracked private runners define `run()` and can appear in the backtest menu.
+They are intentionally omitted from `scripts/run_all_backtests.py`, which only
+targets first-class public runners under `backtests/*.py`.
 
 A Telonex subscriber can use these files to approximate the original workflow:
 hydrate the Polymarket and Binance caches for the dates and spot symbols in the
 target model summary, run the research script with matching `TELONEX_CHURN_*`
-environment settings, then run the walk-forward script against the emitted
-dataset. Exact bit-for-bit reproduction still depends on Telonex retaining the
-same historical files and on matching the original environment choices recorded
-in the model JSON summaries.
+environment settings, then run the walk-forward or runner-validation scripts
+against the emitted dataset/model. Exact bit-for-bit reproduction still depends
+on Telonex retaining the same historical files and on matching the original
+environment choices recorded in the model JSON summaries and runner constants.
 
 ## Runner Contract
 

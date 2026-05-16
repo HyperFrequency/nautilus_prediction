@@ -11,6 +11,11 @@ for studying the live wiring, feature construction, model serialization, and
 strategy guards, but it is not a current trading recommendation or a maintained
 profitability claim.
 
+The broader `private/` research archive is also published for study. That does
+not make every archived strategy a live strategy. The live/sandbox surface is
+still limited to tracked files under `live/`, and currently only the BTC
+snapshot model bundle has live sandbox wiring.
+
 Real Polymarket live trading support is planned later. Keep that path separate
 from sandbox until account credentials, order permissions, kill switches,
 position limits, and operational checks are explicit.
@@ -18,9 +23,9 @@ position limits, and operational checks are explicit.
 ## Directory Contract
 
 - `strategies/` contains reusable strategy implementations.
-- `strategies/private/` contains git-ignored local strategy modules. The BTC
-  snapshot model strategy is a historical exception that remains in this
-  namespace for import compatibility while being tracked as an archived example.
+- `strategies/private/` contains historical strategy modules that were once
+  local-only. They remain in this namespace for import compatibility while
+  being tracked as archived examples.
 - `prediction_market_extensions/live/` contains shared live/sandbox helper
   code that is safe to ship with the framework.
 - `live/` contains local sandbox and future live runner entrypoints.
@@ -217,12 +222,15 @@ structure, public feed behavior, Polymarket constraints, and model relevance can
 all drift. Treat `--build-only` as a wiring check and `--run` as a sandbox-only
 experiment.
 
-## Private Strategy Boundary
+## Archived Strategy Boundary
 
-Most private strategy and model artifacts should stay private. The BTC snapshot
-model is a deliberate archival exception: its strategy, model summary JSONs, and
-research script are tracked so readers can inspect a complete historical example
-of:
+The `private/` directory name is historical. Tracked modules there are public
+source now, but they are still archived research code rather than promoted
+framework defaults.
+
+The BTC snapshot model is the only archived private strategy connected to live
+sandbox runners. Its strategy, model summary JSONs, and research scripts are
+tracked so readers can inspect a complete historical example of:
 
 - Polymarket BTC 5m market discovery;
 - external BTC and optional cross-asset spot feature buffering;
@@ -240,18 +248,24 @@ module at runtime for the logistic model type, feature constants, and prediction
 helper, so that file is part of the live sandbox dependency surface as well as
 the retraining story.
 
-Do not include:
+`strategies/private/passive_pair_accumulation.py` is also tracked, but it is not
+connected to any live runner. It belongs to the archived Telonex BTC 5m
+backtest/search stack. The strategy posts passive paired bids on complementary
+YES/NO books when the combined maker cost is below settlement value, holds
+matched shares, and exits unmatched surplus after its completion timeout.
+
+Do not include in git:
 
 - unrelated model weights or serialized model profiles;
-- unrelated private feature-generation or training code;
-- private optimizer sweeps, validation reports, or iteration history;
-- tuned strategy thresholds that are not deliberately published examples;
-- private Telonex-derived datasets or derived research artifacts.
+- private optimizer sweeps, validation reports, or iteration history unless
+  they are deliberately curated source files;
+- local model profiles that were not intentionally published;
+- Telonex-derived datasets or generated research artifacts;
+- `.env`, logs, diagnostics, sandbox settlement ledgers, or account credentials.
 
-Keep unrelated private artifacts under ignored paths such as local model
-directories, private runner modules, or another local storage path. Public
-helpers should describe interfaces and operational mechanics, not silently embed
-unpublished edge.
+Keep unpublished artifacts under ignored paths such as `output/`, local model
+directories, or another local storage path. Public helpers should describe
+interfaces and operational mechanics, not silently embed unpublished edge.
 
 ## Model And Parameter Placement
 
@@ -260,8 +274,9 @@ Published archival model profiles can live under `live/models/`. Private model
 weights and private research artifacts should stay under ignored paths such as:
 
 ```text
-strategies/private/
-backtests/private/
+live/models/local-*.json
+output/
+~/.cache/nautilus_trader/
 ```
 
 A local runner can inject tracked operating parameters and ignored model paths

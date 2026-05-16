@@ -17,10 +17,7 @@ EXCLUDED_DIRS = {
     "__pycache__",
     "tests",
 }
-EXCLUDED_RELATIVE_PREFIXES = {
-    ("backtests", "private"),
-    ("strategies", "private"),
-}
+EXCLUDED_RELATIVE_PREFIXES: set[tuple[str, ...]] = set()
 
 
 @dataclass
@@ -187,7 +184,7 @@ def build_document() -> str:
         "# Codebase UML Inventory",
         "",
         "This file is generated from Python AST metadata and excludes `tests/` plus "
-        "git-ignored private strategy/research directories.",
+        "cache, virtualenv, and dot directories.",
         f"Generated: {datetime.now(UTC).isoformat(timespec='seconds')}",
         f"Modules: {len(modules)} | Classes: {class_count} | Functions/methods: {callable_count}",
         "",
