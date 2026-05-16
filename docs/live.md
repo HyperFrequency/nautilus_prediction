@@ -6,6 +6,11 @@
 testing a strategy against live data feeds with sandbox execution, not for
 sending real Polymarket orders.
 
+The BTC snapshot model bundle is published as an archived example. It is useful
+for studying the live wiring, feature construction, model serialization, and
+strategy guards, but it is not a current trading recommendation or a maintained
+profitability claim.
+
 Real Polymarket live trading support is planned later. Keep that path separate
 from sandbox until account credentials, order permissions, kill switches,
 position limits, and operational checks are explicit.
@@ -13,19 +18,22 @@ position limits, and operational checks are explicit.
 ## Directory Contract
 
 - `strategies/` contains reusable strategy implementations.
-- `strategies/private/` contains git-ignored local strategy modules.
+- `strategies/private/` contains git-ignored local strategy modules. The BTC
+  snapshot model strategy is a historical exception that remains in this
+  namespace for import compatibility while being tracked as an archived example.
 - `prediction_market_extensions/live/` contains shared live/sandbox helper
   code that is safe to ship with the framework.
 - `live/` contains local sandbox and future live runner entrypoints.
 
 Live runner and scaffold files can be tracked when they are safe to publish.
-Private model artifacts, diagnostics, logs, `.env` files, and machine-specific
+Selected public model profiles can also be tracked under `live/models/`.
+Diagnostics, logs, `.env` files, settlement ledgers, and machine-specific
 runtime files remain ignored by `live/.gitignore`.
 
 Do not put private model weights, private research notes, or deployment secrets
 in `prediction_market_extensions/live/`. That package is shared helper code
-only. If a public runner needs a private model, reference the ignored model path
-and keep the model file under `live/models/`.
+only. If a runner needs a model that is not intended for publication, reference
+the ignored local path and keep the model file out of git.
 
 ## Sandbox Runner Contract
 
@@ -77,8 +85,9 @@ thresholds, coefficients, model paths, or sizing rules.
 
 ## BTC 5m Sandbox Plumbing
 
-The BTC 5m sandbox flow is split between public-safe plumbing and private
-strategy assets.
+The BTC 5m sandbox flow is split between public-safe plumbing and strategy
+assets. The archived BTC snapshot strategy is tracked, but the same boundary
+still applies to unpublished local strategies.
 
 The public-safe path is:
 
@@ -111,8 +120,9 @@ shutdown logs show expired books being cleaned up.
 
 Settlement is separate from Nautilus' simulated exchange. The strategy can poll
 public Polymarket CLOB market state after market expiry, record whether the
-held token won, and write a local sandbox settlement ledger. That ledger is a
-local runtime artifact and is ignored by `live/.gitignore`.
+held token won, apply synthetic settlement fills to the sandbox position state,
+and write a local sandbox settlement ledger. That ledger is local accounting,
+not a real account ledger, and is ignored by `live/.gitignore`.
 
 Long-running sandbox strategies should emit operational proof-of-life logs even
 when they do not trade. The BTC snapshot sandbox emits `SANDBOX_MODEL_HEARTBEAT`
@@ -123,28 +133,45 @@ market.
 
 Strategies should also guard against stale reference data. A connected reference
 websocket is not enough proof that BTC features are fresh; the runner can pass a
-maximum BTC feature age so private strategy code skips entries when recent BTC
-trade ticks are missing. The example runner defaults this to 30 seconds, which
-keeps the guard meaningful while avoiding false blocks from normal public-feed
+maximum BTC feature age so strategy code skips entries when recent BTC trade
+ticks are missing. The example runner defaults this to 30 seconds, which keeps
+the guard meaningful while avoiding false blocks from normal public-feed
 cadence.
 
 ## Example BTC Snapshot Runner
 
-`live/btc_snapshot_model_sandbox.py` is an example of how a local live runner
-uses the public-safe plumbing. It is intentionally a wiring example, not a
-complete public trading package:
+`live/btc_snapshot_model_sandbox.py` is the generic runner for the archived BTC
+snapshot model bundle. It shows how the public-safe plumbing, model profile, and
+strategy implementation fit together:
 
 - it selects the BTC 5m market horizon;
 - it sets environment values used by the importable BTC 5m slug builder;
-- it resolves the private model path from `LIVE_BTC_SNAPSHOT_MODEL_PATH` or a
-  default under `live/models/`;
+- it resolves the model path from `LIVE_BTC_SNAPSHOT_MODEL_PATH` or a default
+  tracked profile under `live/models/`;
 - it builds a strategy config that injects instrument IDs, the external BTC
   trade instrument, optional extra spot feature instruments, local runtime
-  options, and the private model path;
+  options, and the model path;
 - it calls `build_polymarket_binance_sandbox_config()` and
   `build_polymarket_binance_sandbox_node()`;
 - it supports dry-run/build-only validation and a `--run` path for starting the
   Nautilus node.
+
+The default model path is:
+
+```text
+live/models/btc_snapshot_model_s204_btc_l2_full_mar1_may9.json
+```
+
+That profile, plus several earlier or cross-asset variants under `live/models/`,
+are summary JSONs produced by
+`backtests/private/telonex_btc_5m_snapshot_model_research.py`. They include the
+serialized logistic coefficients, feature columns, and research metrics needed
+to score rows. Live policy knobs such as edge threshold, snapshot seconds,
+spread limits, and sizing still come from the runner config and environment.
+Selecting a different `LIVE_BTC_SNAPSHOT_MODEL_PATH` without matching those
+runtime knobs can mismatch the JSON's recorded best policy. The referenced
+dataset and policy CSV paths are provenance fields only and are not shipped as a
+reproducibility bundle.
 
 By default, the example runner sets `heartbeat_log_seconds` from
 `LIVE_BTC_HEARTBEAT_LOG_SECONDS`, defaulting to five minutes. Set that
@@ -154,66 +181,85 @@ sandbox log is too chatty.
 The example runner also exposes operational switches for the live data path:
 
 - `LIVE_BTC_MAX_FEATURE_AGE_SECONDS` controls how stale BTC trade-derived
-  features may be before the private strategy should skip an entry; the default
+  features may be before the strategy should skip an entry; the default
   is 30 seconds.
 - `LIVE_BTC_DAILY_STOP_LOSS` passes a sandbox daily loss limit into strategies
-  that support one.
+  that support one. For the archived BTC snapshot strategy this guard uses
+  settled daily PnL, so unsettled open positions do not trip it.
 - `LIVE_BTC_DATA_SOURCE` or `--btc-data-source` selects the Binance BTC feed.
   Supported values are `binance-us` and `binance-global`; the example runner
   defaults to `binance-global` so live BTC features match the Telonex Binance
-  data used for the private model.
+  data used for the archived model.
 - `LIVE_BTC_BINANCE_GLOBAL=1` or `--binance-global` remains as a compatibility
   alias for `--btc-data-source binance-global`.
 - `LIVE_BTC_EXTRA_SPOT_INSTRUMENT_IDS` or `--extra-spot-instrument-ids` can
   provide comma-separated Binance spot instruments such as
-  `ETHUSDT.BINANCE,SOLUSDT.BINANCE`. If unset, the runner inspects the private
+  `ETHUSDT.BINANCE,SOLUSDT.BINANCE`. If unset, the runner inspects the
   model columns and auto-subscribes matching spot instruments for prefixes such
   as `eth_` and `sol_`.
 
-`live/btc_eth_sol_snapshot_model_sandbox.py` is a local convenience wrapper for
-the current private BTC 5m ETH/SOL profile. It points the base runner at the
-ignored ETH/SOL model artifact, sets `LIVE_BTC_SNAPSHOT_EDGE=0.08`, and
-subscribes `ETHUSDT.BINANCE` and `SOLUSDT.BINANCE` alongside BTC. Run it
-directly the same way as the generic runner:
+`live/btc_eth_sol_snapshot_model_sandbox.py` is a convenience wrapper for the
+archived BTC 5m ETH/SOL profile. It points the base runner at the ETH/SOL model
+artifact, sets `LIVE_BTC_SNAPSHOT_EDGE=0.08`, and subscribes
+`ETHUSDT.BINANCE` and `SOLUSDT.BINANCE` alongside BTC. Run it directly the same
+way as the generic runner:
 
 ```bash
 uv run python live/btc_eth_sol_snapshot_model_sandbox.py --run
 ```
 
-That runner is useful as a public example of the sandbox wiring. It references
-private strategy and model paths to show where local artifacts plug in, but
-those artifacts are not part of the public framework for obvious reasons. The
-model artifact, private strategy implementation, private research runner,
-optimizer history, and training data are not a public reproducibility package.
+The wrapper uses `os.environ.setdefault()`, so existing environment variables
+still override its model path, edge, or extra spot instrument defaults.
+
+The BTC snapshot runners are useful public examples of sandbox wiring and model
+strategy mechanics. They are not proof that the strategy still works. Market
+structure, public feed behavior, Polymarket constraints, and model relevance can
+all drift. Treat `--build-only` as a wiring check and `--run` as a sandbox-only
+experiment.
 
 ## Private Strategy Boundary
 
-Do not open-source the private strategy or model artifacts.
+Most private strategy and model artifacts should stay private. The BTC snapshot
+model is a deliberate archival exception: its strategy, model summary JSONs, and
+research script are tracked so readers can inspect a complete historical example
+of:
 
-The BTC snapshot model depends on private research code and private Telonex
-backtesting data. The public repository can show how Nautilus sandbox plumbing,
-Polymarket BTC 5m market discovery, external BTC trade features, heartbeat and
-evaluation logging, settlement polling, and local runner injection fit together.
-It should not include:
+- Polymarket BTC 5m market discovery;
+- external BTC and optional cross-asset spot feature buffering;
+- L2 book imbalance and microprice features;
+- stale-data, spread, size, settled daily-loss, and settlement guards;
+- sandbox market-order submission through Nautilus;
+- model evaluation and diagnostics logging.
 
-- model weights or serialized model profiles;
-- private feature-generation or training code;
+The archived bundle is still not a public reproducibility package. Retraining
+the JSON profiles requires local Telonex Polymarket book snapshots and Telonex
+Binance spot parquet files that are not included in the repository. The research
+runner will fail closed when those local caches are missing rather than silently
+fabricating training rows. The live strategy also imports the archived research
+module at runtime for the logistic model type, feature constants, and prediction
+helper, so that file is part of the live sandbox dependency surface as well as
+the retraining story.
+
+Do not include:
+
+- unrelated model weights or serialized model profiles;
+- unrelated private feature-generation or training code;
 - private optimizer sweeps, validation reports, or iteration history;
-- tuned strategy thresholds that are not intended as public examples;
+- tuned strategy thresholds that are not deliberately published examples;
 - private Telonex-derived datasets or derived research artifacts.
 
-Keep those under ignored paths such as `live/models/`, `strategies/private/`,
-`backtests/private/`, or another local private storage path. Public helpers
-should describe interfaces and operational mechanics, not the edge itself.
+Keep unrelated private artifacts under ignored paths such as local model
+directories, private runner modules, or another local storage path. Public
+helpers should describe interfaces and operational mechanics, not silently embed
+unpublished edge.
 
 ## Model And Parameter Placement
 
 Open-source-safe runner parameters can live in a tracked file under `live/`.
-Private model weights and private research artifacts should stay under ignored
-paths such as:
+Published archival model profiles can live under `live/models/`. Private model
+weights and private research artifacts should stay under ignored paths such as:
 
 ```text
-live/models/
 strategies/private/
 backtests/private/
 ```
@@ -263,9 +309,10 @@ Equivalent direct command:
 uv run python main.py --mode sandbox
 ```
 
-The menu discovers flat Python and notebook files under `live/`. Keep model
-files in `live/models/`; they are ignored and are not included in the public
-framework.
+The menu discovers flat Python and notebook files under `live/`. Runtime files
+such as diagnostics and settlement ledgers are ignored. Published model profiles
+under `live/models/` can be inspected or selected with
+`LIVE_BTC_SNAPSHOT_MODEL_PATH`.
 
 Direct runner execution is still useful while developing a sandbox runner:
 
@@ -303,9 +350,8 @@ Future real live trading should reuse the same structure:
 - Public-safe live runner scaffolds can live under `live/`.
 - Shared Polymarket adapter helpers should remain under
   `prediction_market_extensions/live/`.
-- Private keys, account identifiers, model parameters, and risk limits should
-  stay out of tracked helper code. Model files should stay under ignored
-  `live/models/`.
+- Private keys, account identifiers, unpublished model parameters, and
+  deployment-specific risk limits should stay out of tracked helper code.
 - Real Polymarket order routing will require authenticated Polymarket
   credentials and should not reuse the unauthenticated sandbox data factory for
   execution.

@@ -22,6 +22,18 @@
 
 ## Known Issues
 
+- The archived BTC snapshot model bundle is published for study, not as a
+  current live-trading edge. The sandbox runner may still be useful for wiring
+  and feature-flow experiments, but market structure, public feed behavior,
+  Polymarket constraints, and model relevance have drifted since the recorded
+  research runs. Re-training the included JSON profiles requires local Telonex
+  Polymarket book snapshots and Telonex Binance spot parquet caches that are
+  not shipped with the repository; cross-asset profiles need matching ETH, SOL,
+  or XRP spot caches. The archived cache-hydration helpers can populate those
+  paths for users with Telonex API access, but exact reproduction still depends
+  on historical Telonex file availability and matching the original environment
+  settings. The companion walk-forward runner also requires a dataset CSV
+  emitted by the research runner.
 - Kalshi is not currently exposed as a public runnable backtest path. The repo
   still contains Kalshi instrument, trade/candlestick loader, fee-model, and
   research helper components, but the built-in replay adapter registry only
