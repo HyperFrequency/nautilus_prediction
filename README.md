@@ -24,7 +24,7 @@
 **New in Version 4.1-alpha:**
 - Live sandbox plumbing for Polymarket BTC 5min markets
 - Example runner showing how to use live BTC 5min hooks
-- (strategy & model not included)
+- (strategy & model *now* included)
 
 **New in Version 4:**
 - Nautilus 1.226.0
